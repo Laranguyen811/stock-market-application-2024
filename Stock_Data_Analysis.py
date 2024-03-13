@@ -1,8 +1,17 @@
 from Stock_Market_Application import *
 import matplotlib.pyplot as plt
 import pandas as pd
-
+import seaborn as sns
+import numpy as np
+import pylab
+import scipy.stats as stats
+from statsmodels.tsa.seasonal import seasonal_decompose
+from datetime import datetime
+import plotly.graph_objects as go
+from sklearn.preprocessing import StandardScaler
+from sklearn.decomposition import PCA
 #Create a dictionary to store all the stock dataframes and its name
+
 stock_data = {'MSFT':data_msft,'GOOG': data_goog,'AMZN': data_amzn,'AAPL': data_aapl,'SAP':data_sap,'META':data_meta,'005930_KS':data_005930_ks,'INTC':data_intc,
               'IBM':data_ibm, 'ORCL':data_orcl, 'BABA':data_baba,'TCEHY':data_tcehy,'NVDA': data_nvda,'TSM':data_tsm,'NFLX': data_nflx,'TSLA':data_tsla,'CRM':data_crm,
               'ADBE':data_adbe,'PYPL':data_pypl}
@@ -11,12 +20,11 @@ stock_data = {'MSFT':data_msft,'GOOG': data_goog,'AMZN': data_amzn,'AAPL': data_
 # A function to analyse data structures of stock data
 def analyse_stock_data(stock_data):
     for i, (name,data) in enumerate(stock_data.items()):
-        '''taking 2 lists of stock data and stock names and returning an iterator aggregating
+        '''Takes a dictionary of stock data and returning an iterator aggregating
         elements from each list. Also print the info, shape (numbers of columns and rows), data type and the table of statistical descriptions.
         of each stock.  
         Inputs:
-        stock_data (dataframes): list of stock dataframes
-        stock_names (string): list of stock names
+        stock_data (dictionary): A dictionary of stock data and their corresponding names
         Returns:
         string: stock name
         string: information about the stock
@@ -35,20 +43,216 @@ def analyse_stock_data(stock_data):
         print(data.describe())
         print(data.duplicated().sum())
         print("\n Number of duplicated values: " + str(data.duplicated().sum()))
-
-
 analyse_stock_data(stock_data)
-#Convert the DataFrame to an Agate table
-#table = ag.Table.from_object(data_msft)
-#print(table.column_names)
 
-#new_table = table.select(['column_name'])
+#A dictionary to store all the stock data with reset DateTimeindex indices
+stock_reset_index = {}
+#A function to reset DateTimeIndex for each dataframe
+def reset_index_stock_data(stock_data):
+    '''Takes a dictionary of stock data and resets the index of time.
+    Input:
+    stock_data(dictionary): a dictionary containing the stock data and its name
+    Returns:
+    stock_reset_index(dictionary): Dictionary with stock names as keys and stock data as values with reset Date indices
+    '''
+    for i,(name,data) in enumerate(stock_data.items()):
+        data_reset = data.reset_index()
+        stock_reset_index[name + '_reset'] = data_reset
+    print(stock_reset_index)
 
-#Checking outliers in our stock data using the method of Interquartile Range(IQR).
+reset_index_stock_data(stock_data)
+
+#Pair plots for stock market data
+for i,(name,data) in enumerate(stock_reset_index.items()):
+    plt.figure()
+    sns.pairplot(data)
+    plt.title(name)
+    plt.show()
+plt.close('all')
+
+#Principal Component Analysis for stock market data to identify dominant patterns and understand relationships
+def principal_analysis(df):
+    '''
+
+     Takes a dictionary of stock data and returns values of explained variance ratios for
+     principal components, scatter plots of principal components and dataframes of loadings
+     Input:
+     stock_data(dictionary): a dictionary containing the stock data and their names
+
+     Returns:
+     string: explained variance ratios for principal components of stock data
+     dataframe: loadings of principal components of stock data
+     graph: scatter plots of principal components of stock data
+            '''
+    for i,(name,data) in enumerate(stock_data.items()):
+        scaler = StandardScaler() #scaling our data with standard scaler
+        scaled_data = scaler.fit_transform(data)
+
+        n_components = 6 #specifying the number of dimensions we want to keep
+        pca = PCA(n_components=n_components)
+        principal_components = pca.fit_transform(scaled_data)
+        #Convert to DataFrame
+        component_names = [f"PC{j+1}" for j in range(principal_components.shape[1])]
+        principal_df = pd.DataFrame(principal_components, columns=component_names)
+        principal_df.head()
+
+        #Check how much variance each principal component explains
+        explained_variance = pca.explained_variance_ratio_
+        print(f"Explained variance ratio for {name}: {explained_variance}")
+
+        #Calculate the correlations/covariance between the original features and PCA-scaled units
+        loadings = pd.DataFrame(
+            pca.components_.T, #transpose the matrix of loadings
+            columns = component_names,# the columns a re the principal components
+            index = data.columns, #the rows are the original features
+        )
+        print(loadings)
+        # Visualise the reduced-dimensional data
+
+        plt.figure(figsize=(8, 6))
+        sns.scatterplot(data=principal_components)  # creating a scatter plot for the principal components of all the data points for a company
+        plt.title(f"Principal Components for {name}")
+        plt.show()
+        plt.close('all')
+
+        def plot_variance(pca):
+            '''Takes PCA components and their corresponding explained variance
+             and returns their plots of explained variance.
+            Input:
+            pca components: a string of pca components of all features in stock market data
+            explained_variance: a list of explained variance for each pca component
+            Returns:
+            plot: a list of plots of explained variance for each pca
+            '''
+            fig, axs = plt.subplots(nrows=1, ncols=2, figsize=(6, 8))
+            n = pca.n_components
+            grid = np.arange(1, n + 1)
+
+            # Explained variance
+            explained_variance = pca.explained_variance_ratio_
+            axs[0].bar(grid, explained_variance)
+            axs[0].set(
+                xlabel="Component", ylabel="% Explained Variance",
+                ylim=(0.0, 1.0)
+
+            )
+            # Cumulative Variance
+            cv = np.cumsum(explained_variance)
+            axs[1].plot(np.r_[0, grid], np.r_[0, cv], "o-")
+            axs[1].set(
+                xlabel="Component", title="% Cumulative Variance",
+                ylim=(0.0, 1.0)
+            )
+            # Set up figure
+            plt.title(f"Variance for {name}")
+            fig.set(figwidth=8, dpi=100)
+            plt.close('all')
+            return axs
+
+        plot_variance(pca)
+principal_analysis(stock_reset_index)
+
+
+#Probability Plot to determine whether our data follow a specific distribution.
+cols = ['Open', 'High', 'Low', 'Adj Close', 'Close', 'Volume']
+def detect_normal_distribution(stock_data):
+    for i, (name,data) in enumerate(stock_data.items()):
+        fig, axs = plt.subplots(nrows=3, ncols=2, figsize=(10, 8))
+        axs = axs.flatten() #flatten (meaning to transform into a one-dimensional array)
+        # the axes array to easily iterate over it
+        for ax, col in zip(axs,cols): #using zip function to iterate over the axes and column names
+            #simultaneously
+            stats.probplot(data[col], dist='norm', plot=ax) #Q-Q Plot
+            ax.set_title(f"Probability Plot of {col} for {name}")
+        plt.tight_layout()
+        plt.show()
+#Create a dictionary to store stock names and their dataframes
+detect_normal_distribution(stock_data)
+
+
+
+#Line Plot for stock data
+trace_names = ['Open', 'High', 'Low', 'Adj Close', 'Close']
+for i,(name,reset_data) in enumerate(stock_reset_index.items()):
+    fig = go.Figure()
+    for trace_name in trace_names:
+        fig.add_trace(go.Scatter(x=reset_data['Date'], y=reset_data[trace_name],mode='lines',name='Open'))
+    #fig.add_trace(go.Scatter(x=reset_data['Date'], y=reset_data['Volume'], mode='lines', name='Volume'))
+    fig.update_layout(title=f"Stock Price for {name}")
+    fig.show()
+
+#Statistical Analysis to understand the data distribution
+#def detect_normal_distribution(stock_data):
+ #   '''Takes a dictionary of stock_data and returning histograms, shapiro test results and kolmogorov-smirnov test results
+  #  Input:
+   # stock_data (dict): Dictionary of stock data and their names
+
+#    Returns:
+ #   graph: Histogram of stock data and their names
+  #  string: Shapiro test results of stock data
+   # string: Kolmogorov-Smirnov test results of stock data
+   # '''
+
+    #for i, (name,data) in enumerate(stock_data.items()):
+     #   fig, axs = plt.subplots(nrows=3, ncols=2, figsize=(10, 8))
+      #  axs = axs.flatten()  # flatten (meaning to transform into a one-dimensional array)
+       # for (ax,col) in zip(axs,cols):
+        #  decomposition = seasonal_decompose(data[col],model= 'multiplicative', period=7)
+
+         # trend = decomposition.trend
+         # seasonal = decomposition.seasonal
+         # residual = decomposition.resid
+          #Plot the original data, trend, seasonality and residuals
+         # plt.subplot(411)
+         # plt.plot(data[col],label='Original')
+          #plt.legend(loc='best')
+         # plt.subplot(412)
+         # plt.plot(trend,label='Trend')
+         # plt.legend(loc='best')
+         # plt.subplot(413)
+         # plt.plot(seasonal,label='Seasonality')
+         # plt.legend(loc='best')
+         # plt.subplot(414)
+         # plt.plot(residual,label='Residuals')
+         # plt.legend(loc='best')
+         # plt.tight_layout()
+    #plt.close('all')
+          #shapiro_test = stats.shapiro(data[col]) #Shapiro-Wilk Test
+          #print(f"{name}'s Shapiro Test for {col}: {shapiro_test[0]}, p-value:{shapiro_test[1]}")
+          #if shapiro_test[1] < 0.05:
+          #  print(f"Based on Shapiro test, {name}'s {col} may not be a normal distribution.")
+          #else:
+          #  print (f"Based on Shapiro test, there is not enough evidence to suggest that {name}'s {col} may not be a normal distribution.")
+
+           # kolmo_test = stats.kstest(data[col], 'norm') #Kolmogorov-Smirnov test
+          #  print (f"{name}'s KS test for {col}: {kolmo_test.statistic}, p-value:{kolmo_test.pvalue}")
+          #  if kolmo_test.pvalue < 0.05:
+           #     print (f"Based on KS test, {name}'s {col} may not be a normal distribution.")
+           # else:
+            #    print(f"Based on KS test, there is not enough statistic evidence to suggest that {name}'s {col} may not be a normal distribution.")
+#detect_normal_distribution(stock_data)
+
+
+
+
+#Investigating outliers in our stock data using the method of Interquartile Range(IQR) since all stock data are not normally
+# distributed.
+# It is a common technique used for stock market because it gives us insights into the spread of stock prices
+# over a specific period. It is resistant to outliers, making it robust.
+#An outlier: an extremely high or low data point relative to the nearest data points and
+#the rest of the neighboring co-existing vals in a dataset.
 #The IQR is the range between the first quartile (25th percentile) and the third quartile (75th percentile) of the data.
 #Any point falling below Q1 - 1.5IQR or above Q3 + 1.5IQR is considered an outlier.
 
 for i,(name,data) in enumerate(stock_data.items()):
+    '''Takes stock data and returns and box plots outliers of them.
+    Input:
+    stock_data: a dictionary of stock data
+    Returns:
+    plot: a box plot of the stock data
+    Series: a series of outliers for each stock
+    '''
+
     Q1 = data['Close'].quantile(0.25)
     Q3 = data['Close'].quantile(0.75)
     IQR = Q3 - Q1
@@ -58,14 +262,32 @@ for i,(name,data) in enumerate(stock_data.items()):
     #Detect outliers
     data_outliers = data[(data['Close'] < lower_bound) | (data['Close'] > upper_bound)]
     if data_outliers.empty:
-        print(f"The outliers of {name} is none")
+        print(f"The outliers of {name} are none")
     else:
-        print(f"The outliers of {name} is {data_outliers['Close']}")
+        print(f"The outliers of {name} are {data_outliers['Close']}")
         print(f"Number of outliers: {data_outliers.shape[0]}")
     #Create boxplot
     plt.boxplot(data['Close'])
     plt.title (f"Box Plot of {name}")
     plt.show()
+    plt.close('all')
+
+ #Heat maps to show the correlation between different features
+ for i,(name,data) in enumerate(stock_data.items()):
+     #Calculate the correlation matrix
+     feat_corr = data.corr()
+
+     #Create the heat map of the correlation matrix
+     plt.figure(figsize=(10,8))
+     sns.heatmap(corr, cmap='coolwarm',annot=True)
+     plt.title (f" The correlation matrix for {name}")
+     plt.show()
+
+
+
+
+
+
 
 
 
