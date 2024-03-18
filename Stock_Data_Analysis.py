@@ -71,7 +71,7 @@ for i,(name,data) in enumerate(stock_reset_index.items()):
 plt.close('all')
 
 #Principal Component Analysis for stock market data to identify dominant patterns and understand relationships
-def principal_analysis(df):
+def principal_analysis(stock_data):
     '''
 
      Takes a dictionary of stock data and returns values of explained variance ratios for
@@ -99,6 +99,10 @@ def principal_analysis(df):
         #Check how much variance each principal component explains
         explained_variance = pca.explained_variance_ratio_
         print(f"Explained variance ratio for {name}: {explained_variance}")
+        print(f"{name}has a maximum explained variance of PC1: \n {explained_variance[0]}")
+        print(f"{name} has a second highest explained variance of PC2: \n {explained_variance[1]}")
+        print(f"The rest has little impact on {name}")
+
 
         #Calculate the correlations/covariance between the original features and PCA-scaled units
         loadings = pd.DataFrame(
@@ -107,10 +111,23 @@ def principal_analysis(df):
             index = data.columns, #the rows are the original features
         )
         print(loadings)
+        for col in loadings.columns:
+            for feature in loadings.index:
+                loading = loadings.loc[feature,col] #Obtaining the loading of each principal component
+                #corresponding to each feature
+                if loading>0.3:
+                    print(f"{name}'s {col} has a substantially positive relationship with {feature}")
+                elif loading < -0.3:
+                    print(f"{name}'s {col} has a substantially inverse relationship with {feature}")
+                else:
+                    print(f"{name}'s {col} has little relationship with {feature}")
+
+
+
         # Visualise the reduced-dimensional data
 
         plt.figure(figsize=(8, 6))
-        sns.scatterplot(data=principal_components)  # creating a scatter plot for the principal components of all the data points for a company
+        sns.scatterplot(data=principal_df)  # creating a scatter plot for the principal components of all the data points for a company
         plt.title(f"Principal Components for {name}")
         plt.show()
         plt.close('all')
@@ -129,10 +146,9 @@ def principal_analysis(df):
             grid = np.arange(1, n + 1)
 
             # Explained variance
-            explained_variance = pca.explained_variance_ratio_
             axs[0].bar(grid, explained_variance)
             axs[0].set(
-                xlabel="Component", ylabel="% Explained Variance",
+                xlabel="Component", title=" Explained Variance ",
                 ylim=(0.0, 1.0)
 
             )
@@ -140,17 +156,18 @@ def principal_analysis(df):
             cv = np.cumsum(explained_variance)
             axs[1].plot(np.r_[0, grid], np.r_[0, cv], "o-")
             axs[1].set(
-                xlabel="Component", title="% Cumulative Variance",
+                xlabel="Component", title=" Cumulative Variance ",
                 ylim=(0.0, 1.0)
             )
             # Set up figure
-            plt.title(f"Variance for {name}")
+            plt.title(f"{name}",loc="left")
             fig.set(figwidth=8, dpi=100)
+            plt.show()
             plt.close('all')
             return axs
 
         plot_variance(pca)
-principal_analysis(stock_reset_index)
+principal_analysis(stock_data)
 
 
 #Probability Plot to determine whether our data follow a specific distribution.
