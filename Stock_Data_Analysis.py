@@ -99,7 +99,7 @@ def principal_analysis(stock_data):
         #Check how much variance each principal component explains
         explained_variance = pca.explained_variance_ratio_
         print(f"Explained variance ratio for {name}: {explained_variance}")
-        print(f"{name}has a maximum explained variance of PC1: \n {explained_variance[0]}")
+        print(f"{name} has a maximum explained variance of PC1: \n {explained_variance[0]}")
         print(f"{name} has a second highest explained variance of PC2: \n {explained_variance[1]}")
         print(f"The rest has little impact on {name}")
 
@@ -116,11 +116,11 @@ def principal_analysis(stock_data):
                 loading = loadings.loc[feature,col] #Obtaining the loading of each principal component
                 #corresponding to each feature
                 if loading>0.3:
-                    print(f"{name}'s {col} has a substantially positive relationship with {feature}")
+                    print(f"{name}'s {col} may have a substantially positive relationship with {feature}")
                 elif loading < -0.3:
-                    print(f"{name}'s {col} has a substantially inverse relationship with {feature}")
+                    print(f"{name}'s {col} may have a substantially inverse relationship with {feature}")
                 else:
-                    print(f"{name}'s {col} has little relationship with {feature}")
+                    print(f"{name}'s {col} may have little relationship with {feature}")
 
 
 
@@ -199,41 +199,40 @@ for i,(name,reset_data) in enumerate(stock_reset_index.items()):
     fig.show()
 
 #Statistical Analysis to understand the data distribution
-#def detect_normal_distribution(stock_data):
- #   '''Takes a dictionary of stock_data and returning histograms, shapiro test results and kolmogorov-smirnov test results
-  #  Input:
-   # stock_data (dict): Dictionary of stock data and their names
+def seasonal_decomposition(stock_data):
+    '''Takes a dictionary of stock_data and returning decomposition seasonality of the stock data
+    Input:
+    stock_data (dict): Dictionary of stock data and their names
 
-#    Returns:
- #   graph: Histogram of stock data and their names
-  #  string: Shapiro test results of stock data
-   # string: Kolmogorov-Smirnov test results of stock data
-   # '''
+    Returns:
+    graph: Histogram of stock data and their names
+    '''
 
-    #for i, (name,data) in enumerate(stock_data.items()):
-     #   fig, axs = plt.subplots(nrows=3, ncols=2, figsize=(10, 8))
-      #  axs = axs.flatten()  # flatten (meaning to transform into a one-dimensional array)
-       # for (ax,col) in zip(axs,cols):
-        #  decomposition = seasonal_decompose(data[col],model= 'multiplicative', period=7)
+    for i, (name,data) in enumerate(stock_data.items()):
+        fig, axs = plt.subplots(nrows=3, ncols=2, figsize=(10, 8))
+        axs = axs.flatten()  # flatten (meaning to transform into a one-dimensional array)
+        for (ax,col) in zip(axs,cols):
+            decomposition = seasonal_decompose(data[col],model= 'additive', period=1)
 
-         # trend = decomposition.trend
-         # seasonal = decomposition.seasonal
-         # residual = decomposition.resid
+            trend = decomposition.trend
+            seasonal = decomposition.seasonal
+            residual = decomposition.resid
           #Plot the original data, trend, seasonality and residuals
-         # plt.subplot(411)
-         # plt.plot(data[col],label='Original')
-          #plt.legend(loc='best')
-         # plt.subplot(412)
-         # plt.plot(trend,label='Trend')
-         # plt.legend(loc='best')
-         # plt.subplot(413)
-         # plt.plot(seasonal,label='Seasonality')
-         # plt.legend(loc='best')
-         # plt.subplot(414)
-         # plt.plot(residual,label='Residuals')
-         # plt.legend(loc='best')
-         # plt.tight_layout()
-    #plt.close('all')
+            plt.subplot(411)
+            plt.plot(data[col],label='Original')
+            plt.legend(loc='best')
+            plt.subplot(412)
+            plt.plot(trend,label='Trend')
+            plt.legend(loc='best')
+            plt.subplot(413)
+            plt.plot(seasonal,label='Seasonality')
+            plt.legend(loc='best')
+            plt.subplot(414)
+            plt.plot(residual,label='Residuals')
+            plt.legend(loc='best')
+            plt.tight_layout()
+            plt.show()
+    plt.close('all')
           #shapiro_test = stats.shapiro(data[col]) #Shapiro-Wilk Test
           #print(f"{name}'s Shapiro Test for {col}: {shapiro_test[0]}, p-value:{shapiro_test[1]}")
           #if shapiro_test[1] < 0.05:
@@ -247,8 +246,7 @@ for i,(name,reset_data) in enumerate(stock_reset_index.items()):
            #     print (f"Based on KS test, {name}'s {col} may not be a normal distribution.")
            # else:
             #    print(f"Based on KS test, there is not enough statistic evidence to suggest that {name}'s {col} may not be a normal distribution.")
-#detect_normal_distribution(stock_data)
-
+seasonal_decomposition(stock_data)
 
 
 
