@@ -300,9 +300,9 @@ def mardia_test(stock_data):
         # with degrees of freedom m*(m+1)*(m+2)/6
 
         if mardia_p < 0.05:
-            print(f"{name}'s results for Mardia's test is {mardia_p} and we do not have evidence that there might be multivariate normality in the stock data")
+            print(f"{name}'s results for Mardia's test is {mardia_p} and we do not have evidence that there might be multivariate normality in its stock data")
         else:
-            print(f"{name}'s results for Mardia's test is {mardia_p} and we have evidence that there might be multivariate normality in the stock data")
+            print(f"{name}'s results for Mardia's test is {mardia_p} and we have evidence that there might be multivariate normality in its stock data")
 
 mardia_test(stock_data)
 
