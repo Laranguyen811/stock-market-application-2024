@@ -73,7 +73,6 @@ plt.close('all')
 #Principal Component Analysis for stock market data to identify dominant patterns and understand relationships
 def principal_analysis(stock_data):
     '''
-
      Takes a dictionary of stock data and returns values of explained variance ratios for
      principal components, scatter plots of principal components and dataframes of loadings
      Input:
@@ -94,8 +93,7 @@ def principal_analysis(stock_data):
         #Convert to DataFrame
         component_names = [f"PC{j+1}" for j in range(principal_components.shape[1])]
         principal_df = pd.DataFrame(principal_components, columns=component_names)
-        principal_df.head()
-
+        print(principal_df.head())
         #Check how much variance each principal component explains
         explained_variance = pca.explained_variance_ratio_
         print(f"Explained variance ratio for {name}: {explained_variance}")
@@ -121,16 +119,6 @@ def principal_analysis(stock_data):
                     print(f"{name}'s {col} may have a substantially inverse relationship with {feature}")
                 else:
                     print(f"{name}'s {col} may have little relationship with {feature}")
-
-
-
-        # Visualise the reduced-dimensional data
-
-        plt.figure(figsize=(8, 6))
-        sns.scatterplot(data=principal_df)  # creating a scatter plot for the principal components of all the data points for a company
-        plt.title(f"Principal Components for {name}")
-        plt.show()
-        plt.close('all')
 
         def plot_variance(pca):
             '''Takes PCA components and their corresponding explained variance
@@ -168,7 +156,31 @@ def principal_analysis(stock_data):
 
         plot_variance(pca)
 principal_analysis(stock_data)
-
+#Visualise the reduced dimension data
+def scatter_plot(stock_data):
+    '''Takes stock_data and returns a scatter plot of principal components
+    Input:
+    stock_data (DataFrame): Dataframe with stock data and their names
+    Return:
+    DataFrame: a DataFrame of principal components
+    graph: a scatter plot of principal components
+    '''
+    for i, (name, data) in enumerate(stock_data.items()):
+        scaler = StandardScaler()  # scaling our data with standard scaler
+        scaled_data = scaler.fit_transform(data)
+        n_components = 6  # specifying the number of dimensions we want to keep
+        pca = PCA(n_components=n_components)
+        principal_components = pca.fit_transform(scaled_data)
+        # Convert to DataFrame
+        component_names = [f"PC{j + 1}" for j in range(principal_components.shape[1])]
+        principal_df = pd.DataFrame(principal_components, columns=component_names)
+        principal_df.head()
+        plt.figure(figsize=(8, 6))
+        sns.scatterplot(data=principal_df)  # creating a scatter plot for the principal components of all the data points for a company
+        plt.title(f"Principal Components for {name}")
+        plt.show()
+    plt.close('all')
+scatter_plot(stock_data)
 
 #Probability Plot to determine whether our data follow a specific distribution.
 cols = ['Open', 'High', 'Low', 'Adj Close', 'Close', 'Volume']
@@ -185,6 +197,7 @@ def detect_normal_distribution(stock_data):
         plt.show()
 #Create a dictionary to store stock names and their dataframes
 detect_normal_distribution(stock_data)
+
 
 
 
@@ -212,8 +225,9 @@ def seasonal_decomposition(stock_data):
         fig, axs = plt.subplots(nrows=3, ncols=2, figsize=(10, 8))
         axs = axs.flatten()  # flatten (meaning to transform into a one-dimensional array)
         for (ax,col) in zip(axs,cols):
-            decomposition = seasonal_decompose(data[col],model= 'additive', period=1)
-
+            decomposition = seasonal_decompose(data[col],model= 'additive', period=1) #2 types of models: additive (seasonality
+            #and irregularities don't change as much when trend increases, multiplicative (seasonality and irregular variations increase in amplitude when trend increases
+            #period: the number of observations in a cycle
             trend = decomposition.trend
             seasonal = decomposition.seasonal
             residual = decomposition.resid
@@ -248,7 +262,49 @@ def seasonal_decomposition(stock_data):
             #    print(f"Based on KS test, there is not enough statistic evidence to suggest that {name}'s {col} may not be a normal distribution.")
 seasonal_decomposition(stock_data)
 
+#Henze-Zirkler's test to assess the multivariate normality of a dataset
+from pingouin import multivariate_normality
+for i,(name,data) in enumerate(stock_data.items()):
+    #Compute test statistic and p-value for Henze-Zirkler's test
+    results = multivariate_normality(data,alpha=.05)
+    if results[2] == False:
+        print(f"{name}'s results for Mardia's test: {results} and we do not have evidence that there might be multivariate normality in the stock data.")
+    else:
+        print(f"{name}'s results for Mardia's test: {results} and we have evidence that there might be multivariate normality in the stock data.")
 
+#Mardia's test to assess the multivariate normality
+from scipy.stats import skew,kurtosis, chi2
+def mardia_test(stock_data):
+    '''Takes stock data and returns '''
+    for i,(name,data) in enumerate(stock_data.items()):
+    #Compute skewness and kurtosis for each variable
+        mardia_skewness = skew(data,axis=0) #skewness of the data
+        mardia_kurtosis = kurtosis(data,axis=0) #kurtosis of the data
+
+        # Compute Mardia's multivariate skewness and kurtosis
+        n = data.shape[0] #number of observations
+        m = data.shape[1] #number of features
+
+        skewness_multivariate = (n/ ((n-1) * (n-3))) * np.sum(mardia_skewness**2) # calculate the Mardia's multivariate skewness: the number of observations divided the multiplication
+        #the first and fourth moments and multiplied by the sum of mardia skewness squared
+        kurtosis_multivariate = (1 - m) * np.sum(mardia_kurtosis) # calculate the Mardia's multivariate kurtosis: subtract 1 by the number of features, multiplied by the sum of mardia
+        #kurtosis
+
+        #Compute test statistic
+        test_statistic = skewness_multivariate**2 + (kurtosis_multivariate - m*(m+2))**2 #calculate test statistic by squaring the Mardia's multivariate skewness
+        # then add the squared Mardia's multivariate kurtosis subtracting the number of features times the number of features plus 2
+
+
+        #Compute the p-value
+        mardia_p = 1 - chi2.cdf(test_statistic,df=m*(m+1)*(m+2)/6) #compute the p-value for the test statistic using chi-squared distribution
+        # with degrees of freedom m*(m+1)*(m+2)/6
+
+        if mardia_p < 0.05:
+            print(f"{name}'s results for Mardia's test is {mardia_p} and we do not have evidence that there might be multivariate normality in the stock data")
+        else:
+            print(f"{name}'s results for Mardia's test is {mardia_p} and we have evidence that there might be multivariate normality in the stock data")
+
+mardia_test(stock_data)
 
 #Investigating outliers in our stock data using the method of Interquartile Range(IQR) since all stock data are not normally
 # distributed.
