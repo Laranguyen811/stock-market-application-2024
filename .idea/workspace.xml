@@ -4,9 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4f5895f3-2d93-4355-bcbb-97c6701d0028" name="Changes" comment="Merge remote-tracking branch 'origin/master'">
+    <list default="true" id="4f5895f3-2d93-4355-bcbb-97c6701d0028" name="Changes" comment="- Add seasonal decomposition&#10;- Add Mardia's test and Henze-Zirkler's test">
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2024_3_12_16_56_[Changes]/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2024_3_12_16_56__Changes_.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2024_3_14_16_59_[Changes]1/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2024_3_14_16_59__Changes_1.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Stock_Data_Analysis.py" beforeDir="false" afterPath="$PROJECT_DIR$/Stock_Data_Analysis.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Stock_Data_Visualisation.py" beforeDir="false" afterPath="$PROJECT_DIR$/misc/Stock_Data_Visualisation.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -84,6 +89,11 @@
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\laran\PycharmProjects\ASX\misc" />
+    </key>
+  </component>
   <component name="RunManager">
     <configuration name="Stock_Market_Application" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="ASX" />
@@ -167,7 +177,11 @@
       <workItem from="1710215798572" duration="6298000" />
       <workItem from="1710406121010" duration="1299000" />
       <workItem from="1710468669659" duration="22000" />
-      <workItem from="1710730871857" duration="10293000" />
+      <workItem from="1710730871857" duration="11837000" />
+      <workItem from="1710904783948" duration="8511000" />
+      <workItem from="1710914048668" duration="2647000" />
+      <workItem from="1711056773359" duration="10302000" />
+      <workItem from="1711420404853" duration="10724000" />
     </task>
     <task id="LOCAL-00001" summary="Add stock market analysis &#10;&#10;Scrape stock data using yfinance API.&#10;Add outlier detection and metadata.">
       <option name="closed" value="true" />
@@ -193,7 +207,47 @@
       <option name="project" value="LOCAL" />
       <updated>1710405916086</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Merge remote-tracking branch 'origin/master'">
+      <option name="closed" value="true" />
+      <created>1710742154808</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1710742154808</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Merge remote-tracking branch 'origin/master'">
+      <option name="closed" value="true" />
+      <created>1710742186141</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1710742186141</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Add stock market analysis &#10;&#10;Scrape stock data using yfinance API.&#10;Add outlier detection and metadata.">
+      <option name="closed" value="true" />
+      <created>1710916185575</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1710916185575</updated>
+    </task>
+    <task id="LOCAL-00007" summary="- Add seasonal decomposition&#10;- Add Mardia's test and Henze-Zirkler's test">
+      <option name="closed" value="true" />
+      <created>1711067219684</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1711067219684</updated>
+    </task>
+    <task id="LOCAL-00008" summary="- Add seasonal decomposition&#10;- Add Mardia's test and Henze-Zirkler's test">
+      <option name="closed" value="true" />
+      <created>1711067270609</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1711067270609</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -211,9 +265,10 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Add stock market analysis &#10;&#10;Scrape stock data using yfinance API.&#10;Add outlier detection and metadata." />
     <MESSAGE value="Merge remote-tracking branch 'origin/master'" />
-    <option name="LAST_COMMIT_MESSAGE" value="Merge remote-tracking branch 'origin/master'" />
+    <MESSAGE value="Add stock market analysis &#10;&#10;Scrape stock data using yfinance API.&#10;Add outlier detection and metadata." />
+    <MESSAGE value="- Add seasonal decomposition&#10;- Add Mardia's test and Henze-Zirkler's test" />
+    <option name="LAST_COMMIT_MESSAGE" value="- Add seasonal decomposition&#10;- Add Mardia's test and Henze-Zirkler's test" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

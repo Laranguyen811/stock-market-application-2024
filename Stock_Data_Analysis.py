@@ -70,6 +70,18 @@ for i,(name,data) in enumerate(stock_reset_index.items()):
     plt.show()
 plt.close('all')
 
+#Heat maps to show the correlation between different features
+ for i,(name,data) in enumerate(stock_data.items()):
+     #Calculate the correlation matrix
+     feat_corr = data.corr()
+
+     #Create the heat map of the correlation matrix
+     plt.figure(figsize=(10,8))
+     sns.heatmap(feat_corr, cmap='coolwarm',annot=True)
+     plt.title (f" The correlation matrix for {name}")
+     plt.show()
+
+
 #Principal Component Analysis for stock market data to identify dominant patterns and understand relationships
 def principal_analysis(stock_data):
     '''
@@ -218,34 +230,29 @@ def seasonal_decomposition(stock_data):
     stock_data (dict): Dictionary of stock data and their names
 
     Returns:
-    graph: Histogram of stock data and their names
+    graph: line plots of seasonal decomposition of stock data and their names
     '''
 
     for i, (name,data) in enumerate(stock_data.items()):
-        fig, axs = plt.subplots(nrows=3, ncols=2, figsize=(10, 8))
+        fig, axs = plt.subplots(nrows=3, ncols=2, figsize=(12,10))
         axs = axs.flatten()  # flatten (meaning to transform into a one-dimensional array)
-        for (ax,col) in zip(axs,cols):
+        for j,(ax,col) in enumerate(zip(axs,cols)):
             decomposition = seasonal_decompose(data[col],model= 'additive', period=1) #2 types of models: additive (seasonality
             #and irregularities don't change as much when trend increases, multiplicative (seasonality and irregular variations increase in amplitude when trend increases
-            #period: the number of observations in a cycle
+            #period: the number of observations in a cycle, choose yearly (1) to analyse the long-term trend
             trend = decomposition.trend
             seasonal = decomposition.seasonal
             residual = decomposition.resid
           #Plot the original data, trend, seasonality and residuals
-            plt.subplot(411)
-            plt.plot(data[col],label='Original')
-            plt.legend(loc='best')
-            plt.subplot(412)
-            plt.plot(trend,label='Trend')
-            plt.legend(loc='best')
-            plt.subplot(413)
-            plt.plot(seasonal,label='Seasonality')
-            plt.legend(loc='best')
-            plt.subplot(414)
-            plt.plot(residual,label='Residuals')
-            plt.legend(loc='best')
-            plt.tight_layout()
-            plt.show()
+            ax.plot(data[col],label='Original', linewidth=2, linestyle='-')
+            ax.plot(trend,label='Trend', linewidth=1, linestyle='--')
+            ax.plot(seasonal,label='Seasonality',linewidth=2, linestyle='-')
+            ax.plot(residual,label='Residuals',linewidth=1, linestyle='--')
+
+            ax.legend(loc='best')
+            ax.set_title(f"Seasonal decomposition of {name}'s {col}")
+        plt.tight_layout()
+        plt.show()
     plt.close('all')
           #shapiro_test = stats.shapiro(data[col]) #Shapiro-Wilk Test
           #print(f"{name}'s Shapiro Test for {col}: {shapiro_test[0]}, p-value:{shapiro_test[1]}")
@@ -264,23 +271,38 @@ seasonal_decomposition(stock_data)
 
 #Henze-Zirkler's test to assess the multivariate normality of a dataset
 from pingouin import multivariate_normality
-for i,(name,data) in enumerate(stock_data.items()):
-    #Compute test statistic and p-value for Henze-Zirkler's test
-    results = multivariate_normality(data,alpha=.05)
-    if results[2] == False:
-        print(f"{name}'s results for Mardia's test: {results} and we do not have evidence that there might be multivariate normality in the stock data.")
-    else:
-        print(f"{name}'s results for Mardia's test: {results} and we have evidence that there might be multivariate normality in the stock data.")
+def henze_zirkler_test(stock_data):
+    ''' Takes stock data and returns Henze-Zirkler's test statistic.
+    Input:
+    stock_data (dictionary): a dictionary of stock data and its corresponding values
+    Returns:
+    string: a string of Henze-Zirkler's test statistic for stock data
+    '''
+    for i,(name,data) in enumerate(stock_data.items()):
+        #Compute test statistic and p-value for Henze-Zirkler's test
+        results = multivariate_normality(data,alpha=.05) #compute the nonnegative function distance measuring the distance between
+        #the empirical characteristic function of the data and the character function of multivariate normal distribution.
+        #Process: measuring the mean, variance and smoothness of the data. Then, we lognormalised the mean and covariance, and estimate the p-value.
+        if results[2] == False:
+            print(f"{name}'s results for Mardia's test: {results} and we do not have evidence that there might be multivariate normality in the stock data.")
+        else:
+            print(f"{name}'s results for Mardia's test: {results} and we have evidence that there might be multivariate normality in the stock data.")
 
 #Mardia's test to assess the multivariate normality
 from scipy.stats import skew,kurtosis, chi2
 def mardia_test(stock_data):
-    '''Takes stock data and returns '''
+    '''Takes stock data and returns the p-values of Mardia's test statistic
+    Input:
+    stock_data (dictionary): A dictionary of stock data and its corresponding values
+    Returns:
+    string: a string of p-values of Mardia's test statistic for each stock data
+    '''
     for i,(name,data) in enumerate(stock_data.items()):
     #Compute skewness and kurtosis for each variable
         mardia_skewness = skew(data,axis=0) #skewness of the data
+    #b_{1,p} = \frac{1}{n^2} \sum_{i=1}^{n} \sum_{j=1}^{n} [(x_i - \bar{x})^T S^{-1} (x_j - \bar{x})]^3
         mardia_kurtosis = kurtosis(data,axis=0) #kurtosis of the data
-
+    #b_{2,p} = \frac{1}{n} \sum_{i=1}^{n} [(x_i - \bar{x})^T S^{-1} (x_i - \bar{x})]^2
         # Compute Mardia's multivariate skewness and kurtosis
         n = data.shape[0] #number of observations
         m = data.shape[1] #number of features
@@ -350,7 +372,7 @@ for i,(name,data) in enumerate(stock_data.items()):
 
      #Create the heat map of the correlation matrix
      plt.figure(figsize=(10,8))
-     sns.heatmap(corr, cmap='coolwarm',annot=True)
+     sns.heatmap(feat_corr, cmap='coolwarm',annot=True)
      plt.title (f" The correlation matrix for {name}")
      plt.show()
 
