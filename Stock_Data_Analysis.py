@@ -81,6 +81,46 @@ plt.close('all')
      plt.title (f" The correlation matrix for {name}")
      plt.show()
 
+#Calculate correlation coefficients
+def calculate_corr_coeffs(stock_data):
+    ''' Takes stock data and calculates the correlation coefficients between two different features.
+    Input:
+    stock_data (Dictionary):a dictionary of stock data and their corresponding names
+    Returns:
+    string: a string of correlation coefficients between the features for each stock data
+
+
+    :param stock_data:
+    :return:
+    '''
+    for i,(name,data) in enumerate(stock_data.items()):
+        corr_matrix = data.corr()
+
+    #Calculate the correlation coefficients (off-diagonal elements)
+        #corr_coeffs = corr_matrix[0,1]
+        print(f" Correlation coefficient for {name} : \n {corr_matrix}")
+        for col in corr_matrix.columns:
+            for row in corr_matrix.index:
+                corr_coeff= corr_matrix.loc[col,row]
+                if corr_coeff > 0.8:
+                    print(f"We have evidence that there might be a strong positive correlation between {name}'s {col} and {row} with the correlation coefficient of {corr_coeff}.")
+                elif 0.6 <= corr_coeff <= 0.8:
+                    print(f"We have evidence that there might be a moderate positive correlation between {name}'s {col} and {row} with the correlation coefficient of {corr_coeff}.")
+                elif 0.4 <= corr_coeff <0.6:
+                    print(f"We have evidence that there might be a weak positive correlation between {name}'s {col} and {row} with the correlation coefficient of {corr_coeff}.")
+                elif 0 <= corr_coeff < 0.4:
+                    print(f"We have evidence that there might be a very weak positive correlation between {name}'s {col} and {row} with the correlation coefficient of {corr_coeff}.")
+                elif -0.4 <= corr_coeff <0:
+                    print(f"We have evidence that there might be a very weak negative correlation between {name}'s {col} and {row} with the correlation coefficient of {corr_coeff}.")
+                elif -0.6< corr_coeff <= -0.4:
+                    print(f"We have evidence that there might be a weak negative correlation between {name}'s {col} and {row} with the correlation of {corr_coeff}.")
+                elif -0.6 <= corr_coeff <= -0.8:
+                    print(f"We have evidence that there might be a moderate weak positive correlation between {name}'s {col} and {row} with the correlation coefficient of {corr_coeff}")
+                else:
+                    print(f"We have evidence that there might be a strong negative correlation between {name}'s {col} and {row} with the correlation of {corr_coeff }.")
+
+calculate_corr_coeffs(stock_data)
+
 
 #Principal Component Analysis for stock market data to identify dominant patterns and understand relationships
 def principal_analysis(stock_data):
@@ -301,8 +341,20 @@ def mardia_test(stock_data):
     #Compute skewness and kurtosis for each variable
         mardia_skewness = skew(data,axis=0) #skewness of the data
     #b_{1,p} = \frac{1}{n^2} \sum_{i=1}^{n} \sum_{j=1}^{n} [(x_i - \bar{x})^T S^{-1} (x_j - \bar{x})]^3
+    #for x_i and x_j data points, we measure the distance between them and with itself.x bar is the
+    # mean (average) of all the data points. The double summation means that for each data point x_i, we are comparing with data point
+    #x_j, including itself.
+    #S(-1) is the inverse of the covariance matrix (the covariance matrix measure how much of each of dimensions/variances
+    # vary from the mean with respect to each other). We use the inverse of the covariance matrix, or the precision matrix, to hold other variables
+    #constant while measuring the relationship of two variables in questions, by normalising the data (essentially removing any correlation and variance
+    #between two variables.It is crucial in multivariate analysis/statistics.
+    #(x_i - \bar{x})^T: the transpose matrix of the difference between the data point x_i and the mean, since we need a row vector to multiply
+    #with the precision matrix.
+    #(x_j - \bar{x})^3: cubing the difference between x_j and the mean to estimate the skewness
         mardia_kurtosis = kurtosis(data,axis=0) #kurtosis of the data
     #b_{2,p} = \frac{1}{n} \sum_{i=1}^{n} [(x_i - \bar{x})^T S^{-1} (x_i - \bar{x})]^2
+    #We only calculate for data point x_i since we only measure the tailedness of the data by looking at the distance from a data point to the mean.
+    # Therefore, we square the difference between x_i and the mean to calculate the kurtosis.
         # Compute Mardia's multivariate skewness and kurtosis
         n = data.shape[0] #number of observations
         m = data.shape[1] #number of features
