@@ -10,6 +10,7 @@ from datetime import datetime
 import plotly.graph_objects as go
 from sklearn.preprocessing import StandardScaler
 from sklearn.decomposition import PCA
+from scipy.stats import chi2
 #Create a dictionary to store all the stock dataframes and its name
 
 stock_data = {'MSFT':data_msft,'GOOG': data_goog,'AMZN': data_amzn,'AAPL': data_aapl,'SAP':data_sap,'META':data_meta,'005930_KS':data_005930_ks,'INTC':data_intc,
@@ -97,7 +98,6 @@ def calculate_corr_coeffs(stock_data):
         corr_matrix = data.corr()
 
     #Calculate the correlation coefficients (off-diagonal elements)
-        #corr_coeffs = corr_matrix[0,1]
         print(f" Correlation coefficient for {name} : \n {corr_matrix}")
         for col in corr_matrix.columns:
             for row in corr_matrix.index:
@@ -417,16 +417,44 @@ for i,(name,data) in enumerate(stock_data.items()):
     plt.show()
     plt.close('all')
 
- #Heat maps to show the correlation between different features
- for i,(name,data) in enumerate(stock_data.items()):
-     #Calculate the correlation matrix
-     feat_corr = data.corr()
+#Calculate Mahalanobis distance
+from scipy.spatial.distance import mahalanobis
+from scipy.stats import f
+def mahalanobis_distance(stock_reset_index):
+    ''' Takes stock data and returns mahalanobis distance
+    stock_data (Dictionary): a dictionary of stock data and their respective names
+    Returns:
+    DataFrame: a DataFrame of mahalanobis distance
+    '''
+    for i,(reset_name,reset_data) in enumerate(stock_reset_index.items()):
+        #Calculate the mean
+        feat_df = reset_data.drop('Date',axis=1) #Drop the Date column to retain only feature columns
+        mu = np.mean(feat_df,axis=0)
+        #Calculate the covariance matrix of the distribution
+        p = 6 #number of variables
+        alpha = 0.05 #value of alpha (significance level)
+        n = reset_data.shape[0] #number of observations
+        alpha_level = alpha/n #the alpha level with Bonferroni correction to control the family-wise error rate while performing
+        #multiple tests, hence, minimise Type I errors for a smaller sample data
+        dfn = p-1 #degree of freedom for the numerator
+        dfd = n-dfn #degree of freedom for the denominator
+        f_critical_value = f.ppf(1-(alpha/n),dfn,dfd) #calculate the critical value of f-distribution
+        chi_squared_critical = stats.chi2.ppf(1-(alpha/n),feat_df)
+        cut_off = (p * (n - 1) ** 2) * f_critical_value /(n * (n - p - 1 + p * f_critical_value))
+        sigma = np.cov(feat_df.T) #Singular Matrix since there is multicollinearity, The matrix does not have an inverse
+        # Add a small constant to the diagonal elements of the covariance matrix to solve the problem
+        sigma += np.eye(sigma.shape[0]) * 1e-6
+        for row in feat_df.index:
+           point = feat_df.loc[row]
+           mahalanobis_distance = mahalanobis(point,mu,np.linalg.inv(sigma))
+           if mahalanobis_distance > cut_off:
+                print(f"We have evidence that {reset_name} might have potential outliers of {point} since the mahalanobis distance is {mahalanobis_distance}")
+           else:
+               pass;
 
-     #Create the heat map of the correlation matrix
-     plt.figure(figsize=(10,8))
-     sns.heatmap(feat_corr, cmap='coolwarm',annot=True)
-     plt.title (f" The correlation matrix for {name}")
-     plt.show()
+mahalanobis_distance(stock_reset_index)
+
+
 
 
 
