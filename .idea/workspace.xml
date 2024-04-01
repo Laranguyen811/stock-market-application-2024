@@ -4,14 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4f5895f3-2d93-4355-bcbb-97c6701d0028" name="Changes" comment="- Add seasonal decomposition&#10;- Add Mardia's test and Henze-Zirkler's test">
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2024_3_12_16_56_[Changes]/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2024_3_12_16_56__Changes_.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2024_3_14_16_59_[Changes]1/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2024_3_14_16_59__Changes_1.xml" beforeDir="false" />
+    <list default="true" id="4f5895f3-2d93-4355-bcbb-97c6701d0028" name="Changes" comment="- Add correlation coefficients">
+      <change beforePath="$PROJECT_DIR$/.idea/ASX.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/ASX.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Stock_Data_Analysis.py" beforeDir="false" afterPath="$PROJECT_DIR$/Stock_Data_Analysis.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Stock_Data_Visualisation.py" beforeDir="false" afterPath="$PROJECT_DIR$/misc/Stock_Data_Visualisation.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -182,6 +178,10 @@
       <workItem from="1710914048668" duration="2647000" />
       <workItem from="1711056773359" duration="10302000" />
       <workItem from="1711420404853" duration="10724000" />
+      <workItem from="1711488427653" duration="652000" />
+      <workItem from="1711682113480" duration="10741000" />
+      <workItem from="1711786483817" duration="3232000" />
+      <workItem from="1711878654070" duration="13041000" />
     </task>
     <task id="LOCAL-00001" summary="Add stock market analysis &#10;&#10;Scrape stock data using yfinance API.&#10;Add outlier detection and metadata.">
       <option name="closed" value="true" />
@@ -247,7 +247,23 @@
       <option name="project" value="LOCAL" />
       <updated>1711067270609</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="- Add seasonal decomposition&#10;- Add Mardia's test and Henze-Zirkler's test&#10;- Fix correlation heatmaps">
+      <option name="closed" value="true" />
+      <created>1711488479027</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1711488479027</updated>
+    </task>
+    <task id="LOCAL-00010" summary="- Add correlation coefficients">
+      <option name="closed" value="true" />
+      <created>1711692708728</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1711692708728</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -268,7 +284,9 @@
     <MESSAGE value="Merge remote-tracking branch 'origin/master'" />
     <MESSAGE value="Add stock market analysis &#10;&#10;Scrape stock data using yfinance API.&#10;Add outlier detection and metadata." />
     <MESSAGE value="- Add seasonal decomposition&#10;- Add Mardia's test and Henze-Zirkler's test" />
-    <option name="LAST_COMMIT_MESSAGE" value="- Add seasonal decomposition&#10;- Add Mardia's test and Henze-Zirkler's test" />
+    <MESSAGE value="- Add seasonal decomposition&#10;- Add Mardia's test and Henze-Zirkler's test&#10;- Fix correlation heatmaps" />
+    <MESSAGE value="- Add correlation coefficients" />
+    <option name="LAST_COMMIT_MESSAGE" value="- Add correlation coefficients" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
