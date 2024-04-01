@@ -442,7 +442,7 @@ def mahalanobis_distance(stock_reset_index):
         chi_squared_critical = stats.chi2.ppf(1-(alpha/n),feat_df)
         cut_off = (p * (n - 1) ** 2) * f_critical_value /(n * (n - p - 1 + p * f_critical_value))
         sigma = np.cov(feat_df.T) #Singular Matrix since there is multicollinearity, The matrix does not have an inverse
-        # Add a small constant to the diagonal elements of the covariance matrix to solve the problem
+        # Add a small constant to the diagonal elements of the covariance matrix to solve the problem (ridge regression)
         sigma += np.eye(sigma.shape[0]) * 1e-6
         for row in feat_df.index:
            point = feat_df.loc[row]
