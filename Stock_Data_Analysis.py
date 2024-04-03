@@ -10,7 +10,9 @@ from datetime import datetime
 import plotly.graph_objects as go
 from sklearn.preprocessing import StandardScaler
 from sklearn.decomposition import PCA
-from scipy.stats import chi2
+from scipy.stats import chi2,f
+from pingouin import multivariate_normality
+from scipy.spatial.distance import mahalanobis
 #Create a dictionary to store all the stock dataframes and its name
 
 stock_data = {'MSFT':data_msft,'GOOG': data_goog,'AMZN': data_amzn,'AAPL': data_aapl,'SAP':data_sap,'META':data_meta,'005930_KS':data_005930_ks,'INTC':data_intc,
@@ -20,19 +22,19 @@ stock_data = {'MSFT':data_msft,'GOOG': data_goog,'AMZN': data_amzn,'AAPL': data_
 
 # A function to analyse data structures of stock data
 def analyse_stock_data(stock_data):
+    '''Takes a dictionary of stock data and returning an iterator aggregating
+    elements from each list. Also print the info, shape (numbers of columns and rows), data type and the table of statistical descriptions.
+    of each stock.
+    Inputs:
+    stock_data (dictionary): A dictionary of stock data and their corresponding names
+    Returns:
+    string: stock name
+    string: information about the stock
+    string: numbers of columns and rows
+    string: data types of each column in the stock dataframe
+    string: stats of the stock dataframe
+    '''
     for i, (name,data) in enumerate(stock_data.items()):
-        '''Takes a dictionary of stock data and returning an iterator aggregating
-        elements from each list. Also print the info, shape (numbers of columns and rows), data type and the table of statistical descriptions.
-        of each stock.  
-        Inputs:
-        stock_data (dictionary): A dictionary of stock data and their corresponding names
-        Returns:
-        string: stock name
-        string: information about the stock
-        string: numbers of columns and rows
-        string: data types of each column in the stock dataframe
-        string: stats of the stock dataframe 
-        '''
         print(f'{name}')
         print("\nInfo:")
         print(data.info())
@@ -50,7 +52,8 @@ analyse_stock_data(stock_data)
 stock_reset_index = {}
 #A function to reset DateTimeIndex for each dataframe
 def reset_index_stock_data(stock_data):
-    '''Takes a dictionary of stock data and resets the index of time.
+    '''
+    Takes a dictionary of stock data and resets the index of time.
     Input:
     stock_data(dictionary): a dictionary containing the stock data and its name
     Returns:
@@ -72,27 +75,24 @@ for i,(name,data) in enumerate(stock_reset_index.items()):
 plt.close('all')
 
 #Heat maps to show the correlation between different features
- for i,(name,data) in enumerate(stock_data.items()):
-     #Calculate the correlation matrix
-     feat_corr = data.corr()
+for i,(name,data) in enumerate(stock_data.items()):
+    #Calculate the correlation matrix
+    feat_corr = data.corr()
 
-     #Create the heat map of the correlation matrix
-     plt.figure(figsize=(10,8))
-     sns.heatmap(feat_corr, cmap='coolwarm',annot=True)
-     plt.title (f" The correlation matrix for {name}")
-     plt.show()
+    #Create the heat map of the correlation matrix
+    plt.figure(figsize=(10,8))
+    sns.heatmap(feat_corr, cmap='coolwarm',annot=True)
+    plt.title (f" The correlation matrix for {name}")
+    plt.show()
 
 #Calculate correlation coefficients
 def calculate_corr_coeffs(stock_data):
-    ''' Takes stock data and calculates the correlation coefficients between two different features.
+    '''
+    Takes stock data and calculates the correlation coefficients between two different features.
     Input:
     stock_data (Dictionary):a dictionary of stock data and their corresponding names
     Returns:
     string: a string of correlation coefficients between the features for each stock data
-
-
-    :param stock_data:
-    :return:
     '''
     for i,(name,data) in enumerate(stock_data.items()):
         corr_matrix = data.corr()
@@ -134,7 +134,7 @@ def principal_analysis(stock_data):
      string: explained variance ratios for principal components of stock data
      dataframe: loadings of principal components of stock data
      graph: scatter plots of principal components of stock data
-            '''
+    '''
     for i,(name,data) in enumerate(stock_data.items()):
         scaler = StandardScaler() #scaling our data with standard scaler
         scaled_data = scaler.fit_transform(data)
@@ -210,10 +210,11 @@ def principal_analysis(stock_data):
 principal_analysis(stock_data)
 #Visualise the reduced dimension data
 def scatter_plot(stock_data):
-    '''Takes stock_data and returns a scatter plot of principal components
+    '''
+    Takes stock_data and returns a scatter plot of principal components
     Input:
     stock_data (DataFrame): Dataframe with stock data and their names
-    Return:
+    Returns:
     DataFrame: a DataFrame of principal components
     graph: a scatter plot of principal components
     '''
@@ -237,6 +238,12 @@ scatter_plot(stock_data)
 #Probability Plot to determine whether our data follow a specific distribution.
 cols = ['Open', 'High', 'Low', 'Adj Close', 'Close', 'Volume']
 def detect_normal_distribution(stock_data):
+    ''' Takes a DataFrame of stock data and return probability plot (Q-Q plot) for each stock.
+    Input:
+    stock_data(Dataframe): a Dataframe of stock data and their respective names
+    Returns:
+    graph: a Probability plot of stock data
+    '''
     for i, (name,data) in enumerate(stock_data.items()):
         fig, axs = plt.subplots(nrows=3, ncols=2, figsize=(10, 8))
         axs = axs.flatten() #flatten (meaning to transform into a one-dimensional array)
@@ -249,9 +256,6 @@ def detect_normal_distribution(stock_data):
         plt.show()
 #Create a dictionary to store stock names and their dataframes
 detect_normal_distribution(stock_data)
-
-
-
 
 #Line Plot for stock data
 trace_names = ['Open', 'High', 'Low', 'Adj Close', 'Close']
@@ -294,23 +298,9 @@ def seasonal_decomposition(stock_data):
         plt.tight_layout()
         plt.show()
     plt.close('all')
-          #shapiro_test = stats.shapiro(data[col]) #Shapiro-Wilk Test
-          #print(f"{name}'s Shapiro Test for {col}: {shapiro_test[0]}, p-value:{shapiro_test[1]}")
-          #if shapiro_test[1] < 0.05:
-          #  print(f"Based on Shapiro test, {name}'s {col} may not be a normal distribution.")
-          #else:
-          #  print (f"Based on Shapiro test, there is not enough evidence to suggest that {name}'s {col} may not be a normal distribution.")
-
-           # kolmo_test = stats.kstest(data[col], 'norm') #Kolmogorov-Smirnov test
-          #  print (f"{name}'s KS test for {col}: {kolmo_test.statistic}, p-value:{kolmo_test.pvalue}")
-          #  if kolmo_test.pvalue < 0.05:
-           #     print (f"Based on KS test, {name}'s {col} may not be a normal distribution.")
-           # else:
-            #    print(f"Based on KS test, there is not enough statistic evidence to suggest that {name}'s {col} may not be a normal distribution.")
 seasonal_decomposition(stock_data)
 
 #Henze-Zirkler's test to assess the multivariate normality of a dataset
-from pingouin import multivariate_normality
 def henze_zirkler_test(stock_data):
     ''' Takes stock data and returns Henze-Zirkler's test statistic.
     Input:
@@ -329,7 +319,6 @@ def henze_zirkler_test(stock_data):
             print(f"{name}'s results for Mardia's test: {results} and we have evidence that there might be multivariate normality in the stock data.")
 
 #Mardia's test to assess the multivariate normality
-from scipy.stats import skew,kurtosis, chi2
 def mardia_test(stock_data):
     '''Takes stock data and returns the p-values of Mardia's test statistic
     Input:
@@ -380,79 +369,199 @@ def mardia_test(stock_data):
 
 mardia_test(stock_data)
 
-#Investigating outliers in our stock data using the method of Interquartile Range(IQR) since all stock data are not normally
-# distributed.
-# It is a common technique used for stock market because it gives us insights into the spread of stock prices
-# over a specific period. It is resistant to outliers, making it robust.
-#An outlier: an extremely high or low data point relative to the nearest data points and
-#the rest of the neighboring co-existing vals in a dataset.
-#The IQR is the range between the first quartile (25th percentile) and the third quartile (75th percentile) of the data.
-#Any point falling below Q1 - 1.5IQR or above Q3 + 1.5IQR is considered an outlier.
 
-for i,(name,data) in enumerate(stock_data.items()):
-    '''Takes stock data and returns and box plots outliers of them.
-    Input:
-    stock_data: a dictionary of stock data
-    Returns:
-    plot: a box plot of the stock data
-    Series: a series of outliers for each stock
-    '''
 
-    Q1 = data['Close'].quantile(0.25)
-    Q3 = data['Close'].quantile(0.75)
-    IQR = Q3 - Q1
-    #Define bounds for outliers
-    lower_bound = Q1 - 1.5 * IQR
-    upper_bound = Q3 + 1.5 * IQR
-    #Detect outliers
-    data_outliers = data[(data['Close'] < lower_bound) | (data['Close'] > upper_bound)]
-    if data_outliers.empty:
-        print(f"The outliers of {name} are none")
-    else:
-        print(f"The outliers of {name} are {data_outliers['Close']}")
-        print(f"Number of outliers: {data_outliers.shape[0]}")
-    #Create boxplot
-    plt.boxplot(data['Close'])
-    plt.title (f"Box Plot of {name}")
-    plt.show()
-    plt.close('all')
+class Outliers: #using class to define how objects should behave (type). An instance is an object with that type
+    def __init__(self,stock_data): #calling this method when we want to initialise the class
+        #using self inside a class definition to reference the instance object we have created
+        self.stock_data = stock_data
 
-#Calculate Mahalanobis distance
-from scipy.spatial.distance import mahalanobis
-from scipy.stats import f
-def mahalanobis_distance(stock_reset_index):
-    ''' Takes stock data and returns mahalanobis distance
+    # Investigating outliers in our stock data using the method of Interquartile Range(IQR) since all stock data are not normally
+    # distributed.
+    # It is a common technique used for stock market because it gives us insights into the spread of stock prices
+    # over a specific period. It is resistant to outliers, making it robust.
+    # An outlier: an extremely high or low data point relative to the nearest data points and
+    # the rest of the neighboring co-existing vals in a dataset.
+    # The IQR is the range between the first quartile (25th percentile) and the third quartile (75th percentile) of the data.
+    # Any point falling below Q1 - 1.5IQR or above Q3 + 1.5IQR is considered an outlier.
+    def iqr_method(self):
+        '''Takes stock data and returns and box plots outliers of them.
+           Input:
+           stock_data: a dictionary of stock data
+           Returns:
+           plot: a box plot of the stock data
+           Series: a series of outliers for each stock
+        '''
+        for name,data in self.stock_data.items():
+            Q1 = data['Close'].quantile(0.25)
+            Q3 = data['Close'].quantile(0.75)
+            IQR = Q3 - Q1
+            # Define bounds for outliers
+            lower_bound = Q1 - 1.5 * IQR
+            upper_bound = Q3 + 1.5 * IQR
+            # Detect outliers
+            data_outliers = data[(data['Close'] < lower_bound) | (data['Close'] > upper_bound)]
+            if data_outliers.empty:
+                print(f"The outliers of {name} are none")
+            else:
+                print(f"The outliers of {name} are {data_outliers['Close']}")
+                print(f"Number of outliers: {data_outliers.shape[0]}")
+            # Create boxplot
+            plt.boxplot(data['Close'])
+            plt.title(f"Box Plot of {name}")
+            plt.show()
+            plt.close('all')
+    def mahalanobis_distance(self):
+        ''' Takes stock data and returns mahalanobis distance for stock prices of a specific date
     stock_data (Dictionary): a dictionary of stock data and their respective names
     Returns:
     DataFrame: a DataFrame of mahalanobis distance
     '''
-    for i,(reset_name,reset_data) in enumerate(stock_reset_index.items()):
-        #Calculate the mean
-        feat_df = reset_data.drop('Date',axis=1) #Drop the Date column to retain only feature columns
-        mu = np.mean(feat_df,axis=0)
-        #Calculate the covariance matrix of the distribution
-        p = 6 #number of variables
-        alpha = 0.05 #value of alpha (significance level)
-        n = reset_data.shape[0] #number of observations
-        alpha_level = alpha/n #the alpha level with Bonferroni correction to control the family-wise error rate while performing
-        #multiple tests, hence, minimise Type I errors for a smaller sample data
-        dfn = p-1 #degree of freedom for the numerator
-        dfd = n-dfn #degree of freedom for the denominator
-        f_critical_value = f.ppf(1-(alpha/n),dfn,dfd) #calculate the critical value of f-distribution
-        chi_squared_critical = stats.chi2.ppf(1-(alpha/n),feat_df)
-        cut_off = (p * (n - 1) ** 2) * f_critical_value /(n * (n - p - 1 + p * f_critical_value))
-        sigma = np.cov(feat_df.T) #Singular Matrix since there is multicollinearity, The matrix does not have an inverse
-        # Add a small constant to the diagonal elements of the covariance matrix to solve the problem (ridge regression)
-        sigma += np.eye(sigma.shape[0]) * 1e-6
-        for row in feat_df.index:
-           point = feat_df.loc[row]
-           mahalanobis_distance = mahalanobis(point,mu,np.linalg.inv(sigma))
-           if mahalanobis_distance > cut_off:
-                print(f"We have evidence that {reset_name} might have potential outliers of {point} since the mahalanobis distance is {mahalanobis_distance}")
-           else:
-               pass;
+        for name,data in self.stock_data.items():
 
-mahalanobis_distance(stock_reset_index)
+            #Calculate the mean
+            mu = np.mean(data,axis=0)
+            sigma = np.cov(data.T) #Singular Matrix since there is multicollinearity, The matrix does not have an inverse
+
+            # Add a small constant to the diagonal elements of the covariance matrix to solve the problem (ridge regression)
+            sigma += np.eye(sigma.shape[0]) * 1e-6
+
+            # Calculate the covariance matrix of the distribution
+            p = 6  # number of variables
+            alpha = 0.05  # value of alpha (significance level)
+            n = data.shape[0]  # number of observations
+            alpha_level = alpha / n  # the alpha level with Bonferroni correction to control the family-wise error rate while performing
+            # multiple tests, hence, minimise Type I errors (false positive) for a smaller sample data
+            dfn = p - 1  # degree of freedom for the numerator
+            dfd = n - dfn  # degree of freedom for the denominator
+            f_critical_value = f.ppf(1 - (alpha / n), dfn, dfd)  # calculate the critical value of f-distribution
+            chi_squared_critical = stats.chi2.ppf(1 - (alpha / n), data)
+            cut_off = (p * (n - 1) ** 2) * f_critical_value / (n * (n - p - 1 + p * f_critical_value))
+            for row in data.index:
+                point = data.loc[row]
+                mahalanobis_distance = mahalanobis(point,mu,np.linalg.inv(sigma))
+                if mahalanobis_distance > cut_off:
+                    print(f"We have evidence that {name} might have potential outliers of \n {point} since the mahalanobis distance is {mahalanobis_distance}")
+                else:
+                    pass;
+Outliers(stock_data).iqr_method()
+Outliers(stock_data).mahalanobis_distance()
+
+#PCA without outliers:
+class PrincipalComponent:
+    def __init__(self,stock_data):
+        self.stock_data = stock_data
+    def principal_analysis(self):
+        '''Takes a dictionary of stock data and returns values of explained variance ratios for
+        principal components, scatter plots of principal components and dataframes of loadings
+        Input:
+        stock_data(dictionary): a dictionary containing the stock data and their names
+
+     Returns:
+     string: explained variance ratios for principal components of stock data
+     dataframe: loadings of principal components of stock data
+     graph: scatter plots of principal components of stock data
+    '''
+        for name,data in self.stock_data.items():
+            scaler = StandardScaler() #scaling our data with standard scaler
+            scaled_data = scaler.fit_transform(data)
+
+            n_components = 6 #specifying the number of dimensions we want to keep
+            pca = PCA(n_components=n_components)
+            principal_components = pca.fit_transform(scaled_data)
+            #Convert to DataFrame
+            component_names = [f"PC{j+1}" for j in range(principal_components.shape[1])]
+            principal_df = pd.DataFrame(principal_components, columns=component_names)
+            print(principal_df.head())
+            #Check how much variance each principal component explains
+            explained_variance = pca.explained_variance_ratio_
+            print(f"Explained variance ratio for {name}: {explained_variance}")
+            print(f"{name} has a maximum explained variance of PC1: \n {explained_variance[0]}")
+            print(f"{name} has a second highest explained variance of PC2: \n {explained_variance[1]}")
+            print(f"The rest has little impact on {name}")
+
+
+            #Calculate the correlations/covariance between the original features and PCA-scaled units
+            loadings = pd.DataFrame(
+                pca.components_.T, #transpose the matrix of loadings
+                columns = component_names,# the columns a re the principal components
+                index = data.columns, #the rows are the original features
+            )
+            print(loadings)
+            for col in loadings.columns:
+                for feature in loadings.index:
+                    loading = loadings.loc[feature,col] #Obtaining the loading of each principal component
+                    #corresponding to each feature
+                    if loading>0.3:
+                        print(f"{name}'s {col} may have a substantially positive relationship with {feature}")
+                    elif loading < -0.3:
+                        print(f"{name}'s {col} may have a substantially inverse relationship with {feature}")
+                    else:
+                        print(f"{name}'s {col} may have little relationship with {feature}")
+
+            def plot_variance(pca):
+                '''Takes PCA components and their corresponding explained variance
+                and returns their plots of explained variance.
+                Input:
+                pca components: a string of pca components of all features in stock market data
+                explained_variance: a list of explained variance for each pca component
+                Returns:
+                plot: a list of plots of explained variance for each pca
+                '''
+                fig, axs = plt.subplots(nrows=1, ncols=2, figsize=(6, 8))
+                n = pca.n_components
+                grid = np.arange(1, n + 1)
+
+                # Explained variance
+                axs[0].bar(grid, explained_variance)
+                axs[0].set(
+                    xlabel="Component", title=" Explained Variance ",
+                    ylim=(0.0, 1.0)
+
+                )
+                # Cumulative Variance
+                cv = np.cumsum(explained_variance)
+                axs[1].plot(np.r_[0, grid], np.r_[0, cv], "o-")
+                axs[1].set(
+                    xlabel="Component", title=" Cumulative Variance ",
+                    ylim=(0.0, 1.0)
+                )
+                # Set up figure
+                plt.title(f"{name}",loc="left")
+                fig.set(figwidth=8, dpi=100)
+                plt.show()
+                plt.close('all')
+                return axs
+
+            plot_variance(pca)
+
+    def scatter_plot(self):
+        '''
+        Takes stock_data and returns a scatter plot of principal components
+        Input:
+        stock_data (DataFrame): Dataframe with stock data and their names
+        Returns:
+        DataFrame: a DataFrame of principal components
+        graph: a scatter plot of principal components
+        '''
+        for name, data in self.stock_data.items():
+            scaler = StandardScaler()  # scaling our data with standard scaler
+            scaled_data = scaler.fit_transform(data)
+            n_components = 6  # specifying the number of dimensions we want to keep
+            pca = PCA(n_components=n_components)
+            principal_components = pca.fit_transform(scaled_data)
+            # Convert to DataFrame
+            component_names = [f"PC{j + 1}" for j in range(principal_components.shape[1])]
+            principal_df = pd.DataFrame(principal_components, columns=component_names)
+            principal_df.head()
+            plt.figure(figsize=(8, 6))
+            sns.scatterplot(data=principal_df)  # creating a scatter plot for the principal components of all the data points for a company
+            plt.title(f"Principal Components for {name}")
+            plt.show()
+        plt.close('all')
+PrincipalComponent(stock_data).principal_analysis()
+PrincipalComponent(stock_data).scatter_plot()
+
 
 
 

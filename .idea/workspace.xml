@@ -4,8 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4f5895f3-2d93-4355-bcbb-97c6701d0028" name="Changes" comment="- Add correlation coefficients">
-      <change beforePath="$PROJECT_DIR$/.idea/ASX.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/ASX.iml" afterDir="false" />
+    <list default="true" id="4f5895f3-2d93-4355-bcbb-97c6701d0028" name="Changes" comment="- Calculate Mahalanobis to detect outliers">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Stock_Data_Analysis.py" beforeDir="false" afterPath="$PROJECT_DIR$/Stock_Data_Analysis.py" afterDir="false" />
     </list>
@@ -181,7 +180,9 @@
       <workItem from="1711488427653" duration="652000" />
       <workItem from="1711682113480" duration="10741000" />
       <workItem from="1711786483817" duration="3232000" />
-      <workItem from="1711878654070" duration="13041000" />
+      <workItem from="1711878654070" duration="13641000" />
+      <workItem from="1712021319128" duration="3188000" />
+      <workItem from="1712113218478" duration="7388000" />
     </task>
     <task id="LOCAL-00001" summary="Add stock market analysis &#10;&#10;Scrape stock data using yfinance API.&#10;Add outlier detection and metadata.">
       <option name="closed" value="true" />
@@ -263,7 +264,31 @@
       <option name="project" value="LOCAL" />
       <updated>1711692708728</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="- Add correlation coefficients">
+      <option name="closed" value="true" />
+      <created>1711965154472</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1711965154472</updated>
+    </task>
+    <task id="LOCAL-00012" summary="- Calculate Mahalanobis to detect outliers">
+      <option name="closed" value="true" />
+      <created>1711965205409</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1711965205409</updated>
+    </task>
+    <task id="LOCAL-00013" summary="- Calculate Mahalanobis to detect outliers">
+      <option name="closed" value="true" />
+      <created>1711965369684</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1711965369684</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -286,7 +311,8 @@
     <MESSAGE value="- Add seasonal decomposition&#10;- Add Mardia's test and Henze-Zirkler's test" />
     <MESSAGE value="- Add seasonal decomposition&#10;- Add Mardia's test and Henze-Zirkler's test&#10;- Fix correlation heatmaps" />
     <MESSAGE value="- Add correlation coefficients" />
-    <option name="LAST_COMMIT_MESSAGE" value="- Add correlation coefficients" />
+    <MESSAGE value="- Calculate Mahalanobis to detect outliers" />
+    <option name="LAST_COMMIT_MESSAGE" value="- Calculate Mahalanobis to detect outliers" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
