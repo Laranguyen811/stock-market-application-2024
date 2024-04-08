@@ -393,24 +393,38 @@ class Outliers: #using class to define how objects should behave (type). An inst
            Series: a series of outliers for each stock
         '''
         for name,data in self.stock_data.items():
-            Q1 = data['Close'].quantile(0.25)
-            Q3 = data['Close'].quantile(0.75)
-            IQR = Q3 - Q1
-            # Define bounds for outliers
-            lower_bound = Q1 - 1.5 * IQR
-            upper_bound = Q3 + 1.5 * IQR
+            for col in data.columns:
+                Q1 = data[col].quantile(0.25)
+                Q3 = data[col].quantile(0.75)
+                IQR = Q3 - Q1
+                # Define bounds for outliers
+                lower_bound = Q1 - 1.5 * IQR
+                upper_bound = Q3 + 1.5 * IQR
             # Detect outliers
-            data_outliers = data[(data['Close'] < lower_bound) | (data['Close'] > upper_bound)]
-            if data_outliers.empty:
-                print(f"The outliers of {name} are none")
-            else:
-                print(f"The outliers of {name} are {data_outliers['Close']}")
-                print(f"Number of outliers: {data_outliers.shape[0]}")
-            # Create boxplot
-            plt.boxplot(data['Close'])
-            plt.title(f"Box Plot of {name}")
+                data_outliers = data[(data[col] < lower_bound) | (data[col] > upper_bound)]
+                if data_outliers.empty:
+                    print(f"The outliers of {name}'s {col} are none")
+                else:
+                    print(f"The outliers of {name}'s {col} are \n {data_outliers[col]}")
+                    print(f"Number of outliers: {data_outliers.shape[0]}")
+    def box_plot(self):
+        ''' Takes stock data and returns and box plots
+      #  Input:
+      #  stock_data (Dictionary): a dictionary of stock data
+      #  Returns:
+       # plot: a box plot of the stock
+      #  '''
+        for name,data in self.stock_data.items():
+
+            fig, axes = plt.subplots(3, 2, figsize=(10, 8))
+            axes = axes.flatten()
+            for ax,col in zip(axes,data):
+                sns.boxplot(data=data[col],ax=ax)
+                ax.set_title(f"Box Plot of {name}'s {col}")
+            plt.tight_layout()
             plt.show()
-            plt.close('all')
+        plt.close('all')
+
     def mahalanobis_distance(self):
         ''' Takes stock data and returns mahalanobis distance for stock prices of a specific date
     stock_data (Dictionary): a dictionary of stock data and their respective names
@@ -434,17 +448,18 @@ class Outliers: #using class to define how objects should behave (type). An inst
             # multiple tests, hence, minimise Type I errors (false positive) for a smaller sample data
             dfn = p - 1  # degree of freedom for the numerator
             dfd = n - dfn  # degree of freedom for the denominator
-            f_critical_value = f.ppf(1 - (alpha / n), dfn, dfd)  # calculate the critical value of f-distribution
-            chi_squared_critical = stats.chi2.ppf(1 - (alpha / n), data)
+            f_critical_value = f.ppf(1 - (alpha_level), dfn, dfd)  # calculate the critical value of f-distribution
+            chi_squared_critical = stats.chi2.ppf(1 - (alpha_level), data)
             cut_off = (p * (n - 1) ** 2) * f_critical_value / (n * (n - p - 1 + p * f_critical_value))
             for row in data.index:
                 point = data.loc[row]
-                mahalanobis_distance = mahalanobis(point,mu,np.linalg.inv(sigma))
-                if mahalanobis_distance > cut_off:
-                    print(f"We have evidence that {name} might have potential outliers of \n {point} since the mahalanobis distance is {mahalanobis_distance}")
+                mahalanobis_dist = mahalanobis(point,mu,np.linalg.inv(sigma))
+                if mahalanobis_dist > cut_off:
+                    print(f"We have evidence that {name} might have potential outliers of \n {point} since the mahalanobis distance is {mahalanobis_dist}")
                 else:
                     pass;
 Outliers(stock_data).iqr_method()
+Outliers(stock_data).box_plot()
 Outliers(stock_data).mahalanobis_distance()
 
 #PCA without outliers:
