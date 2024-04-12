@@ -393,7 +393,9 @@ class Outliers: #using class to define how objects should behave (type). An inst
            Series: a series of outliers for each stock
         '''
         for name,data in self.stock_data.items():
-            for col in data.columns:
+            fig, axes = plt.subplots(3, 2, figsize=(10, 8))
+            axes = axes.flatten()
+            for ax,col in zip(axes,data.columns):
                 Q1 = data[col].quantile(0.25)
                 Q3 = data[col].quantile(0.75)
                 IQR = Q3 - Q1
@@ -402,11 +404,21 @@ class Outliers: #using class to define how objects should behave (type). An inst
                 upper_bound = Q3 + 1.5 * IQR
             # Detect outliers
                 data_outliers = data[(data[col] < lower_bound) | (data[col] > upper_bound)]
+                lower_outliers = data_outliers[col][data_outliers[col] < lower_bound] #filtering operations to select outliers in the lower bounds
+                upper_outliers = data_outliers[col][data_outliers[col] > upper_bound] #filtering operations to select outliers in the upper bounds
                 if data_outliers.empty:
                     print(f"The outliers of {name}'s {col} are none")
                 else:
                     print(f"The outliers of {name}'s {col} are \n {data_outliers[col]}")
                     print(f"Number of outliers: {data_outliers.shape[0]}")
+                    print(f"Upper bound outliers of {name}'s {col} are: {upper_outliers}")
+                    print (f"Lower bound outliers of {name}'s {col} are: {lower_outliers}")
+                    ax.plot(data_outliers.index, data_outliers)
+                    ax.set_title(f"Outliers of {name}'s {col}")
+            plt.tight_layout()
+            plt.show()
+            plt.close('all')
+
     def box_plot(self):
         ''' Takes stock data and returns and box plots
       #  Input:
