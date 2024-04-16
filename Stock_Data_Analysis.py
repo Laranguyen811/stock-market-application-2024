@@ -426,11 +426,12 @@ class Outliers: #using class to define how objects should behave (type). An inst
       #  Returns:
        # plot: a box plot of the stock
       #  '''
+        fig, axes = plt.subplots(3, 2, figsize=(10, 8))
+        axes = axes.flatten()
         for name,data in self.stock_data.items():
-
             fig, axes = plt.subplots(3, 2, figsize=(10, 8))
             axes = axes.flatten()
-            for ax,col in zip(axes,data):
+            for ax, col in zip(axes,data):
                 sns.boxplot(data=data[col],ax=ax)
                 ax.set_title(f"Box Plot of {name}'s {col}")
             plt.tight_layout()
