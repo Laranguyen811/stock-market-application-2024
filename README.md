@@ -1,8 +1,8 @@
 ## Stock Market Application 2024
 ![Stock Market Application Image](https://github.com/Laranguyen811/stock-market-application-2024/assets/36720666/d68560b1-4495-403f-913b-75a537ac4340)
 ## Introduction
-My pilot project creates a stock market application to assist financial insights. If you are an individual trader and investor, it provides 
-essential information to help you make decisions while investing. 
+Our pilot project creates a stock market application to assist financial insights. If you are an individual trader and investor, it provides 
+essential information to help you make decisions. 
 ## Features
 * Real-Time Data Visualisation
 * Portfolio Tracking and Management
