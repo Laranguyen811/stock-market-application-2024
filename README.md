@@ -18,7 +18,7 @@ essential information to help you make decisions.
 ## Installation
 ## Usage
 ## Contributing
-We welcome contributions! If you'd like to add new features, fix bugs, or improve documentation, please follow our upcoming contribution guidelines.
+We welcome contributions! If you'd like to add new features, fix bugs, or improve documentation, please follow our contribution guidelines.
 ## License
 This project is licensed under the MIT License. See the LICENSE file for details.
 ## Acknowledgement
