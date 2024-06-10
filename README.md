@@ -18,7 +18,7 @@ essential information to help you make decisions.
 ## Installation
 ## Usage
 ## Contributing
-We welcome contributions! If you'd like to add new features, fix bugs, or improve documentation, please follow our contribution guidelines.
+We welcome contributions! If you'd like to add new features, fix bugs, or improve documentation, please follow our contribution guidelines (https://github.com/Laranguyen811/stock-market-application-2024/blob/master/README.md).
 ## License
 This project is licensed under the MIT License. See the LICENSE file for details.
 ## Acknowledgement
