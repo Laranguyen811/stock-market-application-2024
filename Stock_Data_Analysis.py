@@ -10,6 +10,9 @@ from datetime import datetime
 import plotly.graph_objects as go
 from sklearn.preprocessing import StandardScaler
 from sklearn.decomposition import PCA
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+from sklearn import metrics
 from scipy.stats import chi2,f
 from pingouin import multivariate_normality
 from scipy.spatial.distance import mahalanobis
@@ -123,91 +126,7 @@ calculate_corr_coeffs(stock_data)
 
 
 #Principal Component Analysis for stock market data to identify dominant patterns and understand relationships
-def principal_analysis(stock_data):
-    '''
-     Takes a dictionary of stock data and returns values of explained variance ratios for
-     principal components, scatter plots of principal components and dataframes of loadings
-     Input:
-     stock_data(dictionary): a dictionary containing the stock data and their names
 
-     Returns:
-     string: explained variance ratios for principal components of stock data
-     dataframe: loadings of principal components of stock data
-     graph: scatter plots of principal components of stock data
-    '''
-    for i,(name,data) in enumerate(stock_data.items()):
-        scaler = StandardScaler() #scaling our data with standard scaler
-        scaled_data = scaler.fit_transform(data)
-
-        n_components = 6 #specifying the number of dimensions we want to keep
-        pca = PCA(n_components=n_components)
-        principal_components = pca.fit_transform(scaled_data)
-        #Convert to DataFrame
-        component_names = [f"PC{j+1}" for j in range(principal_components.shape[1])]
-        principal_df = pd.DataFrame(principal_components, columns=component_names)
-        print(principal_df.head())
-        #Check how much variance each principal component explains
-        explained_variance = pca.explained_variance_ratio_
-        print(f"Explained variance ratio for {name}: {explained_variance}")
-        print(f"{name} has a maximum explained variance of PC1: \n {explained_variance[0]}")
-        print(f"{name} has a second highest explained variance of PC2: \n {explained_variance[1]}")
-        print(f"The rest has little impact on {name}")
-
-
-        #Calculate the correlations/covariance between the original features and PCA-scaled units
-        loadings = pd.DataFrame(
-            pca.components_.T, #transpose the matrix of loadings
-            columns = component_names,# the columns a re the principal components
-            index = data.columns, #the rows are the original features
-        )
-        print(loadings)
-        for col in loadings.columns:
-            for feature in loadings.index:
-                loading = loadings.loc[feature,col] #Obtaining the loading of each principal component
-                #corresponding to each feature
-                if loading>0.3:
-                    print(f"{name}'s {col} may have a substantially positive relationship with {feature}")
-                elif loading < -0.3:
-                    print(f"{name}'s {col} may have a substantially inverse relationship with {feature}")
-                else:
-                    print(f"{name}'s {col} may have little relationship with {feature}")
-
-        def plot_variance(pca):
-            '''Takes PCA components and their corresponding explained variance
-             and returns their plots of explained variance.
-            Input:
-            pca components: a string of pca components of all features in stock market data
-            explained_variance: a list of explained variance for each pca component
-            Returns:
-            plot: a list of plots of explained variance for each pca
-            '''
-            fig, axs = plt.subplots(nrows=1, ncols=2, figsize=(6, 8))
-            n = pca.n_components
-            grid = np.arange(1, n + 1)
-
-            # Explained variance
-            axs[0].bar(grid, explained_variance)
-            axs[0].set(
-                xlabel="Component", title=" Explained Variance ",
-                ylim=(0.0, 1.0)
-
-            )
-            # Cumulative Variance
-            cv = np.cumsum(explained_variance)
-            axs[1].plot(np.r_[0, grid], np.r_[0, cv], "o-")
-            axs[1].set(
-                xlabel="Component", title=" Cumulative Variance ",
-                ylim=(0.0, 1.0)
-            )
-            # Set up figure
-            plt.title(f"{name}",loc="left")
-            fig.set(figwidth=8, dpi=100)
-            plt.show()
-            plt.close('all')
-            return axs
-
-        plot_variance(pca)
-principal_analysis(stock_data)
 #Visualise the reduced dimension data
 def scatter_plot(stock_data):
     '''
@@ -236,13 +155,13 @@ def scatter_plot(stock_data):
 scatter_plot(stock_data)
 
 #Probability Plot to determine whether our data follow a specific distribution.
-cols = ['Open', 'High', 'Low', 'Adj Close', 'Close', 'Volume']
 def detect_normal_distribution(stock_data):
-    ''' Takes a DataFrame of stock data and return probability plot (Q-Q plot) for each stock.
+    ''' Takes a DataFrame of stock data and return probability plot (Q-Q plot) and histogram for each stock.
     Input:
     stock_data(Dataframe): a Dataframe of stock data and their respective names
     Returns:
     graph: a Probability plot of stock data
+    graph: a histogram of stock data
     '''
     for i, (name,data) in enumerate(stock_data.items()):
         fig, axs = plt.subplots(nrows=3, ncols=2, figsize=(10, 8))
@@ -252,11 +171,67 @@ def detect_normal_distribution(stock_data):
             #simultaneously
             stats.probplot(data[col], dist='norm', plot=ax) #Q-Q Plot
             ax.set_title(f"Probability Plot of {col} for {name}")
+
+            ax.hist(data[col], bins=6)
+            ax.set_title(f"Histogram of {col} for {name}")
         plt.tight_layout()
         plt.show()
+    plt.close('all')
 #Create a dictionary to store stock names and their dataframes
 detect_normal_distribution(stock_data)
 
+
+def histogram_plot(stock_data):
+    """ Takes a DataFrame of stock data and return histogram of each stock
+    Input:
+    stock_data(Dataframe): a Dataframe of stock and its corresponding name
+
+    Returns:
+        graph: A histogram of stock data
+    """
+    for i, (name,data) in enumerate(stock_data.items()):
+        cols = data.columns
+        fig, axs = plt.subplots(nrows=3, ncols=2, figsize=(8,6))
+        axs = axs.flatten()
+        for ax, col in zip(axs,cols):
+            ax.hist(data[col], bins=6)
+            ax.set_title(f"Histogram of {col} for {name}")
+        plt.tight_layout()
+        plt.show()
+    plt.close('all')
+
+histogram_plot(stock_data)
+
+
+#def plot_distribution(stock_data):
+  #  '''
+  #  Takes a DataFrame of stock data and return probability plot (Q-Q plot) and histogram for each stock.
+  #  Input:
+  #  stock_data(Dataframe): a Dataframe of stock data and their respective names
+  #  Returns:
+  #  graph: a Probability plot of stock data
+  #  graph: a histogram of stock data
+   # '''
+    #for name, data in stock_data.items():
+     #   cols = data.columns
+      #  fig, axs = plt.subplots(nrows=3, ncols=2, figsize=(10, 8))
+       # axs = axs.flatten()  # flatten (meaning to transform into a one-dimensional array)
+       # for ax, col in zip(axs,cols):
+
+            # Q-Q plot
+        #    stats.probplot(data[col], dist='norm', plot=axs[0])
+         #   ax[0].set_title(f"Probability Plot of {col} for {name}")
+
+            # Histogram
+          #  ax[1].hist(data[col], bins=6, color='skyblue', edgecolor='black')
+           # ax[1].set_title(f"Histogram of {col} for {name}")
+
+           # plt.tight_layout()
+           # plt.show()
+    #plt.close('all')
+
+# Create a dictionary to store stock names and their dataframes
+#plot_distribution(stock_data)
 #Line Plot for stock data
 trace_names = ['Open', 'High', 'Low', 'Adj Close', 'Close']
 for i,(name,reset_data) in enumerate(stock_reset_index.items()):
@@ -406,6 +381,10 @@ class Outliers: #using class to define how objects should behave (type). An inst
                 data_outliers = data[(data[col] < lower_bound) | (data[col] > upper_bound)]
                 lower_outliers = data_outliers[col][data_outliers[col] < lower_bound] #filtering operations to select outliers in the lower bounds
                 upper_outliers = data_outliers[col][data_outliers[col] > upper_bound] #filtering operations to select outliers in the upper bounds
+                min_outlier = data_outliers[col].min()
+                max_outlier = data_outliers[col].max()
+                min_row = data_outliers.loc[data_outliers[col] == min_outlier] #selecting row with the minimum outlier for the column
+                max_row = data_outliers.loc[data_outliers[col] == max_outlier] #selecting row with maximum outlier for the column
                 if data_outliers.empty:
                     print(f"The outliers of {name}'s {col} are none")
                 else:
@@ -413,6 +392,8 @@ class Outliers: #using class to define how objects should behave (type). An inst
                     print(f"Number of outliers: {data_outliers.shape[0]}")
                     print(f"Upper bound outliers of {name}'s {col} are: {upper_outliers}")
                     print (f"Lower bound outliers of {name}'s {col} are: {lower_outliers}")
+                    print (f"The minimum outlier of {name}'s {col} is: \n {min_row}")
+                    print (f"The maximum outlier of {name}'s {col} is: \n {max_row}")
                     ax.plot(data_outliers.index, data_outliers)
                     ax.set_title(f"Outliers of {name}'s {col}")
             plt.tight_layout()
@@ -471,6 +452,9 @@ class Outliers: #using class to define how objects should behave (type). An inst
                     print(f"We have evidence that {name} might have potential outliers of \n {point} since the mahalanobis distance is {mahalanobis_dist}")
                 else:
                     pass;
+
+
+
 Outliers(stock_data).iqr_method()
 Outliers(stock_data).box_plot()
 Outliers(stock_data).mahalanobis_distance()
@@ -589,6 +573,20 @@ class PrincipalComponent:
         plt.close('all')
 PrincipalComponent(stock_data).principal_analysis()
 PrincipalComponent(stock_data).scatter_plot()
+
+
+
+def regression_analysis(stock_reset_index):
+
+    for col in stock_reset_index.items():
+
+
+
+
+#class TimeSeriesAnalysis:
+#   def __init__(self,stock_data):
+ #      self.stock_data = stock_data
+  #  def simple_moving_average(self):
 
 
 
