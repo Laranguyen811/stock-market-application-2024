@@ -164,6 +164,7 @@ def detect_normal_distribution(stock_data):
     graph: a histogram of stock data
     '''
     for i, (name,data) in enumerate(stock_data.items()):
+        cols = data.columns
         fig, axs = plt.subplots(nrows=3, ncols=2, figsize=(10, 8))
         axs = axs.flatten() #flatten (meaning to transform into a one-dimensional array)
         # the axes array to easily iterate over it
@@ -171,9 +172,6 @@ def detect_normal_distribution(stock_data):
             #simultaneously
             stats.probplot(data[col], dist='norm', plot=ax) #Q-Q Plot
             ax.set_title(f"Probability Plot of {col} for {name}")
-
-            ax.hist(data[col], bins=6)
-            ax.set_title(f"Histogram of {col} for {name}")
         plt.tight_layout()
         plt.show()
     plt.close('all')
