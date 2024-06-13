@@ -192,7 +192,7 @@ def histogram_plot(stock_data):
         fig, axs = plt.subplots(nrows=3, ncols=2, figsize=(8,6))
         axs = axs.flatten()
         for ax, col in zip(axs,cols):
-            ax.hist(data[col], bins=6)
+            ax.hist(data[col], bins=50) #using square-root rule to decide the number of bins
             ax.set_title(f"Histogram of {col} for {name}")
         plt.tight_layout()
         plt.show()
@@ -200,36 +200,46 @@ def histogram_plot(stock_data):
 
 histogram_plot(stock_data)
 
+def kolmogorov_smirnov_test(stock_data):
+    """ Takes a DataFrame of stock data and return Kolmogorov-Smirnov test.
+        Input:
+        stock_data(Dataframe): a Dataframe of stock and its corresponding names
+        Returns:
+        string: A Kolmogorov-Smirnov test result of stock data
+    """
+    for i, (name,data) in enumerate(stock_data.items()):
+        cols = data.columns
+        for col in cols:
+            d, p_value = stats.kstest((data[col] - np.mean(data[col])) / np.std(data[col],ddof=1), 'norm')
+            if p_value < 0.05:
+                print(f"We have no evidence that {name}'s {col} might be normally distributed since the p-value is {p_value}.")
+            if p_value >= 0.05:
+                print(f"We have evidence that {name}'s {col} might be normally distributed since the p-value is {p_value}")
 
-#def plot_distribution(stock_data):
-  #  '''
-  #  Takes a DataFrame of stock data and return probability plot (Q-Q plot) and histogram for each stock.
-  #  Input:
-  #  stock_data(Dataframe): a Dataframe of stock data and their respective names
-  #  Returns:
-  #  graph: a Probability plot of stock data
-  #  graph: a histogram of stock data
-   # '''
-    #for name, data in stock_data.items():
-     #   cols = data.columns
-      #  fig, axs = plt.subplots(nrows=3, ncols=2, figsize=(10, 8))
-       # axs = axs.flatten()  # flatten (meaning to transform into a one-dimensional array)
-       # for ax, col in zip(axs,cols):
+kolmogorov_smirnov_test(stock_data)
 
-            # Q-Q plot
-        #    stats.probplot(data[col], dist='norm', plot=axs[0])
-         #   ax[0].set_title(f"Probability Plot of {col} for {name}")
+def anderson_darling_test(stock_data):
+    """ Takes a DataFrame of stock data and returns the Anderson-Darling test result.
 
-            # Histogram
-          #  ax[1].hist(data[col], bins=6, color='skyblue', edgecolor='black')
-           # ax[1].set_title(f"Histogram of {col} for {name}")
+    Input:
+        stock_data(Dataframe): a Dataframe of stock and its corresponding names
 
-           # plt.tight_layout()
-           # plt.show()
-    #plt.close('all')
+    Returns:
+        string: the Anderson-Darling test result of the stock data
+    """
+    for i, (name,data) in enumerate(stock_data.items()):
+        cols = data.columns
+        for col in cols:
+            anderson_darling_result = stats.anderson(data[col], dist='norm')
+            anderson_stats = anderson_darling_result.statistic
+            for critical_value,significance_level in zip(anderson_darling_result.critical_values, anderson_darling_result.significance_level):
+                if anderson_stats > critical_value:
+                    print(f"We have no evidence that {name}'s {col} might be normally distributed since the critical value is {critical_value}.")
+                if anderson_stats <= critical_value:
+                    print(f"We have evidence that {name}'s{col} might be normally distributed since the critical value is {critical_value}.")
 
-# Create a dictionary to store stock names and their dataframes
-#plot_distribution(stock_data)
+anderson_darling_test(stock_data)
+
 #Line Plot for stock data
 trace_names = ['Open', 'High', 'Low', 'Adj Close', 'Close']
 for i,(name,reset_data) in enumerate(stock_reset_index.items()):
@@ -251,6 +261,7 @@ def seasonal_decomposition(stock_data):
     '''
 
     for i, (name,data) in enumerate(stock_data.items()):
+        cols = data.columns
         fig, axs = plt.subplots(nrows=3, ncols=2, figsize=(12,10))
         axs = axs.flatten()  # flatten (meaning to transform into a one-dimensional array)
         for j,(ax,col) in enumerate(zip(axs,cols)):

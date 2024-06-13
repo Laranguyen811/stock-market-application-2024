@@ -4,7 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4f5895f3-2d93-4355-bcbb-97c6701d0028" name="Changes" comment="Merge remote-tracking branch 'origin/master'&#10;- Add histogram" />
+    <list default="true" id="4f5895f3-2d93-4355-bcbb-97c6701d0028" name="Changes" comment="Merge remote-tracking branch 'origin/master'&#10;- Add histogram">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Stock_Data_Analysis.py" beforeDir="false" afterPath="$PROJECT_DIR$/Stock_Data_Analysis.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -225,6 +228,8 @@
       <workItem from="1718082866781" duration="2759000" />
       <workItem from="1718164986077" duration="5135000" />
       <workItem from="1718184325893" duration="252000" />
+      <workItem from="1718184595005" duration="469000" />
+      <workItem from="1718254755449" duration="4534000" />
     </task>
     <task id="LOCAL-00001" summary="Add stock market analysis &#10;&#10;Scrape stock data using yfinance API.&#10;Add outlier detection and metadata.">
       <option name="closed" value="true" />
@@ -402,7 +407,15 @@
       <option name="project" value="LOCAL" />
       <updated>1718184539666</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="Merge remote-tracking branch 'origin/master'&#10;- Add histogram">
+      <option name="closed" value="true" />
+      <created>1718184607328</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1718184607328</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -430,7 +443,8 @@
     <MESSAGE value="- Adding upper bound and lower bound outliers" />
     <MESSAGE value="- Add histogram" />
     <MESSAGE value="Merge remote-tracking branch 'origin/master'" />
-    <option name="LAST_COMMIT_MESSAGE" value="Merge remote-tracking branch 'origin/master'" />
+    <MESSAGE value="Merge remote-tracking branch 'origin/master'&#10;- Add histogram" />
+    <option name="LAST_COMMIT_MESSAGE" value="Merge remote-tracking branch 'origin/master'&#10;- Add histogram" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -442,7 +456,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/Stock_Data_Analysis.py</url>
-          <line>375</line>
+          <line>386</line>
           <option name="timeStamp" value="2" />
         </line-breakpoint>
       </breakpoints>
