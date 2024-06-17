@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4f5895f3-2d93-4355-bcbb-97c6701d0028" name="Changes" comment="Merge remote-tracking branch 'origin/master'&#10;- Add histogram">
+    <list default="true" id="4f5895f3-2d93-4355-bcbb-97c6701d0028" name="Changes" comment="- add Anderson-Darling test">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Stock_Data_Analysis.py" beforeDir="false" afterPath="$PROJECT_DIR$/Stock_Data_Analysis.py" afterDir="false" />
     </list>
@@ -229,7 +229,9 @@
       <workItem from="1718164986077" duration="5135000" />
       <workItem from="1718184325893" duration="252000" />
       <workItem from="1718184595005" duration="469000" />
-      <workItem from="1718254755449" duration="4534000" />
+      <workItem from="1718254755449" duration="4940000" />
+      <workItem from="1718342362706" duration="3105000" />
+      <workItem from="1718600999420" duration="5492000" />
     </task>
     <task id="LOCAL-00001" summary="Add stock market analysis &#10;&#10;Scrape stock data using yfinance API.&#10;Add outlier detection and metadata.">
       <option name="closed" value="true" />
@@ -415,7 +417,15 @@
       <option name="project" value="LOCAL" />
       <updated>1718184607328</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL-00024" summary="- add Anderson-Darling test">
+      <option name="closed" value="true" />
+      <created>1718261691982</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1718261691982</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -444,7 +454,8 @@
     <MESSAGE value="- Add histogram" />
     <MESSAGE value="Merge remote-tracking branch 'origin/master'" />
     <MESSAGE value="Merge remote-tracking branch 'origin/master'&#10;- Add histogram" />
-    <option name="LAST_COMMIT_MESSAGE" value="Merge remote-tracking branch 'origin/master'&#10;- Add histogram" />
+    <MESSAGE value="- add Anderson-Darling test" />
+    <option name="LAST_COMMIT_MESSAGE" value="- add Anderson-Darling test" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -456,7 +467,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/Stock_Data_Analysis.py</url>
-          <line>386</line>
+          <line>385</line>
           <option name="timeStamp" value="2" />
         </line-breakpoint>
       </breakpoints>

@@ -154,92 +154,6 @@ def scatter_plot(stock_data):
     plt.close('all')
 scatter_plot(stock_data)
 
-#Probability Plot to determine whether our data follow a specific distribution.
-def detect_normal_distribution(stock_data):
-    ''' Takes a DataFrame of stock data and return probability plot (Q-Q plot) and histogram for each stock.
-    Input:
-    stock_data(Dataframe): a Dataframe of stock data and their respective names
-    Returns:
-    graph: a Probability plot of stock data
-    graph: a histogram of stock data
-    '''
-    for i, (name,data) in enumerate(stock_data.items()):
-        cols = data.columns
-        fig, axs = plt.subplots(nrows=3, ncols=2, figsize=(10, 8))
-        axs = axs.flatten() #flatten (meaning to transform into a one-dimensional array)
-        # the axes array to easily iterate over it
-        for ax, col in zip(axs,cols): #using zip function to iterate over the axes and column names
-            #simultaneously
-            stats.probplot(data[col], dist='norm', plot=ax) #Q-Q Plot
-            ax.set_title(f"Probability Plot of {col} for {name}")
-        plt.tight_layout()
-        plt.show()
-    plt.close('all')
-#Create a dictionary to store stock names and their dataframes
-detect_normal_distribution(stock_data)
-
-
-def histogram_plot(stock_data):
-    """ Takes a DataFrame of stock data and return histogram of each stock
-    Input:
-    stock_data(Dataframe): a Dataframe of stock and its corresponding name
-
-    Returns:
-        graph: A histogram of stock data
-    """
-    for i, (name,data) in enumerate(stock_data.items()):
-        cols = data.columns
-        fig, axs = plt.subplots(nrows=3, ncols=2, figsize=(8,6))
-        axs = axs.flatten()
-        for ax, col in zip(axs,cols):
-            ax.hist(data[col], bins=50) #using square-root rule to decide the number of bins
-            ax.set_title(f"Histogram of {col} for {name}")
-        plt.tight_layout()
-        plt.show()
-    plt.close('all')
-
-histogram_plot(stock_data)
-
-def kolmogorov_smirnov_test(stock_data):
-    """ Takes a DataFrame of stock data and return Kolmogorov-Smirnov test.
-        Input:
-        stock_data(Dataframe): a Dataframe of stock and its corresponding names
-        Returns:
-        string: A Kolmogorov-Smirnov test result of stock data
-    """
-    for i, (name,data) in enumerate(stock_data.items()):
-        cols = data.columns
-        for col in cols:
-            d, p_value = stats.kstest((data[col] - np.mean(data[col])) / np.std(data[col],ddof=1), 'norm')
-            if p_value < 0.05:
-                print(f"We have no evidence that {name}'s {col} might be normally distributed since the p-value is {p_value}.")
-            if p_value >= 0.05:
-                print(f"We have evidence that {name}'s {col} might be normally distributed since the p-value is {p_value}")
-
-kolmogorov_smirnov_test(stock_data)
-
-def anderson_darling_test(stock_data):
-    """ Takes a DataFrame of stock data and returns the Anderson-Darling test result.
-
-    Input:
-        stock_data(Dataframe): a Dataframe of stock and its corresponding names
-
-    Returns:
-        string: the Anderson-Darling test result of the stock data
-    """
-    for i, (name,data) in enumerate(stock_data.items()):
-        cols = data.columns
-        for col in cols:
-            anderson_darling_result = stats.anderson(data[col], dist='norm')
-            anderson_stats = anderson_darling_result.statistic
-            for critical_value,significance_level in zip(anderson_darling_result.critical_values, anderson_darling_result.significance_level):
-                if anderson_stats > critical_value:
-                    print(f"We have no evidence that {name}'s {col} might be normally distributed since the critical value is {critical_value}.")
-                if anderson_stats <= critical_value:
-                    print(f"We have evidence that {name}'s{col} might be normally distributed since the critical value is {critical_value}.")
-
-anderson_darling_test(stock_data)
-
 #Line Plot for stock data
 trace_names = ['Open', 'High', 'Low', 'Adj Close', 'Close']
 for i,(name,reset_data) in enumerate(stock_reset_index.items()):
@@ -296,7 +210,7 @@ def henze_zirkler_test(stock_data):
         #Compute test statistic and p-value for Henze-Zirkler's test
         results = multivariate_normality(data,alpha=.05) #compute the nonnegative function distance measuring the distance between
         #the empirical characteristic function of the data and the character function of multivariate normal distribution.
-        #Process: measuring the mean, variance and smoothness of the data. Then, we lognormalised the mean and covariance, and estimate the p-value.
+        #Process: measuring the mean, variance and smoothness of the data. Then, we log-normalised the mean and covariance, and estimate the p-value.
         if results[2] == False:
             print(f"{name}'s results for Mardia's test: {results} and we do not have evidence that there might be multivariate normality in the stock data.")
         else:
@@ -354,7 +268,92 @@ def mardia_test(stock_data):
 mardia_test(stock_data)
 
 
+class DetectNormalDistribution:
+    def __init__(self,stock_data):
+        self.stock_data = stock_data
+    def prob_plot(self):
+        ''' Takes a DataFrame of stock data and return probability plot (Q-Q plot) and histogram for each stock.
+        Input:
+        stock_data(Dataframe): a Dataframe of stock data and their respective names
+        Returns:
+        graph: a Probability plot of stock data
+        '''
+        for name,data in self.stock_data.items():
+            cols = data.columns
+            fig, axs = plt.subplots(nrows=3, ncols=2, figsize=(10, 8))
+            axs = axs.flatten() #flatten (meaning to transform into a one-dimensional array)
+            # the axes array to easily iterate over it
+            for ax, col in zip(axs,cols): #using zip function to iterate over the axes and column names
+                #simultaneously
+                stats.probplot(data[col], dist='norm', plot=ax) #Q-Q Plot
+                ax.set_title(f"Probability Plot of {col} for {name}")
+            plt.tight_layout()
+            plt.show()
+        plt.close('all')
 
+
+    def histogram_plot(self):
+        """ Takes a DataFrame of stock data and return histogram of each stock
+        Input:
+        stock_data(Dataframe): a Dataframe of stock and its corresponding name
+
+        Returns:
+        graph: A histogram of stock data
+        """
+        for i, (name,data) in enumerate(self.stock_data.items()):
+            cols = data.columns
+            fig, axs = plt.subplots(nrows=3, ncols=2, figsize=(8,6))
+            axs = axs.flatten()
+            for ax, col in zip(axs,cols):
+                ax.hist(data[col], bins=50) #using square-root rule to decide the number of bins
+                ax.set_title(f"Histogram of {col} for {name}")
+            plt.tight_layout()
+            plt.show()
+        plt.close('all')
+
+    def kolmogorov_smirnov_test(self):
+        """ Takes a DataFrame of stock data and return Kolmogorov-Smirnov test.
+            Input:
+            stock_data(Dataframe): a Dataframe of stock and its corresponding names
+            Returns:
+            string: A Kolmogorov-Smirnov test result of stock data
+        """
+        for i, (name,data) in enumerate(self.stock_data.items()):
+            cols = data.columns
+            for col in cols:
+                d, p_value = stats.kstest((data[col] - np.mean(data[col])) / np.std(data[col],ddof=1), 'norm')
+                if p_value < 0.05:
+                    print(f"We have no evidence that {name}'s {col} might be normally distributed since the p-value is {p_value}.")
+                if p_value >= 0.05:
+                    print(f"We have evidence that {name}'s {col} might be normally distributed since the p-value is {p_value}")
+
+
+    def anderson_darling_test(self):
+        """ Takes a DataFrame of stock data and returns the Anderson-Darling test result.
+
+        Input:
+            stock_data(Dataframe): a Dataframe of stock and its corresponding names
+
+        Returns:
+            string: the Anderson-Darling test result of the stock data
+        """
+        for i, (name,data) in enumerate(self.stock_data.items()):
+            cols = data.columns
+            for col in cols:
+                anderson_darling_result = stats.anderson(data[col], dist='norm')
+                anderson_stats = anderson_darling_result.statistic
+                print(f"The Anderson-Darling test statistics of {name}'s {col}: {anderson_stats}")
+                for critical_value,significance_level in zip(anderson_darling_result.critical_values, anderson_darling_result.significance_level):
+                    if anderson_stats > critical_value:
+
+                        print(f"We have no evidence that {name}'s {col} might be normally distributed since the critical value is {critical_value} at {significance_level}%.")
+                    if anderson_stats <= critical_value:
+                        print(f"We have evidence that {name}'s{col} might be normally distributed since the critical value is {critical_value} at {significance_level}%.")
+
+DetectNormalDistribution(stock_data).prob_plot()
+DetectNormalDistribution(stock_data).histogram_plot()
+DetectNormalDistribution(stock_data).kolmogorov_smirnov_test()
+DetectNormalDistribution(stock_data).anderson_darling_test()
 class Outliers: #using class to define how objects should behave (type). An instance is an object with that type
     def __init__(self,stock_data): #calling this method when we want to initialise the class
         #using self inside a class definition to reference the instance object we have created
@@ -585,17 +584,34 @@ PrincipalComponent(stock_data).scatter_plot()
 
 
 
-def regression_analysis(stock_reset_index):
 
-    for col in stock_reset_index.items():
+class VolatilityTest:
+    def __init__(self,stock_data):
+        self.stock_data = stock_data
+
+    def average_true_range(self):
+        for i, (name, data) in enumerate(self.stock_data.items()):
+            data['HL'] = data['High'] - data['Low']
+            data['AHL'] = abs(data['High'] - data['Close'].shift()) #calculate the
+            # absolute value of high value less close value of the previous day
+            data['ALC'] = abs(data['Low'] - data['Close'].shift()) #calculate the low value
+            #less the close value of the previous day
+            data['TR'] = data[['HL','AHL','ALC']].max(axis=1)
+
+            #Calculate the Average True Range
+            data['ATR'] = data['TR'].rolling(window=14).mean() #function rolling() used
+            # for creating a rolling window calculation over a specific period
+            print(f"The ATR for {name} is {data['ATR']}")
+
+            plt.plot(data['ATR'])
+            plt.title(f"ATR for {name}")
+            plt.tight_layout()
+            plt.show()
+            plt.close('all')
+
+VolatilityTest(stock_data).average_true_range()
 
 
-
-
-#class TimeSeriesAnalysis:
-#   def __init__(self,stock_data):
- #      self.stock_data = stock_data
-  #  def simple_moving_average(self):
 
 
 
