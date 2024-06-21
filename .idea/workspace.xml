@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4f5895f3-2d93-4355-bcbb-97c6701d0028" name="Changes" comment="- add Anderson-Darling test">
+    <list default="true" id="4f5895f3-2d93-4355-bcbb-97c6701d0028" name="Changes" comment="- add ATR">
+      <change afterPath="$PROJECT_DIR$/Reflection_Agent.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/misc/Real_Time_Data_Analysis.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Stock_Data_Analysis.py" beforeDir="false" afterPath="$PROJECT_DIR$/Stock_Data_Analysis.py" afterDir="false" />
     </list>
@@ -81,7 +83,7 @@
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;editor.preferences.appearance&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
@@ -231,7 +233,12 @@
       <workItem from="1718184595005" duration="469000" />
       <workItem from="1718254755449" duration="4940000" />
       <workItem from="1718342362706" duration="3105000" />
-      <workItem from="1718600999420" duration="5492000" />
+      <workItem from="1718600999420" duration="5777000" />
+      <workItem from="1718686946060" duration="4491000" />
+      <workItem from="1718691779678" duration="2220000" />
+      <workItem from="1718779152634" duration="5039000" />
+      <workItem from="1718928383015" duration="31000" />
+      <workItem from="1718933336670" duration="1765000" />
     </task>
     <task id="LOCAL-00001" summary="Add stock market analysis &#10;&#10;Scrape stock data using yfinance API.&#10;Add outlier detection and metadata.">
       <option name="closed" value="true" />
@@ -425,7 +432,15 @@
       <option name="project" value="LOCAL" />
       <updated>1718261691982</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL-00025" summary="- add ATR">
+      <option name="closed" value="true" />
+      <created>1718607053340</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1718607053340</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -455,7 +470,8 @@
     <MESSAGE value="Merge remote-tracking branch 'origin/master'" />
     <MESSAGE value="Merge remote-tracking branch 'origin/master'&#10;- Add histogram" />
     <MESSAGE value="- add Anderson-Darling test" />
-    <option name="LAST_COMMIT_MESSAGE" value="- add Anderson-Darling test" />
+    <MESSAGE value="- add ATR" />
+    <option name="LAST_COMMIT_MESSAGE" value="- add ATR" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

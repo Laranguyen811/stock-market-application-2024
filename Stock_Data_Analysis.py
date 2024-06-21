@@ -590,6 +590,14 @@ class VolatilityTest:
         self.stock_data = stock_data
 
     def average_true_range(self):
+        """ Takes stock data and returns Average True Range (ATR) and its graph
+        Inputs:
+        stock_data (DataFrame): a DataFrame of stock data and its corresponding stock name
+        Return:
+        string: a string containing the Average True Range
+        string: a string containing the average ATR
+        graph: a line plot of the Average True Range of each stock
+        """
         for i, (name, data) in enumerate(self.stock_data.items()):
             data['HL'] = data['High'] - data['Low']
             data['AHL'] = abs(data['High'] - data['Close'].shift()) #calculate the
@@ -601,13 +609,24 @@ class VolatilityTest:
             #Calculate the Average True Range
             data['ATR'] = data['TR'].rolling(window=14).mean() #function rolling() used
             # for creating a rolling window calculation over a specific period
-            print(f"The ATR for {name} is {data['ATR']}")
 
+            #Calculate the average ATR of each stock
+
+            average_ATR = np.mean(data['ATR'])
+            volatility_threshold = average_ATR * 3
+            print(f"The ATR for {name} is {data['ATR']}")
+            print (f"The average ATR for {name} is {average_ATR}")
+            #Create a line plot of ATR of each stock
             plt.plot(data['ATR'])
             plt.title(f"ATR for {name}")
             plt.tight_layout()
             plt.show()
             plt.close('all')
+            if data['ATR'][-1] > volatility_threshold:
+                print (f"The ATR for {name} exceeds the volatility threshold {volatility_threshold}.Therefore, it might be showing high volalitity.")
+            else:
+                print (f"The ATR for {name} does not exceed the volatility threshold {volatility_threshold}. Therefore, it might not be showing high volalitity. ")
+
 
 VolatilityTest(stock_data).average_true_range()
 
