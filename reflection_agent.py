@@ -1,7 +1,9 @@
 import os
 from dotenv import load_dotenv
-from langchain_google_genai import ChatGoogleGenerativeAI
-from langgraph.graph import END, MessageGraph #END is a special node to terminate a graph, MessageGraph is a subclass of StateGraph,
+import google.generativeai as genai
+
+genai.configure(api_key=os.environ['GOOGLE_API_KEY'])
+gemini_model = genai.GenerativeModel(model_name="gemini-1.5-flash")
 #a single, append-only list of messages
 import getpass #a module to securely process password prompts when the program interacts with users
 def _set_if_undefined (var:str) -> None: #function definition, specify the argument types and the return of the function,

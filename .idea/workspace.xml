@@ -5,10 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4f5895f3-2d93-4355-bcbb-97c6701d0028" name="Changes" comment="- add ATR">
-      <change afterPath="$PROJECT_DIR$/Reflection_Agent.py" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/misc/Real_Time_Data_Analysis.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/misc/google-api_key.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Stock_Data_Analysis.py" beforeDir="false" afterPath="$PROJECT_DIR$/Stock_Data_Analysis.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Reflection_Agent.py" beforeDir="false" afterPath="$PROJECT_DIR$/reflection_agent.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Stock_Data_Analysis.py" beforeDir="false" afterPath="$PROJECT_DIR$/stock_data_analysis.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Stock_Market_Application.py" beforeDir="false" afterPath="$PROJECT_DIR$/stock_market_application_data.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/misc/Stock_Data_Visualisation.py" beforeDir="false" afterPath="$PROJECT_DIR$/misc/Stock_Data_Visualisation.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,6 +40,7 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="ROOT_SYNC" value="DONT_SYNC" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
   &quot;lastFilter&quot;: {
@@ -66,34 +71,34 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Python.Stock_Data_Analysis.executor&quot;: &quot;Run&quot;,
-    &quot;Python.Stock_Data_Visualisation.executor&quot;: &quot;Run&quot;,
-    &quot;Python.Stock_Market_Application.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;ToolWindowPlots.ShowToolbar&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/laran/PycharmProjects/ASX&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Python.Stock_Data_Analysis.executor": "Run",
+    "Python.Stock_Data_Visualisation.executor": "Run",
+    "Python.Stock_Market_Application.executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "ToolWindowPlots.ShowToolbar": "false",
+    "git-widget-placeholder": "master",
+    "ignore.virus.scanning.warn.message": "true",
+    "last_opened_file_path": "C:/Users/laran/PycharmProjects/ASX",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\laran\PycharmProjects\ASX\misc" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.Stock_Data_Analysis">
-    <configuration name="Stock_Data_Analysis" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="Python.stock_data_analysis">
+    <configuration name="stock_data_analysis" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="ASX" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -107,7 +112,7 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Stock_Data_Analysis.py" />
+      <option name="SCRIPT_NAME" value="C:\Users\laran\PycharmProjects\ASX\stock_data_analysis.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -116,7 +121,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="Stock_Market_Application" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="stock_market_application_data" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="ASX" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -130,7 +135,7 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Stock_Market_Application.py" />
+      <option name="SCRIPT_NAME" value="C:\Users\laran\PycharmProjects\ASX\stock_market_application_data.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -141,8 +146,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.Stock_Data_Analysis" />
-        <item itemvalue="Python.Stock_Market_Application" />
+        <item itemvalue="Python.stock_data_analysis" />
+        <item itemvalue="Python.stock_market_application_data" />
       </list>
     </recent_temporary>
   </component>
@@ -238,7 +243,10 @@
       <workItem from="1718691779678" duration="2220000" />
       <workItem from="1718779152634" duration="5039000" />
       <workItem from="1718928383015" duration="31000" />
-      <workItem from="1718933336670" duration="1765000" />
+      <workItem from="1718933336670" duration="2510000" />
+      <workItem from="1718953692966" duration="640000" />
+      <workItem from="1719025368562" duration="3514000" />
+      <workItem from="1719030405064" duration="1663000" />
     </task>
     <task id="LOCAL-00001" summary="Add stock market analysis &#10;&#10;Scrape stock data using yfinance API.&#10;Add outlier detection and metadata.">
       <option name="closed" value="true" />
@@ -440,7 +448,15 @@
       <option name="project" value="LOCAL" />
       <updated>1718607053340</updated>
     </task>
-    <option name="localTasksCounter" value="26" />
+    <task id="LOCAL-00026" summary="- add ATR">
+      <option name="closed" value="true" />
+      <created>1718952929030</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1718952929030</updated>
+    </task>
+    <option name="localTasksCounter" value="27" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -477,12 +493,12 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Stock_Data_Analysis.py</url>
+          <url>file://$PROJECT_DIR$/stock_data_analysis.py</url>
           <line>3</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Stock_Data_Analysis.py</url>
+          <url>file://$PROJECT_DIR$/stock_data_analysis.py</url>
           <line>385</line>
           <option name="timeStamp" value="2" />
         </line-breakpoint>

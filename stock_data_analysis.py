@@ -1,4 +1,4 @@
-from Stock_Market_Application import *
+from stock_market_application_data import *
 import matplotlib.pyplot as plt
 import pandas as pd
 import seaborn as sns
