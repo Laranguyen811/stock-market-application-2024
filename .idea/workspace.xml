@@ -249,7 +249,8 @@
       <workItem from="1719203132124" duration="2854000" />
       <workItem from="1719291244561" duration="4671000" />
       <workItem from="1719382113524" duration="3263000" />
-      <workItem from="1719464717634" duration="5980000" />
+      <workItem from="1719464717634" duration="6481000" />
+      <workItem from="1719806529715" duration="4863000" />
     </task>
     <task id="LOCAL-00001" summary="Add stock market analysis &#10;&#10;Scrape stock data using yfinance API.&#10;Add outlier detection and metadata.">
       <option name="closed" value="true" />
@@ -467,7 +468,15 @@
       <option name="project" value="LOCAL" />
       <updated>1719038207146</updated>
     </task>
-    <option name="localTasksCounter" value="28" />
+    <task id="LOCAL-00028" summary="- add Gemini">
+      <option name="closed" value="true" />
+      <created>1719472635746</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1719472635746</updated>
+    </task>
+    <option name="localTasksCounter" value="29" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

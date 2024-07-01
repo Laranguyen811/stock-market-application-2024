@@ -24,9 +24,7 @@ from crewai_tools import (CodeDocsSearchTool,
                           WebsiteSearchTool,
                           BrowserbaseLoadTool,
                           EXASearchTool)
-
-genai.configure(api_key=os.environ['GEMINI_API_KEY'])
-gemini_model = genai.GenerativeModel(model_name="gemini-1.5-flash")
+from gemini_torch.model import Gemini
 
 def _set_if_undefined (var:str) -> None: #function definition, specify the argument types and the return of the function,
     #'var:str' => variable should be a string, '-> None': does not return a value
@@ -47,8 +45,25 @@ def tracing(stock_data):
         decision = action
     logging.info(f"Decision suggested: {decision}")
     return decision
-genai.configure(api_key=os.environ['GEMINI_API_KEY'])
-gemini_model = genai.GenerativeModel(model_name="gemini-1.5-flash")
+#genai.configure(api_key=os.environ['GEMINI_API_KEY'])
+#gemini_model = genai.GenerativeModel(model_name="gemini-1.5-flash")
+gemini_model = Gemini(
+    num_tokens=10000, #number of tokens, every 100 tokens represent 60-80 words
+    max_seq_len=1024,#maximum sequence length, controlling the number of tokens of the input
+    dim=320,#dimension, representing the number of features
+    depth=8,#the number of layers in a neural network
+    dim_head=32,#referring the dimensionality of key,query, and value vectors in the self-attention mechanism
+    heads=6,#A head = the part of the model that makes predictions. Every model has a backbone and a head (backbone network) and a certain amount of prediction heads
+    use_abs_pos_emb=False,#use absolute positional embedding. Positional embeddings inform about the position of tokens in input sequence
+    attn_flash=True,#using flash attention, an efficient and precise Transformer acceleration technique,perceiving memory read and write ops,
+    #changing blocks of query,key,and value from the GPU's HBM(main memory) to SRAM.
+    attn_kv_heads=2,#key-value caching pair with attention heads
+    qk_norm=True,#normalisation of the query and key vectors
+    attn_qk_norm=True,#normalisation of the query and key vectors of attention mechanism
+    attn_qk_norm_dim_scale=True,# the attention score computed as a dot product of query and key vectors,scaled down by the square root of
+    #the dimension of these vectors => applying learned scale across the dimension of features, then normalising the query and key vectors
+
+)
 
 #Actor 1: A Stock Market Investment Analyst
     #1. Creating a Persona: defining the tone and expertise level of the AI.
