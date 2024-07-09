@@ -4,13 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4f5895f3-2d93-4355-bcbb-97c6701d0028" name="Changes" comment="- add gemini model with parameters">
+    <list default="true" id="4f5895f3-2d93-4355-bcbb-97c6701d0028" name="Changes" comment="- Creating agents">
       <change afterPath="$PROJECT_DIR$/misc/Real_Time_Data_Analysis.py" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/misc/google-api_key.py" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/stock_market/Lib/site-packages/mpl_toolkits/mplot3d/tests/test_stock_data_analysis.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stock_market/fl_multimodal_knowledge_graph/collect_data.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/misc/Stock_Data_Visualisation.py" beforeDir="false" afterPath="$PROJECT_DIR$/misc/Stock_Data_Visualisation.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/reflection_agent.py" beforeDir="false" afterPath="$PROJECT_DIR$/reflection_agent.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/stock_data_analysis.py" beforeDir="false" afterPath="$PROJECT_DIR$/stock_data_analysis.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -70,31 +70,31 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Python tests.Python tests for test_stock_data_analysis.test_calculate_corr_coeffs.executor": "Run",
-    "Python tests.Python tests in test_normal_distribution_detection.py.executor": "Run",
-    "Python tests.Python tests in test_stock_data_analysis.py.executor": "Debug",
-    "Python.Stock_Data_Analysis.executor": "Run",
-    "Python.Stock_Data_Visualisation.executor": "Run",
-    "Python.Stock_Market_Application.executor": "Run",
-    "Python.stock_data_analysis.executor": "Run",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "ToolWindowPlots.ShowToolbar": "false",
-    "git-widget-placeholder": "master",
-    "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "C:/Users/laran/PycharmProjects/ASX",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "project.propVCSSupport.DirectoryMappings",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Python tests.Python tests for test_stock_data_analysis.test_calculate_corr_coeffs.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Python tests in test_normal_distribution_detection.py.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Python tests in test_stock_data_analysis.py.executor&quot;: &quot;Debug&quot;,
+    &quot;Python.Stock_Data_Analysis.executor&quot;: &quot;Run&quot;,
+    &quot;Python.Stock_Data_Visualisation.executor&quot;: &quot;Run&quot;,
+    &quot;Python.Stock_Market_Application.executor&quot;: &quot;Run&quot;,
+    &quot;Python.stock_data_analysis.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;ToolWindowPlots.ShowToolbar&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/laran/PycharmProjects/ASX&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;project.propVCSSupport.DirectoryMappings&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\laran\PycharmProjects\ASX\misc" />
@@ -310,7 +310,8 @@
       <workItem from="1719892939611" duration="7795000" />
       <workItem from="1720152708809" duration="3867000" />
       <workItem from="1720156660317" duration="832000" />
-      <workItem from="1720416923842" duration="4426000" />
+      <workItem from="1720416923842" duration="4743000" />
+      <workItem from="1720501394228" duration="3413000" />
     </task>
     <task id="LOCAL-00001" summary="Add stock market analysis &#10;&#10;Scrape stock data using yfinance API.&#10;Add outlier detection and metadata.">
       <option name="closed" value="true" />
@@ -544,7 +545,15 @@
       <option name="project" value="LOCAL" />
       <updated>1719826809445</updated>
     </task>
-    <option name="localTasksCounter" value="30" />
+    <task id="LOCAL-00030" summary="- Creating agents">
+      <option name="closed" value="true" />
+      <created>1720422351544</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1720422351544</updated>
+    </task>
+    <option name="localTasksCounter" value="31" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -577,7 +586,8 @@
     <MESSAGE value="- add ATR" />
     <MESSAGE value="- add Gemini" />
     <MESSAGE value="- add gemini model with parameters" />
-    <option name="LAST_COMMIT_MESSAGE" value="- add gemini model with parameters" />
+    <MESSAGE value="- Creating agents" />
+    <option name="LAST_COMMIT_MESSAGE" value="- Creating agents" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
