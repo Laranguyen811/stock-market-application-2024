@@ -16,6 +16,11 @@ from sklearn import metrics
 from scipy.stats import chi2,f
 from pingouin import multivariate_normality
 from scipy.spatial.distance import mahalanobis
+from scipy.stats import skew,kurtosis
+import matplotlib
+
+print(matplotlib.get_cachedir())
+
 #Create a dictionary to store all the stock dataframes and its name
 
 stock_data = {'MSFT':data_msft,'GOOG': data_goog,'AMZN': data_amzn,'AAPL': data_aapl,'SAP':data_sap,'META':data_meta,'005930_KS':data_005930_ks,'INTC':data_intc,
@@ -49,7 +54,8 @@ def analyse_stock_data(stock_data):
         print(data.describe())
         print(data.duplicated().sum())
         print("\n Number of duplicated values: " + str(data.duplicated().sum()))
-analyse_stock_data(stock_data)
+if __name__ == '__main__':
+    analyse_stock_data(stock_data)
 
 #A dictionary to store all the stock data with reset DateTimeindex indices
 stock_reset_index = {}
@@ -66,8 +72,8 @@ def reset_index_stock_data(stock_data):
         data_reset = data.reset_index()
         stock_reset_index[name + '_reset'] = data_reset
     print(stock_reset_index)
-
-reset_index_stock_data(stock_data)
+if __name__ == '__main__':
+    reset_index_stock_data(stock_data)
 
 #Pair plots for stock market data
 for i,(name,data) in enumerate(stock_reset_index.items()):
@@ -122,7 +128,8 @@ def calculate_corr_coeffs(stock_data):
                 else:
                     print(f"We have evidence that there might be a strong negative correlation between {name}'s {col} and {row} with the correlation of {corr_coeff }.")
 
-calculate_corr_coeffs(stock_data)
+if __name__ == "__main__":
+    calculate_corr_coeffs(stock_data)
 
 
 #Principal Component Analysis for stock market data to identify dominant patterns and understand relationships
@@ -152,7 +159,8 @@ def scatter_plot(stock_data):
         plt.title(f"Principal Components for {name}")
         plt.show()
     plt.close('all')
-scatter_plot(stock_data)
+if __name__ == '__main__':
+ scatter_plot(stock_data)
 
 #Line Plot for stock data
 trace_names = ['Open', 'High', 'Low', 'Adj Close', 'Close']
@@ -196,7 +204,8 @@ def seasonal_decomposition(stock_data):
         plt.tight_layout()
         plt.show()
     plt.close('all')
-seasonal_decomposition(stock_data)
+if __name__ == '__main__':
+ seasonal_decomposition(stock_data)
 
 #Henze-Zirkler's test to assess the multivariate normality of a dataset
 def henze_zirkler_test(stock_data):
@@ -215,7 +224,11 @@ def henze_zirkler_test(stock_data):
             print(f"{name}'s results for Mardia's test: {results} and we do not have evidence that there might be multivariate normality in the stock data.")
         else:
             print(f"{name}'s results for Mardia's test: {results} and we have evidence that there might be multivariate normality in the stock data.")
-
+if __name__ == '__main__':
+    if results[2] == False:
+        print(f"{name}'s results for Mardia's test: {results} and we do not have evidence that there might be multivariate normality in the stock data.")
+    else:
+        print(f"{name}'s results for Mardia's test: {results} and we have evidence that there might be multivariate normality in the stock data.")
 #Mardia's test to assess the multivariate normality
 def mardia_test(stock_data):
     '''Takes stock data and returns the p-values of Mardia's test statistic
@@ -265,7 +278,8 @@ def mardia_test(stock_data):
         else:
             print(f"{name}'s results for Mardia's test is {mardia_p} and we have evidence that there might be multivariate normality in its stock data")
 
-mardia_test(stock_data)
+if __name__ == '__main__':
+    mardia_test(stock_data)
 
 
 class DetectNormalDistribution:
@@ -349,11 +363,11 @@ class DetectNormalDistribution:
                         print(f"We have no evidence that {name}'s {col} might be normally distributed since the critical value is {critical_value} at {significance_level}%.")
                     if anderson_stats <= critical_value:
                         print(f"We have evidence that {name}'s{col} might be normally distributed since the critical value is {critical_value} at {significance_level}%.")
-
-DetectNormalDistribution(stock_data).prob_plot()
-DetectNormalDistribution(stock_data).histogram_plot()
-DetectNormalDistribution(stock_data).kolmogorov_smirnov_test()
-DetectNormalDistribution(stock_data).anderson_darling_test()
+if __name__ == "__main__":
+    DetectNormalDistribution(stock_data).prob_plot()
+    DetectNormalDistribution(stock_data).histogram_plot()
+    DetectNormalDistribution(stock_data).kolmogorov_smirnov_test()
+    DetectNormalDistribution(stock_data).anderson_darling_test()
 class Outliers: #using class to define how objects should behave (type). An instance is an object with that type
     def __init__(self,stock_data): #calling this method when we want to initialise the class
         #using self inside a class definition to reference the instance object we have created
@@ -462,10 +476,10 @@ class Outliers: #using class to define how objects should behave (type). An inst
                     pass;
 
 
-
-Outliers(stock_data).iqr_method()
-Outliers(stock_data).box_plot()
-Outliers(stock_data).mahalanobis_distance()
+if __name__ == "__main__":
+    Outliers(stock_data).iqr_method()
+    Outliers(stock_data).box_plot()
+    Outliers(stock_data).mahalanobis_distance()
 
 #PCA without outliers:
 class PrincipalComponent:
@@ -579,8 +593,10 @@ class PrincipalComponent:
             plt.title(f"Principal Components for {name}")
             plt.show()
         plt.close('all')
-PrincipalComponent(stock_data).principal_analysis()
-PrincipalComponent(stock_data).scatter_plot()
+
+if __name__ == '__main__':
+    PrincipalComponent(stock_data).principal_analysis()
+    PrincipalComponent(stock_data).scatter_plot()
 
 
 
@@ -627,8 +643,8 @@ class VolatilityTest:
             else:
                 print (f"The ATR for {name} does not exceed the volatility threshold {volatility_threshold}. Therefore, it might not be showing high volalitity. ")
 
-
-VolatilityTest(stock_data).average_true_range()
+if __name__ == '__main__':
+    VolatilityTest(stock_data).average_true_range()
 
 
 

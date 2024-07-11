@@ -1,6 +1,6 @@
 import pandas as pd
 import matplotlib.pyplot as plt
-from Stock_Market_Application import data_msft,data_goog,data_amzn,data_aapl,data_sap,data_meta,data_005930_ks,data_intc,data_ibm,data_orcl,data_baba,data_tcehy,data_nvda,data_tsm,data_nflx,data_tsla,data_crm,data_adbe,data_pypl
+from stock_market_application_data import data_msft,data_goog,data_amzn,data_aapl,data_sap,data_meta,data_005930_ks,data_intc,data_ibm,data_orcl,data_baba,data_tcehy,data_nvda,data_tsm,data_nflx,data_tsla,data_crm,data_adbe,data_pypl
 
 import plotly.graph_objects as go
 from dash import Dash, html, dcc, Output, Input
