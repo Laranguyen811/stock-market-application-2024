@@ -4,19 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4f5895f3-2d93-4355-bcbb-97c6701d0028" name="Changes" comment="- Add fl-mmkg">
-      <change afterPath="$PROJECT_DIR$/misc/Real_Time_Data_Analysis.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/misc/google-api_key.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/stock_market/Lib/site-packages/mpl_toolkits/mplot3d/tests/test_stock_data_analysis.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/stock_market/fl_multimodal_knowledge_graph/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/stock_market/fl_multimodal_knowledge_graph/data_collection/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/stock_market/fl_multimodal_knowledge_graph/data_collection/data_collection_tools/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/stock_market/fl_multimodal_knowledge_graph/data_collection/data_collection_tools/add_nodes_and_edges.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+    <list default="true" id="4f5895f3-2d93-4355-bcbb-97c6701d0028" name="Changes" comment="- add uri tool">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/misc/Stock_Data_Visualisation.py" beforeDir="false" afterPath="$PROJECT_DIR$/misc/Stock_Data_Visualisation.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/stock_data_analysis.py" beforeDir="false" afterPath="$PROJECT_DIR$/stock_data_analysis.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/stock_market/fl_multimodal_knowledge_graph/collect_data.py" beforeDir="false" afterPath="$PROJECT_DIR$/stock_market/fl_multimodal_knowledge_graph/data_collection/data_collection_tools/collect_data.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/stock_market/fl_multimodal_knowledge_graph/data_collection/data_collection_tools/add_nodes_and_edges.py" beforeDir="false" afterPath="$PROJECT_DIR$/stock_market/fl_multimodal_knowledge_graph/data_collection/data_collection_tools/add_nodes_and_edges.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -320,7 +310,8 @@
       <workItem from="1720416923842" duration="4743000" />
       <workItem from="1720501394228" duration="6096000" />
       <workItem from="1720579108760" duration="4948000" />
-      <workItem from="1720672224573" duration="7816000" />
+      <workItem from="1720672224573" duration="8566000" />
+      <workItem from="1721018768632" duration="6733000" />
     </task>
     <task id="LOCAL-00001" summary="Add stock market analysis &#10;&#10;Scrape stock data using yfinance API.&#10;Add outlier detection and metadata.">
       <option name="closed" value="true" />
@@ -570,7 +561,15 @@
       <option name="project" value="LOCAL" />
       <updated>1720508484409</updated>
     </task>
-    <option name="localTasksCounter" value="32" />
+    <task id="LOCAL-00032" summary="- add uri tool">
+      <option name="closed" value="true" />
+      <created>1720681961759</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1720681961759</updated>
+    </task>
+    <option name="localTasksCounter" value="33" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -605,7 +604,8 @@
     <MESSAGE value="- add gemini model with parameters" />
     <MESSAGE value="- Creating agents" />
     <MESSAGE value="- Add fl-mmkg" />
-    <option name="LAST_COMMIT_MESSAGE" value="- Add fl-mmkg" />
+    <MESSAGE value="- add uri tool" />
+    <option name="LAST_COMMIT_MESSAGE" value="- add uri tool" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
