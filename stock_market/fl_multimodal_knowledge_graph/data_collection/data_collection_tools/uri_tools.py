@@ -179,7 +179,7 @@ def conjunction_uri(*sources):
     return compound_uri('/and',sorted(set(sources)))
 
 def assertion_uri(rel,start,end):
-    """ Takes a URI and returns an assertion with its relation, start node and end node as a compound URI.
+    """ Takes a URI and returns an assertion (a weighted edge - an edge assigned a numerical value) with its relation, start node and end node as a compound URI.
     Input:
     rel(string): The relation of the URI being asserted. A relation example is /r/CapableOf.
     start(string): The start node of the URI. An example is /c/en/cat
@@ -214,7 +214,7 @@ def is_relation(uri):
     return uri.startswith('/r/')
 
 def is_term(uri):
-    """ Takes a URI and returns a boolean indicating whether it is a term or not
+    """ Takes a URI and returns a boolean indicating whether it is a term (a word or phrase) or not.
     Inputs:
     uri(string): The URI to check. An example is/c/sv/kostym.
     Returns:
@@ -236,6 +236,29 @@ def get_uri_language(uri):
         return split_uri(uri)[1]
     else:
         return None
+
+def uri_to_label(uri):
+    """ Takes a URI and returns a label associated with the URI so that we can use it in its node.
+    Inputs:
+    uri(string): The string of the URI.An example is /c/en/example.
+    Returns:
+    string: The label of the URI to be used in a node. In the above example, the returned label would be an example.
+    """
+    if is_absolute_uri(uri):
+        return uri.split('/')[-1].replace('_',' ') #splitting at the slash, take the component before it, removing the slash and replace it with space
+    if is_term(uri):
+        uri = uri_prefix(uri)
+    parts = split_uri(uri)
+    if len(parts) < 3 and not is_relation(uri):
+        return ''
+    return parts[-1].replace('_',' ')
+
+class Licenses:
+    cc_attribution = 'cc:by/4.0'
+    cc_sharealike = 'cc:by-sa/4.0'
+
+
+
 
 
 
