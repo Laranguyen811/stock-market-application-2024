@@ -1,5 +1,5 @@
 import uritools as ut
-from urllib.parse import urljoin,urlparse
+from urllib.parse import urljoin, urlparse
 from nltk.tokenize import word_tokenize
 from nltk.stem import WordNetLemmatizer
 import spacy
@@ -12,9 +12,9 @@ def preprocess_and_standardize_text(text):
     Returns:
     string: a string of lemmatized tokens
     """
-    lemmatizer = WordNetLemmatizer() #lemmatizing text to find the root of words, help agents understand conversations better
+    lemmatizer = WordNetLemmatizer()  # Lemmatizing text to find the root of words, help agents understand conversations better
     text = text.lower()
-    tokens = word_tokenize(text) #tokenizing words
+    tokens = word_tokenize(text)  # Tokenizing words
     lemmatized_tokens = [lemmatizer.lemmatize(token) for token in tokens]
     return lemmatized_tokens
 
@@ -25,8 +25,7 @@ def join_uri(*pieces):
     Returns:
     string: a string of a new uri
     """
-    uri = '/'+ ('/'.join([piece.strip('/') for piece in pieces])) #stripping off the leading and trailing slashes of constiuent
-    #pieces and join them together to create a joined url with a leading slash
+    uri = '/' + '/'.join([piece.strip('/') for piece in pieces])  # Stripping off the leading and trailing slashes of constituent pieces and join them together to create a joined URL with a leading slash
     return uri
 
 def concept_url(lang,text,*more):
@@ -39,16 +38,14 @@ def concept_url(lang,text,*more):
     Returns:
     string: a joined uri to build a concept url
     """
-    assert ' ' not in text, "%r is not in normalised form" % text #an error exception to see if there are spaces in the text (or
-    #whether it is in a normalised form)
+    assert ' ' not in text, "%r is not in normalized form" % text  # An error exception to see if there are spaces in the text (or whether it is in a normalized form)
     if len(more) > 0:
         if len(more) != 1:
-            # We misparsed a part of speech; everything after the text is probably junk
-            more = []
+            more = []  # We misparsed a part of speech; everything after the text is probably junk
         else:
             for dis1 in more[1:]:
-                assert '_' not in dis1, "%r is not in normalised" %dis1 #ensuring all disambiguations (the process of making an ambiguous expression clear and understandable are in normalised form
-    return urlparse(('','','/c/'+ lang +'/'+text + '/' + '/'.join(more),'','','')) #using urlunparse to build the URI
+                assert '_' not in dis1, "%r is not in normalized form" % dis1  # Ensuring all disambiguations are in normalized form
+    return urlparse(('', '', '/c/' + lang + '/' + text + '/' + '/'.join(more), '', '', ''))  # Using urlunparse to build the URI
 
 def compound_uri(op, args):
     """Takes a main operator with the slash included and an arbitrary number of arguments and returns the URI representing the entire compound structure (made up of different data types)
@@ -59,12 +56,11 @@ def compound_uri(op, args):
     string: the compound URI
 
     """
-    assert op.startswith('/'),"Operator must start with '/'" #ensuring the operator starts with a slash
+    assert op.startswith('/'), "Operator must start with '/'"  # Ensuring the operator starts with a slash
     for arg in args:
-        assert ' ' not in arg, "%r is not in normalised" % arg #ensuring the argument is in a normalised form
-        items = [op, '['] + [f"{',' if i else ''}{arg}" for i,arg in enumerate(args)] + [']'] #using list comprehension to
-        # build an items list
-        return join_uri(items)
+        assert ' ' not in arg, "%r is not in normalized form" % arg  # Ensuring the argument is in a normalized form
+    items = [op, '['] + [f"{',' if i else ''}{arg}" for i, arg in enumerate(args)] + [']']  # Using list comprehension to build an items list
+    return join_uri(*items)
 def split_uri(uri):
     """Takes a URI and splits the string into smaller parts without the slash.
     Inputs:
@@ -72,10 +68,10 @@ def split_uri(uri):
     Returns:
     list: the list of parts without the slash
     """
-    uri = uri.lstrip('/') #stripping leading slash if present
+    uri = uri.lstrip('/')  # Stripping leading slash if present
     if not uri:
-        return[] #return an empty if URI is empty
-    return uri.split('/') #splitting the URI on slashes and returning the result
+        return []  # Return an empty list if URI is empty
+    return uri.split('/')  # Splitting the URI on slashes and returning the result
 
 def is_absolute_uri(uri):
     """Takes a URI and check if it is an absolute URI (containing all the necessary information to locate a resource on the Internet).
@@ -96,7 +92,7 @@ def uri_prefix(uri,max_pieces=3):
     """
     if is_absolute_uri(uri):
         return uri
-    pieces = split_uri[:max_pieces]
+    pieces = split_uri(uri)[:max_pieces]
     return join_uri(*pieces)
 def uri_prefixes(uri,min_pieces=2):
     """Take the URI and get the URI that are the prefixes of the URI (prefix must have at least 2 components).
@@ -110,9 +106,11 @@ def uri_prefixes(uri,min_pieces=2):
         return [uri]
     pieces = []
     for piece in split_uri(uri):
-        counts = Counter(pieces) #counting hashable objects, in this case constiuent pieces
+        pieces.append(piece)
+        counts = Counter(pieces)  # Counting hashable objects, in this case constituent pieces
         if len(pieces) >= min_pieces and counts['['] == counts[']']:
-            yield join_uri(*pieces) #using yield to create a generator function and produce prefixes on-the-fly, more memory efficient especially when having many prefixes
+            yield join_uri(
+                *pieces)  # Using yield to create a generator function and produce prefixes on-the-fly, more memory efficient especially when having many prefixes
 
 def parse_compound_uri(uri):
     """ Take the compound URI and extract its operator and list of arguments.
@@ -136,13 +134,13 @@ def parse_compound_uri(uri):
     depth = 0
 
     #Split on commas unless they are within additional pair of brackets
-    for piece in pieces[(start_list+1) : -1]:
+    for piece in pieces[(start_list + 1): -1]:
         current.append(piece)
         counts = Counter(current)
         if piece == ',' and counts['['] == counts[']']:
             chunks.append('/' + ('/'.join(current[:-1])).strip('/'))
             current = []
-        elif piece =='[':
+        elif piece == '[':
             depth += 1
         elif piece == ']':
             depth -= 1
@@ -150,7 +148,7 @@ def parse_compound_uri(uri):
     assert depth == 0, "Unmatched brackets in %r" % uri
     if current:
         chunks.append('/' + ('/'.join(current)).strip('/'))
-    return op,chunks
+    return op, chunks
 
 def parse_possible_compound_uri(op,uri):
     """ Takes a compound URI and returns a list of components in the compound URI if its operator matches 'op' or
@@ -176,7 +174,7 @@ def conjunction_uri(*sources):
         raise ValueError('Conjunctions of 0 things are not allowed')
     if len(sources) == 1:
         return sources[0]
-    return compound_uri('/and',sorted(set(sources)))
+    return compound_uri('/and', sorted(set(sources)))
 
 def assertion_uri(rel,start,end):
     """ Takes a URI and returns an assertion (a weighted edge - an edge assigned a numerical value) with its relation, start node and end node as a compound URI.
@@ -188,12 +186,12 @@ def assertion_uri(rel,start,end):
     string: The assertion URI. In the example above, the assertion URI is /a/[/r/CapableOf/,/c/en/cat/,/c/en/sleep/]
     """
     if not rel.startswith('/r'):
-        raise ValueError(f"Invalid relation:{rel}.Relation must start with '/r'.")
+        raise ValueError(f"Invalid relation: {rel}. Relation must start with '/r'.")
     if not start.startswith('/c'):
-        raise ValueError(f"Invalid start node:{start}.Start must start with '/c'.")
+        raise ValueError(f"Invalid start node: {start}. Start must start with '/c'.")
     if not end.startswith('/c'):
-        raise ValueError(f"Invalid end node:{end}.Start must start with '/c'.")
-    return compound_uri('/a',(rel,start,end))
+        raise ValueError(f"Invalid end node: {end}. End must start with '/c'.")
+    return compound_uri
 
 def is_concept(uri):
     """ Takes a URI and returns a boolean indicating whether it is a concept or not.

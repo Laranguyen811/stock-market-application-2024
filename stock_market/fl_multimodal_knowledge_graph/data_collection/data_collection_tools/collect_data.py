@@ -1,2 +1,0 @@
-import paperscraper
-import scrapy
