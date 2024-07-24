@@ -147,6 +147,7 @@ def get_multi_model(info):
     filename = filename + '.' + info['form'] #Adding '.' and form of the information to the filename
     try: # Attempting a block of code before throwing an exception
         with open(filename, 'rb') as f: #Openning the file in a binary mode for reading and closing it when done
+            content = f.read()
     except FileNotFoundError: ##Throwing an exception error if FileNotFoundError
         print(f"Error:The file {filename} does not exist.")
         content = None
