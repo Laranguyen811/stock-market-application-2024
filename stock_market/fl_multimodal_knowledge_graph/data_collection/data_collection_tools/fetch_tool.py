@@ -1,4 +1,5 @@
 import os
+import pathlib
 import re #A built-in module to work with regular expressions (sequences of characters forming a search pattern
 import json
 import requests
@@ -155,6 +156,60 @@ def get_multi_model(info):
         print(f"Error:An I/O error occurred while reading the file {filename}: {e}")
         content = None
         return content
+def save_to_local(uri,content):
+    ''' Takes a URI and returns the content in a JSON format saved in a local file.
+    Inputs:
+        uri(string): A string of a URI.
+        content(dictionary): The dictionary of the content of the file if it could be saved to a local file or None otherwise.
+    Returns:
+        None
+    '''
+    try:
+        path = transform_path(uri)
+        filename = transform_filename(uri)
+        if not os.path.exists(path): #If the path does not exist
+            os.makedirs(path) #Creating the path
+        with open(filename,'w') as f: #Opening a filename and write it to a local file and closing when done
+            f.write(json.dumps(content)) #Writing the content from a Python object to a JSON formatted string
+    except Exception as e:
+        print(f"An error occurred while saving data to local: {e}")
+
+def acceptable_element(element):
+    ''' Takes an element and determines whether it is acceptable or not.
+    Inputs:
+        element(string): A string of an element.
+    Returns:
+    bool: True if the element is acceptable, false otherwise.
+    '''
+    acceptable_rels = {
+        '/r/IsA', '/r/PartOf', '/r/HasA', '/r/UsedFor', '/r/CapableOf', '/r/HasProperty', '/r/MannerOf',
+        '/r/MadeOf', '/r/ReceivesAction', '/r/AtLocation', '/r/Causes', '/r/HasSubevent', '/r/HasFirstSubevent',
+        '/r/HasLastSubevent', '/r/HasPrerequisite', '/r/MotivatedByGoal', '/r/ObstructedBy', '/r/Desires',
+        '/r/CreatedBy', '/r/DistinctFrom', '/r/SymbolOf', '/r/DefinedAs', '/r/LocatedNear', '/r/HasContext',
+        '/r/SimilarTo', '/r/CausesDesire','/r/TradedOn','/r/HasCEO','/r/Industry','/r/HeadquarteredIn','/r/Owns','/r/PartnersWith',
+        '/r/CompetesWith','/r/ReportedEarnings','/r/HasMarketCap','/r/HasNews','/r/OffersProduct','/r/HasMarketSentiment','/r/HasEvent','/r/HasInvestorType','/r/InvestorInterest',
+        '/r/InvestorBehavior','/r/InnovatesIn','/r/MarketLeaderIn','/r/AcquiredBy','/r/Acquires','/r/ImplementsStrategy','/r/InvestorActivity','/r/HasLiquidity','/r/HasMarketDepth','/r/HasAnalysis',
+        '/r/HasTrend','/r/ImpactsEconomy','/r/UsesAlgorithmicTrading','/r/HasTraderType','/r/HasSharePrice','/r/HasCustomerLoyalty','/r/HasWorkforce','/r/UsesAdvertising','/r/HasProductPrice','/r/HasCorporateAction',
+        '/r/HasEarningsForecast','/r/HasUserBase','/r/SubjectToRegulation','/r/ImpactsEconomy','/r/TraderBehavior'
+    } #A set of acceptable relations for a faster look-up
+    element_type = element['@id'][1] #Obtaining the type of the element: 'a' for edge and 'c' for node
+    if element_type == 'c':
+        return True
+    elif element_type == 'a':
+        end_id = element['end']['@id'][1] #Obtaining the end ID of the element
+        start_id = element['start']['@id'][1] #Obtaining the start ID of the element
+        if end_id !='c' or start_id !='c':#If the elements don't have the endpoints of either a relation or a node
+            return False
+        if element['rel']['@id'] not in acceptable_rels: #If the relations are not in the acceptable set of relations
+            return False
+        if element['weight'] < 1.0:#If the weights (representing strength, confidence, relevance or importance) are less than 1. Might need to change this later after determining the most suitable strategy for determining weights
+            return False
+    else:
+        return False
+    return True #Passing all checks
+
+
+
 
 
 
