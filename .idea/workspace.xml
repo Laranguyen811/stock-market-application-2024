@@ -4,7 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4f5895f3-2d93-4355-bcbb-97c6701d0028" name="Changes" comment="- add transform_path&#10;- add get_page&#10;- add get_node&#10;- add combine_pages&#10;- add get_edge&#10;- add get_multi_model">
+    <list default="true" id="4f5895f3-2d93-4355-bcbb-97c6701d0028" name="Changes" comment="- add save_to_local&#10;- add acceptable_element">
+      <change afterPath="$PROJECT_DIR$/stock_market/fl_multimodal_knowledge_graph/data_collection/data_collection_tools/download_images.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/stock_market/fl_multimodal_knowledge_graph/data_collection/data_collection_tools/fetch_tool.py" beforeDir="false" afterPath="$PROJECT_DIR$/stock_market/fl_multimodal_knowledge_graph/data_collection/data_collection_tools/fetch_tool.py" afterDir="false" />
     </list>
@@ -405,7 +406,8 @@
       <workItem from="1721629673626" duration="2873000" />
       <workItem from="1721707318099" duration="10325000" />
       <workItem from="1721794303400" duration="8502000" />
-      <workItem from="1721880078455" duration="6906000" />
+      <workItem from="1721880078455" duration="9865000" />
+      <workItem from="1721966643638" duration="6123000" />
     </task>
     <task id="LOCAL-00001" summary="Add stock market analysis &#10;&#10;Scrape stock data using yfinance API.&#10;Add outlier detection and metadata.">
       <option name="closed" value="true" />
@@ -719,7 +721,15 @@
       <option name="project" value="LOCAL" />
       <updated>1721800757254</updated>
     </task>
-    <option name="localTasksCounter" value="40" />
+    <task id="LOCAL-00040" summary="- add save_to_local&#10;- add acceptable_element">
+      <option name="closed" value="true" />
+      <created>1721887214082</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1721887214082</updated>
+    </task>
+    <option name="localTasksCounter" value="41" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -760,7 +770,8 @@
     <MESSAGE value="- add add_relation function" />
     <MESSAGE value="- add fetch_tool.py" />
     <MESSAGE value="- add transform_path&#10;- add get_page&#10;- add get_node&#10;- add combine_pages&#10;- add get_edge&#10;- add get_multi_model" />
-    <option name="LAST_COMMIT_MESSAGE" value="- add transform_path&#10;- add get_page&#10;- add get_node&#10;- add combine_pages&#10;- add get_edge&#10;- add get_multi_model" />
+    <MESSAGE value="- add save_to_local&#10;- add acceptable_element" />
+    <option name="LAST_COMMIT_MESSAGE" value="- add save_to_local&#10;- add acceptable_element" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

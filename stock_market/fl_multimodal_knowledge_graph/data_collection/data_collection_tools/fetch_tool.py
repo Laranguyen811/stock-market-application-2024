@@ -164,7 +164,7 @@ def save_to_local(uri,content):
     Returns:
         None
     '''
-    try:
+    try:# Attempting a block of code before throwing an exception
         path = transform_path(uri)
         filename = transform_filename(uri)
         if not os.path.exists(path): #If the path does not exist
@@ -184,13 +184,16 @@ def acceptable_element(element):
     acceptable_rels = {
         '/r/IsA', '/r/PartOf', '/r/HasA', '/r/UsedFor', '/r/CapableOf', '/r/HasProperty', '/r/MannerOf',
         '/r/MadeOf', '/r/ReceivesAction', '/r/AtLocation', '/r/Causes', '/r/HasSubevent', '/r/HasFirstSubevent',
-        '/r/HasLastSubevent', '/r/HasPrerequisite', '/r/MotivatedByGoal', '/r/ObstructedBy', '/r/Desires',
+        '/r/HasLastSubevent','/r/HasPrerequisite', '/r/MotivatedByGoal', '/r/ObstructedBy', '/r/Desires',
         '/r/CreatedBy', '/r/DistinctFrom', '/r/SymbolOf', '/r/DefinedAs', '/r/LocatedNear', '/r/HasContext',
-        '/r/SimilarTo', '/r/CausesDesire','/r/TradedOn','/r/HasCEO','/r/Industry','/r/HeadquarteredIn','/r/Owns','/r/PartnersWith',
-        '/r/CompetesWith','/r/ReportedEarnings','/r/HasMarketCap','/r/HasNews','/r/OffersProduct','/r/HasMarketSentiment','/r/HasEvent','/r/HasInvestorType','/r/InvestorInterest',
-        '/r/InvestorBehavior','/r/InnovatesIn','/r/MarketLeaderIn','/r/AcquiredBy','/r/Acquires','/r/ImplementsStrategy','/r/InvestorActivity','/r/HasLiquidity','/r/HasMarketDepth','/r/HasAnalysis',
-        '/r/HasTrend','/r/ImpactsEconomy','/r/UsesAlgorithmicTrading','/r/HasTraderType','/r/HasSharePrice','/r/HasCustomerLoyalty','/r/HasWorkforce','/r/UsesAdvertising','/r/HasProductPrice','/r/HasCorporateAction',
-        '/r/HasEarningsForecast','/r/HasUserBase','/r/SubjectToRegulation','/r/ImpactsEconomy','/r/TraderBehavior'
+        '/r/SimilarTo', '/r/CausesDesire','/r/TradedOn','/r/HasCEO','/r/Industry','/r/HeadquarteredIn','/r/Owns',
+        '/r/PartnersWith','/r/CompetesWith','/r/ReportedEarnings','/r/HasMarketCap','/r/HasNews','/r/OffersProduct',
+        '/r/HasMarketSentiment','/r/HasEvent','/r/HasInvestorType','/r/InvestorInterest','/r/InvestorBehavior',
+        '/r/InnovatesIn','/r/MarketLeaderIn','/r/AcquiredBy','/r/Acquires','/r/ImplementsStrategy','/r/InvestorActivity',
+        '/r/HasLiquidity','/r/HasMarketDepth','/r/HasAnalysis','/r/HasTrend','/r/ImpactsEconomy','/r/UsesAlgorithmicTrading',
+        '/r/HasTraderType','/r/HasSharePrice','/r/HasCustomerLoyalty','/r/HasWorkforce','/r/UsesAdvertising','/r/HasProductPrice','/r/HasCorporateAction',
+        '/r/HasEarningsForecast','/r/HasUserBase','/r/SubjectToRegulation','/r/ImpactsEconomy','/r/TraderBehavior','/r/HasPhilanthropy','/r/HasEthics',
+        '/r/CommunityInvolvement','/r/HasCulture','/r/CSRMetrics','/r/CSRKPIs','/r/HasCertifications','/r/ESGFactors'
     } #A set of acceptable relations for a faster look-up
     element_type = element['@id'][1] #Obtaining the type of the element: 'a' for edge and 'c' for node
     if element_type == 'c':
@@ -208,8 +211,52 @@ def acceptable_element(element):
         return False
     return True #Passing all checks
 
+def need_extension(uri):
+    ''' Takes a URI and returns whether it needs a multimodal extension.
+    Inputs:
+        uri(string): a string of a URI to check
+    Returns:
+        bool: True if it needs a multimodal extension and False otherwise.
+    '''
+    no_extension_rels = {'/r/IsA/', '/r/MannerOf/', '/r/HasSubevent/', '/r/HasFirstSubevent/', '/r/HasLastSubevent/',
+			'/r/HasPrerequisite/', '/r/MotivatedByGoal/', '/r/ObstructedBy/', '/r/Desires/', '/r/DistinctFrom/',
+			'/r/SymbolOf/', '/r/DefinedAs/', '/r/HasContext/', '/r/SimilarTo/', '/r/CausesDesire/', '/r/NotDesires/'
+    } #A set of relations needing no multimodal extension
+    if uri[1] =='c':#If the uri represents a node
+        return True
+    else:
+        relation = re.findall('^.*\[(.*?)\]',uri)[0].split(',')[0] #Finding all components matching the pattern in the uri,splitting on commas and return the first part as a relation
+        return relation not in no_extension_rels #If the relation is in the list, return False, return True otherwise
 
 
+def filter_node(node):
+    '''Takes a node and decides which edges are appropriate, then returns the node with suitable edges.
+    Inputs:
+        node(dictionary): A dictionary of an edge
+    Returns:
+        dictionary: A dictionary of an edge with suitable edges
+    Raises:
+        TypeError: If the input is not a dictionary or if the 'edges' key is not present in the dictionary.
+    '''
+    if not isinstance(node, dict): #If the input is not a dictionary
+        raise TypeError('The input must be a dictionary representing a node.')
+    node['edges'] = [edge for edge in node['edges'] if acceptable_element(edge)] #Filtering out the edges
+    return node
+def delete_uri(uri):
+    '''Takes a URI and deletes the file corresponding to that URI.
+    Inputs:
+        uri(string): a string of a URI.
+    Returns:
+        None
+    Raises:
+        FileNotFoundError: If the file does not exist.
+    '''
+    filename = transform_filename(uri)
+
+    if not os.path.exists(filename): #Checking if the file exists
+        raise FileNotFoundError(f'No such file or directory: {filename}')
+    cmd = 'rm -f {}'.format(filename.replace("'", "\\'")) #Constructing a shell command to delete this file
+    subprocess.run(cmd,shell=True) #Execute the command using function subprocess.run from the subprocess module(spawning new processes from given input/output/error pipelines)
 
 
 
