@@ -59,9 +59,9 @@ def download_images(text,save_path,limits=5):
     record = []
     count = 0
     for i,url in enumerate(image_urls):#Looping over image_urls
-        if cnt >= limits:
+        if count >= limits:
             break #Ceasing the loop
-        filename = os.path.join(save_path,str(cnt) + ".jpg") #Joining save_path, count with ".jpg" to form a filename
+        filename = os.path.join(save_path,str(count) + ".jpg") #Joining save_path, count with ".jpg" to form a filename
         try:
             r=requests.get(url,headers=headers,proxies=proxies,stream=True,timeout=45) #Sending a GET request to a specified URL. The headers parameter is used to pass HTTP headers to the request, and the proxies parameter is used to specify the proxies that the request should go through. The stream parameter, when set to True, means that the response content should be streamed rather than immediately downloaded. The timeout parameter specifies the maximum number of seconds to wait for a response before giving up.
             r.raise_for_status() #Checking if the request is successful. If not, will raise a HTTPError exception.
