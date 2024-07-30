@@ -57,7 +57,7 @@ def download_images(text,save_path,limits=5):
             print(f"Error during requests to {url} :{str(e)}")
             continue #Used in a loop, the current iteration ends immediately
     record = []
-    cnt = 0
+    count = 0
     for i,url in enumerate(image_urls):#Looping over image_urls
         if cnt >= limits:
             break #Ceasing the loop
@@ -67,7 +67,7 @@ def download_images(text,save_path,limits=5):
             r.raise_for_status() #Checking if the request is successful. If not, will raise a HTTPError exception.
             with open(filename,'wb') as f: #Opening a filename in a writing binary mode  and closing when done
                 f.write(r.content)
-            cnt += 1
+            count += 1
         except requests.exceptions.RequestException as e: #Raising a RequestException exception
             print(f"Error during requests to {url} :{str(e)}")
             continue #Used in a loop, the current iteration ends immediately
