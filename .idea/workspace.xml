@@ -4,10 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4f5895f3-2d93-4355-bcbb-97c6701d0028" name="Changes" comment="- add save_to_local&#10;- add acceptable_element">
+    <list default="true" id="4f5895f3-2d93-4355-bcbb-97c6701d0028" name="Changes" comment="- add need_extension&#10;- add filter_node&#10;- add delete_uri&#10;-">
       <change afterPath="$PROJECT_DIR$/stock_market/fl_multimodal_knowledge_graph/data_collection/data_collection_tools/download_images.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stock_market/fl_multimodal_knowledge_graph/data_collection/data_collection_tools/download_sounds.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/stock_market/fl_multimodal_knowledge_graph/data_collection/data_collection_tools/fetch_tool.py" beforeDir="false" afterPath="$PROJECT_DIR$/stock_market/fl_multimodal_knowledge_graph/data_collection/data_collection_tools/fetch_tool.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -407,7 +407,9 @@
       <workItem from="1721707318099" duration="10325000" />
       <workItem from="1721794303400" duration="8502000" />
       <workItem from="1721880078455" duration="9865000" />
-      <workItem from="1721966643638" duration="6123000" />
+      <workItem from="1721966643638" duration="7112000" />
+      <workItem from="1722225984671" duration="8434000" />
+      <workItem from="1722312039630" duration="6518000" />
     </task>
     <task id="LOCAL-00001" summary="Add stock market analysis &#10;&#10;Scrape stock data using yfinance API.&#10;Add outlier detection and metadata.">
       <option name="closed" value="true" />
@@ -729,7 +731,15 @@
       <option name="project" value="LOCAL" />
       <updated>1721887214082</updated>
     </task>
-    <option name="localTasksCounter" value="41" />
+    <task id="LOCAL-00041" summary="- add need_extension&#10;- add filter_node&#10;- add delete_uri&#10;-">
+      <option name="closed" value="true" />
+      <created>1721975300713</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1721975300713</updated>
+    </task>
+    <option name="localTasksCounter" value="42" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -771,7 +781,8 @@
     <MESSAGE value="- add fetch_tool.py" />
     <MESSAGE value="- add transform_path&#10;- add get_page&#10;- add get_node&#10;- add combine_pages&#10;- add get_edge&#10;- add get_multi_model" />
     <MESSAGE value="- add save_to_local&#10;- add acceptable_element" />
-    <option name="LAST_COMMIT_MESSAGE" value="- add save_to_local&#10;- add acceptable_element" />
+    <MESSAGE value="- add need_extension&#10;- add filter_node&#10;- add delete_uri&#10;-" />
+    <option name="LAST_COMMIT_MESSAGE" value="- add need_extension&#10;- add filter_node&#10;- add delete_uri&#10;-" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
