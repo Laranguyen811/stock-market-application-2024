@@ -4,9 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4f5895f3-2d93-4355-bcbb-97c6701d0028" name="Changes" comment="- add need_extension&#10;- add filter_node&#10;- add delete_uri&#10;-">
-      <change afterPath="$PROJECT_DIR$/stock_market/fl_multimodal_knowledge_graph/data_collection/data_collection_tools/download_images.py" afterDir="false" />
+    <list default="true" id="4f5895f3-2d93-4355-bcbb-97c6701d0028" name="Changes" comment="- adding download_images.py">
       <change afterPath="$PROJECT_DIR$/stock_market/fl_multimodal_knowledge_graph/data_collection/data_collection_tools/download_sounds.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stock_market/fl_multimodal_knowledge_graph/data_collection/data_collection_tools/extend_tool.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -409,7 +409,8 @@
       <workItem from="1721880078455" duration="9865000" />
       <workItem from="1721966643638" duration="7112000" />
       <workItem from="1722225984671" duration="8434000" />
-      <workItem from="1722312039630" duration="6518000" />
+      <workItem from="1722312039630" duration="7090000" />
+      <workItem from="1722398615717" duration="5741000" />
     </task>
     <task id="LOCAL-00001" summary="Add stock market analysis &#10;&#10;Scrape stock data using yfinance API.&#10;Add outlier detection and metadata.">
       <option name="closed" value="true" />
@@ -739,7 +740,31 @@
       <option name="project" value="LOCAL" />
       <updated>1721975300713</updated>
     </task>
-    <option name="localTasksCounter" value="42" />
+    <task id="LOCAL-00042" summary="- adding download_images.py">
+      <option name="closed" value="true" />
+      <created>1722322738307</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL-00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1722322738307</updated>
+    </task>
+    <task id="LOCAL-00043" summary="- adding download_images.py">
+      <option name="closed" value="true" />
+      <created>1722322787260</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1722322787260</updated>
+    </task>
+    <task id="LOCAL-00044" summary="- adding download_images.py">
+      <option name="closed" value="true" />
+      <created>1722322805901</created>
+      <option name="number" value="00044" />
+      <option name="presentableId" value="LOCAL-00044" />
+      <option name="project" value="LOCAL" />
+      <updated>1722322805901</updated>
+    </task>
+    <option name="localTasksCounter" value="45" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -757,7 +782,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Add stock market analysis &#10;&#10;Scrape stock data using yfinance API.&#10;Add outlier detection and metadata." />
     <MESSAGE value="- Add seasonal decomposition&#10;- Add Mardia's test and Henze-Zirkler's test" />
     <MESSAGE value="- Add seasonal decomposition&#10;- Add Mardia's test and Henze-Zirkler's test&#10;- Fix correlation heatmaps" />
     <MESSAGE value="- Add correlation coefficients" />
@@ -782,7 +806,8 @@
     <MESSAGE value="- add transform_path&#10;- add get_page&#10;- add get_node&#10;- add combine_pages&#10;- add get_edge&#10;- add get_multi_model" />
     <MESSAGE value="- add save_to_local&#10;- add acceptable_element" />
     <MESSAGE value="- add need_extension&#10;- add filter_node&#10;- add delete_uri&#10;-" />
-    <option name="LAST_COMMIT_MESSAGE" value="- add need_extension&#10;- add filter_node&#10;- add delete_uri&#10;-" />
+    <MESSAGE value="- adding download_images.py" />
+    <option name="LAST_COMMIT_MESSAGE" value="- adding download_images.py" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
