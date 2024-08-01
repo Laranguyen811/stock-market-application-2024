@@ -83,7 +83,7 @@ def get_file_size(url):
     Returns:
         float: The float number of the file size in MiB.
     '''
-    info_str = subprocess.check_output(f'you-get --info {url}',shell=True).decode('utf-8') #Running a command specified by the given argument, waiting for it to finish and then returning its output by bytestrin in a formatted string literal. Command executed through shell, and output decoded via 'utf-8'.
+    info_str = subprocess.check_output(f'you-get --info {url}',shell=True).decode('utf-8') #Running a command specified by the given argument, waiting for it to finish and then returning its output by bytestring in a formatted string literal. Command executed through shell, and output decoded via 'utf-8'.
     size_pattern = re.compile(r'(\d+\.\d*)[\s]MiB') #Matching sequence of one or more digits, followed by zero or more digits, then any whitespace character, with the exact string 'MiB'.
     size = float(size_pattern.findall(info_str)[0]) #Turning the first string of the output of info_str that matches the pattern of size_pattern into a float number
     return size
@@ -111,7 +111,7 @@ def download_file(url,save_path,timeout):
         subprocess.run(f'-rm {save_path.replace("'", "\\'")}/*.download',shell=True)
 if __name__ == '__main__':
     download_sound('stock market','Sounds/stock_market')
-    
+
 
 
 
