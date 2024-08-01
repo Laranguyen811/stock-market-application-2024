@@ -4,11 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4f5895f3-2d93-4355-bcbb-97c6701d0028" name="Changes" comment="- adding download_sounds.py&#10;- adding extend_tool.py">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/stock_market/fl_multimodal_knowledge_graph/data_collection/data_collection_tools/download_sounds.py" beforeDir="false" afterPath="$PROJECT_DIR$/stock_market/fl_multimodal_knowledge_graph/data_collection/data_collection_tools/download_sounds.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/stock_market/fl_multimodal_knowledge_graph/data_collection/data_collection_tools/extend_tool.py" beforeDir="false" afterPath="$PROJECT_DIR$/stock_market/fl_multimodal_knowledge_graph/data_collection/data_collection_tools/extend_tool.py" afterDir="false" />
-    </list>
+    <list default="true" id="4f5895f3-2d93-4355-bcbb-97c6701d0028" name="Changes" comment="- adding functions to extend_tool.py" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -411,7 +407,7 @@
       <workItem from="1722225984671" duration="8434000" />
       <workItem from="1722312039630" duration="7090000" />
       <workItem from="1722398615717" duration="6950000" />
-      <workItem from="1722484899256" duration="7614000" />
+      <workItem from="1722484899256" duration="8292000" />
     </task>
     <task id="LOCAL-00001" summary="Add stock market analysis &#10;&#10;Scrape stock data using yfinance API.&#10;Add outlier detection and metadata.">
       <option name="closed" value="true" />
@@ -773,7 +769,15 @@
       <option name="project" value="LOCAL" />
       <updated>1722406975943</updated>
     </task>
-    <option name="localTasksCounter" value="46" />
+    <task id="LOCAL-00046" summary="- adding functions to extend_tool.py">
+      <option name="closed" value="true" />
+      <created>1722493415360</created>
+      <option name="number" value="00046" />
+      <option name="presentableId" value="LOCAL-00046" />
+      <option name="project" value="LOCAL" />
+      <updated>1722493415360</updated>
+    </task>
+    <option name="localTasksCounter" value="47" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -791,7 +795,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="- Add seasonal decomposition&#10;- Add Mardia's test and Henze-Zirkler's test&#10;- Fix correlation heatmaps" />
     <MESSAGE value="- Add correlation coefficients" />
     <MESSAGE value="- Calculate Mahalanobis to detect outliers" />
     <MESSAGE value="- Adding classes for outliers and principal component analysis" />
@@ -816,7 +819,8 @@
     <MESSAGE value="- add need_extension&#10;- add filter_node&#10;- add delete_uri&#10;-" />
     <MESSAGE value="- adding download_images.py" />
     <MESSAGE value="- adding download_sounds.py&#10;- adding extend_tool.py" />
-    <option name="LAST_COMMIT_MESSAGE" value="- adding download_sounds.py&#10;- adding extend_tool.py" />
+    <MESSAGE value="- adding functions to extend_tool.py" />
+    <option name="LAST_COMMIT_MESSAGE" value="- adding functions to extend_tool.py" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

@@ -110,7 +110,7 @@ def get_text(uri):
         '/r/CSRKPIs': 'CSR KPIs ',
         '/r/HasCertifications': 'has certifications ',
         '/r/ESGFactors': 'ESG factors '
-        }
+        } #A dictionary to map each relationship type to a corresponding human-readable relationship text.
     if uri[1] =='c':#Node
         text = uri_to_label(uri)
     else:
