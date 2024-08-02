@@ -5,7 +5,7 @@ import logging
 
 from stock_market.fl_multimodal_knowledge_graph.data_collection.data_collection_tools.uri_tool import uri_to_label
 from stock_market.fl_multimodal_knowledge_graph.data_collection.data_collection_tools import fetch_tool,download_sounds,download_images
-
+from stock_market.fl_multimodal_knowledge_graph.data_collection.data_collection_tools import download_visuals
 def multimodal_path(uri,model):
     '''Takes a URI of a node or edge and a specified modal type and returns a path to a file.
     Inputs:
@@ -185,7 +185,7 @@ def add_multimodel_node_visual(text : str,path : str) -> List[str]:
         os.makedirs(path) #Creating a path
         logging.info(f"Created directory at {path}") ##Emitting log messages using the logging.info method
     try: #Attempting a block of code before throwing an exception
-        file_formats = download_visual.download_visual(text,path)
+        file_formats = download_visuals.download_visual(text,path)
         logging.info(f"Download visual files: {file_formats}") #Emitting log messages using the logging.info method
         return file_formats
     except Exception as e:#Throwing an exception as variable e
