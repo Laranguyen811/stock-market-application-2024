@@ -1,6 +1,6 @@
 import re
 import os
-from typing import List
+from typing import List,Dict,Any
 import logging
 
 from stock_market.fl_multimodal_knowledge_graph.data_collection.data_collection_tools.uri_tool import uri_to_label
@@ -185,12 +185,44 @@ def add_multimodel_node_visual(text : str,path : str) -> List[str]:
         os.makedirs(path) #Creating a path
         logging.info(f"Created directory at {path}") ##Emitting log messages using the logging.info method
     try: #Attempting a block of code before throwing an exception
-        file_formats = download_visuals.download_visual(text,path)
+        file_formats = download_visual.download_visual(text,path)
         logging.info(f"Download visual files: {file_formats}") #Emitting log messages using the logging.info method
         return file_formats
-    except Exception as e:
+    except Exception as e:#Throwing an exception as variable e
         logging.error(f"An error occurred: {e}") #Logging error messages indicating serious problems using logging.error method
         return []
+
+
+def add_multimodel(page:Dict[str,Any],model_type:str) -> Dict[str,Any]:
+    '''Adds multimodal information to the page.
+        Inputs:
+            page(Dict[str,Any]):The page dicctionary containing '@id' key.
+            model_type(str): The type of model to add (e.g. 'audio','image','visual').
+        Returns:
+            Dict[str,Any]:The updated page dicctionary with multimodal information.
+    '''
+    uri = page['@id']
+    model_info = {} #Using a temporary dictionary to record the newly added multimodal information fields
+    text = get_text(uri)
+
+    logging.basicConfig(level=logging.INFO) #Setting up a basic config for logging
+    def add_multimodal_node(node_type:str,add_function):
+        newly_added = add_function(text,multimodal_path(uri,node_type)) #Downloading information and returning the list of newly added items
+        if len(newly_added) > 0:
+            model_info[node_type] = [] #Initialising the list as empty
+            for i,form in enumerate(newly_added):
+                entry = {'@id': multimodel_uri(uri,node_type) + str(i),'form': form} #Creating an entry using id as key, value is the base URI and the number of iteration and form
+                if node_type == 'visual':
+                    entry['with-audio'] = form[0]
+                    entry['form'] = form[1]
+                model_info[node_type].append(entry)
+            logging.info(f'{node_type} added')
+    #Adding audio, image, and visual nodes
+    add_multimodal_node('audio',add_multimodel_node_audio)
+    add_multimodal_node('image',add_multimodel_node_image)
+    add_multimodal_node('visuals',add_multimodel_node_visual)
+
+
 
 
 
