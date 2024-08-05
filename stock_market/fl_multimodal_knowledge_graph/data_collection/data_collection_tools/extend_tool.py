@@ -1,6 +1,6 @@
 import re
 import os
-from typing import List,Dict,Any
+from typing import List,Dict,Any #data types
 import logging
 
 from stock_market.fl_multimodal_knowledge_graph.data_collection.data_collection_tools.uri_tool import uri_to_label
@@ -183,7 +183,7 @@ def add_multimodel_node_visual(text : str,path : str) -> List[str]:
     #Ensuring the directory exists
     if not os.path.exists(path): #If the path does not exist
         os.makedirs(path) #Creating a path
-        logging.info(f"Created directory at {path}") ##Emitting log messages using the logging.info method
+        logging.info(f"Created directory at {path}") #Emitting log messages using the logging.info method
     try: #Attempting a block of code before throwing an exception
         file_formats = download_visuals.download_visual(text,path)
         logging.info(f"Download visual files: {file_formats}") #Emitting log messages using the logging.info method

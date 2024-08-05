@@ -4,10 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4f5895f3-2d93-4355-bcbb-97c6701d0028" name="Changes" comment="- adding functions to extend_tool.py">
-      <change afterPath="$PROJECT_DIR$/stock_market/fl_multimodal_knowledge_graph/data_collection/data_collection_tools/download_visuals.py" afterDir="false" />
+    <list default="true" id="4f5895f3-2d93-4355-bcbb-97c6701d0028" name="Changes" comment="- finishing extend_tool.py">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/stock_market/Lib/site-packages/mpl_toolkits/mplot3d/tests/test_stock_data_analysis.py" beforeDir="false" afterPath="$PROJECT_DIR$/stock_market/Lib/site-packages/mpl_toolkits/mplot3d/tests/test_stock_data_analysis.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/stock_market/fl_multimodal_knowledge_graph/data_collection/data_collection_tools/add_tool.py" beforeDir="false" afterPath="$PROJECT_DIR$/stock_market/fl_multimodal_knowledge_graph/data_collection/data_collection_tools/add_tool.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/stock_market/fl_multimodal_knowledge_graph/data_collection/data_collection_tools/download_images.py" beforeDir="false" afterPath="$PROJECT_DIR$/stock_market/fl_multimodal_knowledge_graph/data_collection/data_collection_tools/download_images.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/stock_market/fl_multimodal_knowledge_graph/data_collection/data_collection_tools/download_visuals.py" beforeDir="false" afterPath="$PROJECT_DIR$/stock_market/fl_multimodal_knowledge_graph/data_collection/data_collection_tools/download_visuals.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/stock_market/fl_multimodal_knowledge_graph/data_collection/data_collection_tools/extend_tool.py" beforeDir="false" afterPath="$PROJECT_DIR$/stock_market/fl_multimodal_knowledge_graph/data_collection/data_collection_tools/extend_tool.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -67,36 +69,36 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Python tests.Python tests for test_stock_data_analysis.test_calculate_corr_coeffs.executor": "Run",
-    "Python tests.Python tests in test_normal_distribution_detection.py.executor": "Run",
-    "Python tests.Python tests in test_stock_data_analysis.py.executor": "Debug",
-    "Python.Stock_Data_Analysis.executor": "Run",
-    "Python.Stock_Data_Visualisation.executor": "Run",
-    "Python.Stock_Market_Application.executor": "Run",
-    "Python.add_tool.executor": "Run",
-    "Python.add_tools.executor": "Run",
-    "Python.proxy_tool.executor": "Run",
-    "Python.stock_data_analysis.executor": "Run",
-    "Python.uri_tool.executor": "Run",
-    "Python.uri_tools.executor": "Run",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "ToolWindowPlots.ShowToolbar": "false",
-    "git-widget-placeholder": "master",
-    "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "C:/Users/laran/PycharmProjects/ASX",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "project.propVCSSupport.DirectoryMappings",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Python tests.Python tests for test_stock_data_analysis.test_calculate_corr_coeffs.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Python tests in test_normal_distribution_detection.py.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Python tests in test_stock_data_analysis.py.executor&quot;: &quot;Debug&quot;,
+    &quot;Python.Stock_Data_Analysis.executor&quot;: &quot;Run&quot;,
+    &quot;Python.Stock_Data_Visualisation.executor&quot;: &quot;Run&quot;,
+    &quot;Python.Stock_Market_Application.executor&quot;: &quot;Run&quot;,
+    &quot;Python.add_tool.executor&quot;: &quot;Run&quot;,
+    &quot;Python.add_tools.executor&quot;: &quot;Run&quot;,
+    &quot;Python.proxy_tool.executor&quot;: &quot;Run&quot;,
+    &quot;Python.stock_data_analysis.executor&quot;: &quot;Run&quot;,
+    &quot;Python.uri_tool.executor&quot;: &quot;Run&quot;,
+    &quot;Python.uri_tools.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;ToolWindowPlots.ShowToolbar&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/laran/PycharmProjects/ASX&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;project.propVCSSupport.DirectoryMappings&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\laran\PycharmProjects\ASX\mathplotlib" />
@@ -415,7 +417,8 @@
       <workItem from="1722398615717" duration="6950000" />
       <workItem from="1722484899256" duration="9152000" />
       <workItem from="1722564249731" duration="4611000" />
-      <workItem from="1722573572280" duration="5447000" />
+      <workItem from="1722573572280" duration="6182000" />
+      <workItem from="1722832012295" duration="6993000" />
     </task>
     <task id="LOCAL-00001" summary="Add stock market analysis &#10;&#10;Scrape stock data using yfinance API.&#10;Add outlier detection and metadata.">
       <option name="closed" value="true" />
@@ -793,7 +796,23 @@
       <option name="project" value="LOCAL" />
       <updated>1722495219221</updated>
     </task>
-    <option name="localTasksCounter" value="48" />
+    <task id="LOCAL-00048" summary="- finishing extend_tool.py">
+      <option name="closed" value="true" />
+      <created>1722581211737</created>
+      <option name="number" value="00048" />
+      <option name="presentableId" value="LOCAL-00048" />
+      <option name="project" value="LOCAL" />
+      <updated>1722581211737</updated>
+    </task>
+    <task id="LOCAL-00049" summary="- finishing extend_tool.py">
+      <option name="closed" value="true" />
+      <created>1722581258851</created>
+      <option name="number" value="00049" />
+      <option name="presentableId" value="LOCAL-00049" />
+      <option name="project" value="LOCAL" />
+      <updated>1722581258851</updated>
+    </task>
+    <option name="localTasksCounter" value="50" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -811,7 +830,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="- Add correlation coefficients" />
     <MESSAGE value="- Calculate Mahalanobis to detect outliers" />
     <MESSAGE value="- Adding classes for outliers and principal component analysis" />
     <MESSAGE value="- Add box plots for outlier detection" />
@@ -836,7 +854,8 @@
     <MESSAGE value="- adding download_images.py" />
     <MESSAGE value="- adding download_sounds.py&#10;- adding extend_tool.py" />
     <MESSAGE value="- adding functions to extend_tool.py" />
-    <option name="LAST_COMMIT_MESSAGE" value="- adding functions to extend_tool.py" />
+    <MESSAGE value="- finishing extend_tool.py" />
+    <option name="LAST_COMMIT_MESSAGE" value="- finishing extend_tool.py" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
