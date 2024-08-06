@@ -4,13 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4f5895f3-2d93-4355-bcbb-97c6701d0028" name="Changes" comment="- finishing extend_tool.py">
+    <list default="true" id="4f5895f3-2d93-4355-bcbb-97c6701d0028" name="Changes" comment="- finished download_visuals.py">
+      <change afterPath="$PROJECT_DIR$/stock_market/fl_multimodal_knowledge_graph/data_collection/data_collection_tools/transport_tool.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/stock_market/Lib/site-packages/mpl_toolkits/mplot3d/tests/test_stock_data_analysis.py" beforeDir="false" afterPath="$PROJECT_DIR$/stock_market/Lib/site-packages/mpl_toolkits/mplot3d/tests/test_stock_data_analysis.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/stock_market/fl_multimodal_knowledge_graph/data_collection/data_collection_tools/add_tool.py" beforeDir="false" afterPath="$PROJECT_DIR$/stock_market/fl_multimodal_knowledge_graph/data_collection/data_collection_tools/add_tool.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/stock_market/fl_multimodal_knowledge_graph/data_collection/data_collection_tools/download_images.py" beforeDir="false" afterPath="$PROJECT_DIR$/stock_market/fl_multimodal_knowledge_graph/data_collection/data_collection_tools/download_images.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/stock_market/fl_multimodal_knowledge_graph/data_collection/data_collection_tools/download_visuals.py" beforeDir="false" afterPath="$PROJECT_DIR$/stock_market/fl_multimodal_knowledge_graph/data_collection/data_collection_tools/download_visuals.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/stock_market/fl_multimodal_knowledge_graph/data_collection/data_collection_tools/extend_tool.py" beforeDir="false" afterPath="$PROJECT_DIR$/stock_market/fl_multimodal_knowledge_graph/data_collection/data_collection_tools/extend_tool.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -418,15 +415,8 @@
       <workItem from="1722484899256" duration="9152000" />
       <workItem from="1722564249731" duration="4611000" />
       <workItem from="1722573572280" duration="6182000" />
-      <workItem from="1722832012295" duration="6993000" />
-    </task>
-    <task id="LOCAL-00001" summary="Add stock market analysis &#10;&#10;Scrape stock data using yfinance API.&#10;Add outlier detection and metadata.">
-      <option name="closed" value="true" />
-      <created>1707104517108</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1707104517108</updated>
+      <workItem from="1722832012295" duration="7538000" />
+      <workItem from="1722924828573" duration="2228000" />
     </task>
     <task id="LOCAL-00002" summary="Merge remote-tracking branch 'origin/master'">
       <option name="closed" value="true" />
@@ -812,7 +802,15 @@
       <option name="project" value="LOCAL" />
       <updated>1722581258851</updated>
     </task>
-    <option name="localTasksCounter" value="50" />
+    <task id="LOCAL-00050" summary="- finished download_visuals.py">
+      <option name="closed" value="true" />
+      <created>1722840598101</created>
+      <option name="number" value="00050" />
+      <option name="presentableId" value="LOCAL-00050" />
+      <option name="project" value="LOCAL" />
+      <updated>1722840598101</updated>
+    </task>
+    <option name="localTasksCounter" value="51" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -830,7 +828,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="- Calculate Mahalanobis to detect outliers" />
     <MESSAGE value="- Adding classes for outliers and principal component analysis" />
     <MESSAGE value="- Add box plots for outlier detection" />
     <MESSAGE value="- Adding upper bound and lower bound outliers" />
@@ -855,7 +852,8 @@
     <MESSAGE value="- adding download_sounds.py&#10;- adding extend_tool.py" />
     <MESSAGE value="- adding functions to extend_tool.py" />
     <MESSAGE value="- finishing extend_tool.py" />
-    <option name="LAST_COMMIT_MESSAGE" value="- finishing extend_tool.py" />
+    <MESSAGE value="- finished download_visuals.py" />
+    <option name="LAST_COMMIT_MESSAGE" value="- finished download_visuals.py" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
