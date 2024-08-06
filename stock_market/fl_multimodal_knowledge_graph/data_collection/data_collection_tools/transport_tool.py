@@ -27,7 +27,7 @@ def rename(name: str):
     Raises:
          Exception: an exception if error executing command.
     '''
-    cmd = f'mv {name}'
+    cmd = f'mv {name}'  # A command to change a file's name
     run_command(cmd)
 
 def compress(name: str):
@@ -39,10 +39,10 @@ def compress(name: str):
     Raises:
         Exception: an exception if error executing the command.
     '''
-    cmd = f'tar -cvzf - ./{name} | split -d -b 500m -{name}.tar'
+    cmd = f'tar -cvzf - ./{name} | split -d -b 500m -{name}.tar'  # A command to split and package a file.
     run_command(cmd)
 
-    cmd = f'rm -rf {name}'
+    cmd = f'rm -rf {name}'  # A command to compress a file.
     run_command(cmd)
 
 def transport(name: str):
@@ -54,10 +54,10 @@ def transport(name: str):
     Raises:
      Exception: an exception if error executing the command.
     '''
-    path_local = ''
-    path_server = '/your/path/here'
-    server = 'your.server'
-    cmd = f'scp -P 2333 {path_local}{name}.tar* {server}"{path_server}'
+    path_local = ''  # A path to local file group
+    path_server = '/your/path/here'  # A path to server
+    server = 'your.server'  # A server
+    cmd = f'scp -P 2333 {path_local}{name}.tar* {server}"{path_server}'  # A command to take a specified file group and send it to a specific server
     run_command(cmd)
 
 
