@@ -27,7 +27,7 @@ def rename(name: str):
     Raises:
          Exception: an exception if error executing command.
     '''
-    cmd = f'mv {name}'  # A command to change a file's name
+    cmd = f'mv {name}'  # A command to change a file's name.
     run_command(cmd)
 
 def compress(name: str):
@@ -39,10 +39,10 @@ def compress(name: str):
     Raises:
         Exception: an exception if error executing the command.
     '''
-    cmd = f'tar -cvzf - ./{name} | split -d -b 500m -{name}.tar'  # A command to split and package a file.
+    cmd = f'tar -cvzf - ./{name} | split -d -b 500m -{name}.tar'  # A command to split, package and compress a file.
     run_command(cmd)
 
-    cmd = f'rm -rf {name}'  # A command to compress a file.
+    cmd = f'rm -rf {name}'  # A command to remove the original file.
     run_command(cmd)
 
 def transport(name: str):
@@ -60,5 +60,43 @@ def transport(name: str):
     cmd = f'scp -P 2333 {path_local}{name}.tar* {server}"{path_server}'  # A command to take a specified file group and send it to a specific server
     run_command(cmd)
 
+def clear(name: str):
+    '''Takes a file's name and clears the file
+    Inputs:
+        name(string): A string of a file's name.
+    Returns:
+        None
+    Raises:
+        Exception: an exception if error executing the command.
+    '''
+    cmd = f'rm -rf {name}*'  # Remove all files and directories whose names start with the value of the name variable and can have any character following it.
+    print(cmd)
+    run_command(cmd)
 
+def deliver_content(name: str):
+    ''' Takes a file's name and compress, transport and remove the file
+    Inputs:
+        name(string): A string of a file's name.
+    Returns:
+        None
+    Raises:
+        Exception: an exception if error executing the command.
+    '''
+    compress(name)
+    transport(name)
+    clear(name)
 
+def email(title: str,content: str):
+    ''' Takes the title and content to send emails.
+    Inputs:
+        title(string): A string of the title of the email.
+        content(string): A string of the content of the email.
+    Returns:
+        None
+    Raises:
+    Exception: an exception if error executing the command.
+    '''
+    mail_receive_address = ['<EMAIL>']
+    for address in mail_receive_address:
+        cmd = f'echo {content} | s-nail -s {title} {address}'  # A command to output the content, send an email with a specified title to a target email address.
+        run_command(cmd)
