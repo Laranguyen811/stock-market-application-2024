@@ -98,31 +98,58 @@ This project is licensed under the MIT License. See the LICENSE file for details
 I'd like to thank the open-source community and the contributors who made this application possible. 
 
 ## References:
-World Economic Forum. (2024, May). Globally, young people are investing more than ever, but do they have the best tools to do so? Retrieved from https://www.weforum.org/agenda/2024/05/globally-young-people-are-investing-more-than-ever-but-do-they-have-the-best-tools-to-do-so/
-Investopedia. (n.d.). Challenges of investing in the modern world. Retrieved from https://www.investopedia.com/articles/basics/12/challenges-investing-modern-world.asp
-State Library of New South Wales. (2024, March). TSS 2021 evaluation final report. Retrieved from https://pls.sl.nsw.gov.au/sites/default/files/2024-03/tss_2021_evaluation_final_report_2021-06-08.pdf
-Society of Actuaries. (2021). Fintech and retirement savings: Fast facts. Retrieved from https://www.soa.org/globalassets/assets/files/resources/research-report/2021/fintech-retirement-savings-fast-facts.pdf
-National Seniors Australia. (n.d.). Seniors more savvy about retirement income. Retrieved from https://nationalseniors.com.au/research/finances/seniors-more-savvy-about-retirement-income
-NerdWallet. (n.d.). How much does a financial advisor cost? Retrieved from https://www.nerdwallet.com/article/investing/how-much-does-a-financial-advisor-cost
-Financial Times. (n.d.). The rise and rise of sustainable investment. Retrieved from https://www.ft.com/partnercontent/london-stock-exchange-group/the-rise-and-rise-of-sustainable-investment.html
-Stockhead. (n.d.). The ethical investor: How to research and screen potential ethical stocks and some tools you can use. Retrieved from https://stockhead.com.au/environment-social-and-governance/the-ethical-investor-how-to-research-and-screen-potential-ethical-stocks-and-some-tools-you-can-use/
-Australian Ethical. (n.d.). Ethical investing in the Australian share market. Retrieved from https://www.australianethical.com.au/blog/ethical-investing-in-the-australian-share-market/
-SpringerLink. (2014). Article title. Journal of Economic Studies, 41(2), 123-145. Retrieved from https://link.springer.com/article/10.1007/s40685-014-0015-7
+* Australian Ethical. (n.d.). Ethical investing in the Australian share market. Retrieved from https://www.australianethical.com.au/blog/ethical-investing-in-the-australian-share-market/
+
+* Congressional Research Service. (2021). Report title. Retrieved from https://crsreports.congress.gov/product/pdf/R/R46941
+
+* Financial Times. (n.d.). The rise and rise of sustainable investment. Retrieved from https://www.ft.com/partnercontent/london-stock-exchange-group/the-rise-and-rise-of-sustainable-investment.html
+
+* Global Financial Literacy Excellence Center. (2016). Financial literacy report. Retrieved from https://gflec.org/wp-content/uploads/2015/11/3313-Finlit_Report_FINAL-5.11.16.pdf
+
+* Global Sustainable Investment Alliance. (2021). GSIR 2021. Retrieved from https://www.gsi-alliance.org/wp-content/uploads/2021/08/GSIR-20201.pdf
+
+ *Harvard Business Review. (n.d.). A beginner’s guide to socially responsible investing. Retrieved from https://hbr.org/2024/01/a-beginners-guide-to-socially-responsible-investing
+
+* HubSpot. (n.d.). Socially responsible investing. Retrieved from https://blog.hubspot.com/sales/socially-responsible-investing
+
+* International Journal of Financial Management and Research. (2024). Article title. Retrieved from https://www.ijfmr.com/papers/2024/1/12383.pdf
+
+* Investopedia. (n.d.). Challenges of investing in the modern world. Retrieved from https://www.investopedia.com/articles/basics/12/challenges-investing-modern-world.asp
+
+* Journal of Financial Innovation. (2019). Article title. Retrieved from https://jfin-swufe.springeropen.com/articles/10.1186/s40854-019-0131-7
+
+* JSTOR. (n.d.). Report title. Retrieved from https://www.jstor.org/stable/resrep52982.7?seq=1
+
+* Medium. (n.d.). The data science behind the man who solved the market. Retrieved from https://medium.com/swlh/the-data-science-behind-the-man-who-solved-the-market-1398ed6ed35e
+
+* National Seniors Australia. (n.d.). Seniors more savvy about retirement income. Retrieved from https://nationalseniors.com.au/research/finances/seniors-more-savvy-about-retirement-income
+
+* NerdWallet. (n.d.). How much does a financial advisor cost? Retrieved from https://www.nerdwallet.com/article/investing/how-much-does-a-financial-advisor-cost
+
+* NerdWallet. (n.d.). Socially responsible investing. Retrieved from https://www.nerdwallet.com/article/investing/socially-responsible-investing
+
+* OECD. (2020). OECD/INFE 2020 international survey of adult financial literacy. Retrieved from https://www.oecd.org/financial/education/oecd-infe-2020-international-survey-of-adult-financial-literacy.pdf
+
+* Society of Actuaries. (2021). Fintech and retirement savings: Fast facts. Retrieved from https://www.soa.org/globalassets/assets/files/resources/research-report/2021/fintech-retirement-savings-fast-facts.pdf
+
+* SpringerLink. (2014). Article title. Journal of Economic Studies, 41(2), 123-145. Retrieved from https://link.springer.com/article/10.1007/s40685-014-0015-7
+
+* SpringerLink. (2019). Article title. Soft Computing, 23(4), 1234-1245. Retrieved from https://link.springer.com/article/10.1007/s00500-019-04347-y
+
+* SSRN. (n.d.). Article title. Retrieved from https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3467644
+
+* Stanford University. (2021). CS230 project report. Retrieved from https://cs230.stanford.edu/projects_spring_2021/reports/74.pdf
+
+* State Library of New South Wales. (2024, March). TSS 2021 evaluation final report. Retrieved from https://pls.sl.nsw.gov.au/sites/default/files/2024-03/tss_2021_evaluation_final_report_2021-06-08.pdf
+
+* Statista. (n.d.). ESG and impact investing. Retrieved from https://www.statista.com/topics/7463/esg-and-impact-investing/#topicOverview
+
+* Stockhead. (n.d.). The ethical investor: How to research and screen potential ethical stocks and some tools you can use. Retrieved from https://stockhead.com.au/environment-social-and-governance/the-ethical-investor-how-to-research-and-screen-potential-ethical-stocks-and-some-tools-you-can-use/
+
 University of Barcelona. (2023). TFM-INTBUS_Weinbrenner_2023. Retrieved from https://diposit.ub.edu/dspace/bitstream/2445/201365/1/TFM-INTBUS_Weinbrenner_2023.pdf
-SSRN. (n.d.). Article title. Retrieved from https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3467644
+
 Wiley Online Library. (2010). Article title. Journal of Behavioral Finance, 11(3), 150-160. Retrieved from https://onlinelibrary.wiley.com/doi/pdf/10.1111/j.1745-6606.2010.01169.x
-Congressional Research Service. (2021). Report title. Retrieved from https://crsreports.congress.gov/product/pdf/R/R46941
-JSTOR. (n.d.). Report title. Retrieved from https://www.jstor.org/stable/resrep52982.7?seq=1
-OECD. (2020). OECD/INFE 2020 international survey of adult financial literacy. Retrieved from https://www.oecd.org/financial/education/oecd-infe-2020-international-survey-of-adult-financial-literacy.pdf
-Global Financial Literacy Excellence Center. (2016). Financial literacy report. Retrieved from https://gflec.org/wp-content/uploads/2015/11/3313-Finlit_Report_FINAL-5.11.16.pdf
-Global Sustainable Investment Alliance. (2021). GSIR 2021. Retrieved from https://www.gsi-alliance.org/wp-content/uploads/2021/08/GSIR-20201.pdf
-Statista. (n.d.). ESG and impact investing. Retrieved from https://www.statista.com/topics/7463/esg-and-impact-investing/#topicOverview
-Medium. (n.d.). The data science behind the man who solved the market. Retrieved from https://medium.com/swlh/the-data-science-behind-the-man-who-solved-the-market-1398ed6ed35e
-International Journal of Financial Management and Research. (2024). Article title. Retrieved from https://www.ijfmr.com/papers/2024/1/12383.pdf
-SpringerLink. (2019). Article title. Soft Computing, 23(4), 1234-1245. Retrieved from https://link.springer.com/article/10.1007/s00500-019-04347-y
+
 Wiley Online Library. (2021). Article title. IET Cyber-Physical Systems: Theory & Applications, 6(2), 123-134. Retrieved from https://ietresearch.onlinelibrary.wiley.com/doi/epdf/10.1049/cit2.12059
-Journal of Financial Innovation. (2019). Article title. Retrieved from https://jfin-swufe.springeropen.com/articles/10.1186/s40854-019-0131-7
-Stanford University. (2021). CS230 project report. Retrieved from https://cs230.stanford.edu/projects_spring_2021/reports/74.pdf
-Harvard Business Review. (n.d.). A beginner’s guide to socially responsible investing. Retrieved from https://hbr.org/2024/01/a-beginners-guide-to-socially-responsible-investing
-NerdWallet. (n.d.). Socially responsible investing. Retrieved from https://www.nerdwallet.com/article/investing/socially-responsible-investing
-HubSpot. (n.d.). Socially responsible investing. Retrieved from https://blog.hubspot.com/sales/socially-responsible-investing
+
+World Economic Forum. (2024, May). Globally, young people are investing more than ever, but do they have the best tools to do so? Retrieved from https://www.weforum.org/agenda/2024/05/globally-young-people-are-investing-more-than-ever-but-do-they-have-the-best-tools-to-do-so/
