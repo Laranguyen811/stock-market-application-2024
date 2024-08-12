@@ -8,7 +8,7 @@ My pilot project creates a stock market application, focusing on Socially Respon
 A new application is needed to educate traders and investors by providing real-time financial insights into the stock market. This application aims to improve individual financial literacy and assist traders and investors in making wise investment decisions.
 
 ### Overview:
-This low-cost, globally accessible application is designed for both desktop and mobile devices. It should be user-friendly, and secure, and emphasize community and social responsibility. Features include broker integration, online banking integration, fractional shares, robo-advisor functionality, and automatic tax-loss harvesting. Users can explore a wide range of investment options, including cryptocurrency.
+This low-cost, globally accessible application is designed for both desktop and mobile devices. It should be user-friendly, and secure, and emphasize community and social responsibility. Features include broker integration, online banking integration, fractional shares, AI agent functionality, and automatic tax-loss harvesting. Users can explore a wide range of investment options, including cryptocurrency.
 
 ### Background:
 Access to ethical investments and financial education is limited, especially in developing regions like Asia and Africa. Many individuals lack the financial literacy needed for stock market investment. The market's rapid pace and overwhelming information can be daunting, highlighting the need for financial education and careful analysis.
@@ -54,6 +54,7 @@ The challenge is to develop a user-friendly, secure stock market application tha
 * Mobile Responsiveness
 * User-Friendly Interface
 * Educational Resources
+* AI agents
   
 ## Installation
 Follow these steps to install and run the application:
