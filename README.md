@@ -3,6 +3,43 @@
 
 ## Introduction
 My pilot project creates a stock market application, focusing on Socially Responsible Investing, to assist financial insights. If you are an individual trader and investor, it provides essential information to help you make decisions. 
+### Abstract:
+A new application is needed to educate traders and investors by providing real-time financial insights into the stock market. This application aims to improve individual financial literacy and assist traders and investors in making wise investment decisions.
+
+### Overview:
+This low-cost, globally accessible application is designed for both desktop and mobile devices. It should be user-friendly, and secure, and emphasize community and social responsibility. Features include broker integration, online banking integration, fractional shares, robo-advisor functionality, and automatic tax-loss harvesting. Users can explore a wide range of investment options, including cryptocurrency.
+
+### Background:
+Access to ethical investments and financial education is limited, especially in developing regions like Asia and Africa. Many individuals lack the financial literacy needed for stock market investment. The market's rapid pace and overwhelming information can be daunting, highlighting the need for financial education and careful analysis.
+
+Young people, who make up a significant portion of retail investors, and an increasing number of tech-savvy retirees are keen on managing their investments. However, financial literacy rates remain low, particularly among the youth. The rising interest in sustainable investments also underscores the need for tools that promote socially responsible investing.
+
+### Detailed Description & Requirements:
+The application should be cost-effective, accessible globally, and available on both desktop and mobile platforms. It must be user-friendly, secure, and community-focused.
+
+
+### Technical Requirements:
+1. **Cost**: The application must cost less than $20 USD per month.
+   - IDE costs: $12 USD
+   - Marketing costs: $0 USD
+   - Data subscription: $0 USD
+2. **Accessibility**: Designed for all ages, backgrounds, and abilities.
+3. **Market Prediction**: Accurate stock market price predictions.
+4. **Socially Responsible Investing**: Promotes ethical and sustainable investment options.
+5. **API Integration**: Includes Gemini API.
+6. **Responsible AI**: Adheres to principles ensuring accuracy, transparency, fairness, and security.
+
+### Optional Features:
+1. **Aesthetic Design**: Visually appealing interface.
+2. **Multipurpose Use**: Additional functionalities for various financial needs.
+
+### Operational Concepts:
+1. **Socially Responsible Investing (SRI)**: Incorporates environmental, social, and governance (ESG) factors in investment strategies, promoting ethical decisions in finance.
+2. **Financial Literacy**: Enhances users' knowledge and skills in managing personal finances and making informed investment decisions.
+3. **Responsible AI**: Ensures AI systems are accurate, accountable, fair, ethical, secure, interpretable, and continuously improved.
+
+### Summary:
+The challenge is to develop a user-friendly, secure stock market application that is free and accessible worldwide. It should promote financial literacy and socially responsible investing while providing comprehensive financial insights to help individual traders and investors make informed decisions. The application must adhere to responsible AI principles and support a wide range of investment options, including emerging markets like cryptocurrencies.
 
 ## Features
 * Real-Time Data Visualisation
