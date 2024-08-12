@@ -42,7 +42,7 @@ The application should be cost-effective, accessible globally, and available on 
 ### Summary:
 The challenge is to develop a user-friendly, secure stock market application that is free and accessible worldwide. It should promote financial literacy and socially responsible investing while providing comprehensive financial insights to help individual traders and investors make informed decisions. The application must adhere to responsible AI principles and support a wide range of investment options, including emerging markets like cryptocurrencies.
 
-## Features
+## Features:
 * Real-Time Data Visualisation
 * Portfolio Tracking and Management
 * News and Market Insights
@@ -97,7 +97,7 @@ This project is licensed under the MIT License. See the LICENSE file for details
 ## Acknowledgement
 I'd like to thank the open-source community and the contributors who made this application possible. 
 
-##References
+## References:
 World Economic Forum. (2024, May). Globally, young people are investing more than ever, but do they have the best tools to do so? Retrieved from https://www.weforum.org/agenda/2024/05/globally-young-people-are-investing-more-than-ever-but-do-they-have-the-best-tools-to-do-so/
 Investopedia. (n.d.). Challenges of investing in the modern world. Retrieved from https://www.investopedia.com/articles/basics/12/challenges-investing-modern-world.asp
 State Library of New South Wales. (2024, March). TSS 2021 evaluation final report. Retrieved from https://pls.sl.nsw.gov.au/sites/default/files/2024-03/tss_2021_evaluation_final_report_2021-06-08.pdf
