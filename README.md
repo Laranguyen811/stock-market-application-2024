@@ -76,7 +76,7 @@ cd stock-market-application-2024
 pip install -r requirements.txt
 
 ## Using <Your Application>
-To use Stock Market Application, follow these steps:
+To use the Stock Market Application, run the application:
 python main.py
 
 ## Contact
