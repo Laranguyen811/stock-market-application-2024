@@ -3,6 +3,7 @@
 
 ## Introduction
 My pilot project creates a stock market application, focusing on Socially Responsible Investing, to assist financial insights. If you are an individual trader and investor, it provides essential information to help you make decisions. 
+### Problem formulation
 ### Abstract:
 A new application is needed to educate traders and investors by providing real-time financial insights into the stock market. This application aims to improve individual financial literacy and assist traders and investors in making wise investment decisions.
 
