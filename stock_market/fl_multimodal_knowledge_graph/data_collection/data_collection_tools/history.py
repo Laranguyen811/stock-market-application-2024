@@ -7,9 +7,6 @@ def count_items(file_path):
         file_path(string): A string of the file path.
     Returns:
         int: The number of items in the file.
-
-    :param file_path:
-    :return:
     '''
     try:  # Attempting a block of code before throwing an exception
         with open(file_path,'r') as f:  # Opening a file in a 'read' mode and closing it when done

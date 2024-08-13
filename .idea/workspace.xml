@@ -4,8 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4f5895f3-2d93-4355-bcbb-97c6701d0028" name="Changes" comment="- added clear_tool.py">
-      <change afterPath="$PROJECT_DIR$/stock_market/fl_multimodal_knowledge_graph/data_collection/data_collection_tools/history.py" afterDir="false" />
+    <list default="true" id="4f5895f3-2d93-4355-bcbb-97c6701d0028" name="Changes" comment="- added history.py">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/stock_market/Lib/site-packages/mpl_toolkits/mplot3d/tests/test_stock_data_analysis.py" beforeDir="false" afterPath="$PROJECT_DIR$/stock_market/Lib/site-packages/mpl_toolkits/mplot3d/tests/test_stock_data_analysis.py" afterDir="false" />
     </list>
@@ -419,15 +418,7 @@
       <workItem from="1722924828573" duration="3029000" />
       <workItem from="1723011292531" duration="2956000" />
       <workItem from="1723184772287" duration="2385000" />
-      <workItem from="1723539041936" duration="535000" />
-    </task>
-    <task id="LOCAL-00007" summary="- Add seasonal decomposition&#10;- Add Mardia's test and Henze-Zirkler's test">
-      <option name="closed" value="true" />
-      <created>1711067219684</created>
-      <option name="number" value="00007" />
-      <option name="presentableId" value="LOCAL-00007" />
-      <option name="project" value="LOCAL" />
-      <updated>1711067219684</updated>
+      <workItem from="1723539041936" duration="1169000" />
     </task>
     <task id="LOCAL-00008" summary="- Add seasonal decomposition&#10;- Add Mardia's test and Henze-Zirkler's test">
       <option name="closed" value="true" />
@@ -813,7 +804,15 @@
       <option name="project" value="LOCAL" />
       <updated>1723186247985</updated>
     </task>
-    <option name="localTasksCounter" value="56" />
+    <task id="LOCAL-00056" summary="- added history.py">
+      <option name="closed" value="true" />
+      <created>1723539599639</created>
+      <option name="number" value="00056" />
+      <option name="presentableId" value="LOCAL-00056" />
+      <option name="project" value="LOCAL" />
+      <updated>1723539599640</updated>
+    </task>
+    <option name="localTasksCounter" value="57" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -831,7 +830,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="- Add histogram" />
     <MESSAGE value="Merge remote-tracking branch 'origin/master'" />
     <MESSAGE value="Merge remote-tracking branch 'origin/master'&#10;- Add histogram" />
     <MESSAGE value="- add Anderson-Darling test" />
@@ -856,7 +854,8 @@
     <MESSAGE value="- added transport_tool.py" />
     <MESSAGE value="- added deliver_content&#10;- added email" />
     <MESSAGE value="- added clear_tool.py" />
-    <option name="LAST_COMMIT_MESSAGE" value="- added clear_tool.py" />
+    <MESSAGE value="- added history.py" />
+    <option name="LAST_COMMIT_MESSAGE" value="- added history.py" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
