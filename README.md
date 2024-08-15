@@ -37,7 +37,7 @@ The application should be cost-effective, accessible globally, and available on 
 ### Operational Concepts:
 1. **Socially Responsible Investing (SRI)**: Incorporates environmental, social, and governance (ESG) factors in investment strategies, promoting ethical decisions in finance.
 2. **Financial Literacy**: Enhances users' knowledge and skills in managing personal finances and making informed investment decisions.
-3. **Responsible AI**: Ensures AI systems are accurate, accountable, fair, ethical, secure, interpretable, and continuously improved.
+3. **Responsible AI**: Ensures AI systems are accurate, accountable, fair, ethical, secure, interpretable, safe and continuously improved.
 
 ### Summary:
 The challenge is to develop a user-friendly, secure stock market application that is free and accessible worldwide. It should promote financial literacy and socially responsible investing while providing comprehensive financial insights to help individual traders and investors make informed decisions. The application must adhere to responsible AI principles and support a wide range of investment options, including emerging markets like cryptocurrencies.
