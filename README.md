@@ -144,12 +144,12 @@ I'd like to thank the open-source community and the contributors who made this a
 
 * Statista. (n.d.). ESG and impact investing. Retrieved from https://www.statista.com/topics/7463/esg-and-impact-investing/#topicOverview
 
-* Stockhead. (n.d.). The ethical investor: How to research and screen potential ethical stocks and some tools you can use. Retrieved from https://stockhead.com.au/environment-social-and-governance/the-ethical-investor-how-to-research-and-screen-potential-ethical-stocks-and-some-tools-you-can-use/
+* Stockhead. (n.d.). The ethical investor: How to research and screen potential ethical stocks and some tools you can use. Retrieved from https://stockhead.com.au/environment-social-and-governance/the-ethical-investor-how-to-research- and-screen-potential-ethical-stocks-and-some-tools-you-can-use/
 
-University of Barcelona. (2023). TFM-INTBUS_Weinbrenner_2023. Retrieved from https://diposit.ub.edu/dspace/bitstream/2445/201365/1/TFM-INTBUS_Weinbrenner_2023.pdf
+* University of Barcelona. (2023). TFM-INTBUS_Weinbrenner_2023. Retrieved from https://diposit.ub.edu/dspace/bitstream/2445/201365/1/TFM-INTBUS_Weinbrenner_2023.pdf
 
-Wiley Online Library. (2010). Article title. Journal of Behavioral Finance, 11(3), 150-160. Retrieved from https://onlinelibrary.wiley.com/doi/pdf/10.1111/j.1745-6606.2010.01169.x
+* Wiley Online Library. (2010). Article title. Journal of Behavioral Finance, 11(3), 150-160. Retrieved from https://onlinelibrary.wiley.com/doi/pdf/10.1111/j.1745-6606.2010.01169.x
 
-Wiley Online Library. (2021). Article title. IET Cyber-Physical Systems: Theory & Applications, 6(2), 123-134. Retrieved from https://ietresearch.onlinelibrary.wiley.com/doi/epdf/10.1049/cit2.12059
+* Wiley Online Library. (2021). Article title. IET Cyber-Physical Systems: Theory & Applications, 6(2), 123-134. Retrieved from https://ietresearch.onlinelibrary.wiley.com/doi/epdf/10.1049/cit2.12059
 
-World Economic Forum. (2024, May). Globally, young people are investing more than ever, but do they have the best tools to do so? Retrieved from https://www.weforum.org/agenda/2024/05/globally-young-people-are-investing-more-than-ever-but-do-they-have-the-best-tools-to-do-so/
+* World Economic Forum. (2024, May). Globally, young people are investing more than ever, but do they have the best tools to do so? Retrieved from https://www.weforum.org/agenda/2024/05/globally-young-people-are-investing-more-than-ever-but-do-they-have-the-best-tools-to-do-so/
