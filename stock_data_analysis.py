@@ -319,7 +319,7 @@ class DetectNormalDistribution:
             fig, axs = plt.subplots(nrows=3, ncols=2, figsize=(8,6))
             axs = axs.flatten()
             for ax, col in zip(axs,cols):
-                ax.hist(data[col], bins=50) #using square-root rule to decide the number of bins
+                ax.hist(data[col], bins=50) #  using square-root rule to decide the number of bins
                 ax.set_title(f"Histogram of {col} for {name}")
             plt.tight_layout()
             plt.show()
@@ -336,10 +336,7 @@ class DetectNormalDistribution:
             cols = data.columns
             for col in cols:
                 d, p_value = stats.kstest((data[col] - np.mean(data[col])) / np.std(data[col],ddof=1), 'norm')
-                if p_value < 0.05:
-                    print(f"We have no evidence that {name}'s {col} might be normally distributed since the p-value is {p_value}.")
-                if p_value >= 0.05:
-                    print(f"We have evidence that {name}'s {col} might be normally distributed since the p-value is {p_value}")
+
 
 
     def anderson_darling_test(self):

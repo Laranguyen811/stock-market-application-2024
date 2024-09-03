@@ -17,8 +17,9 @@ def get_content(url):
     requests.exceptions.RequestException: If the request is not successful.
     '''
     try: #Attempting a block of code before throwing an exception
+        #proxy_list = ['proxy1', 'proxy2', 'proxy3']  # Example proxy list
         user_agent = 'Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101 Firefox/45.0'
-        proxy_ip = proxy_tool.get_proxy()#Obtaining proxy IP
+        proxy_ip = proxy_tool.get_proxy() # Obtaining proxy IP
         proxies = {'http': 'http://'.format(proxy_ip), 'https':'https://{}'.format(proxy_ip)} #Creating a dictionary of proxies
         response = requests.get(url,headers={'User-Agent':user_agent},proxies=proxies,timeout=10)#Sending a GET request to the specified URL. The headers parameter is used to pass HTTP headers to the request, and the proxies parameter is used to specify the proxies that the request should go through. The timeout parameter specifies the maximum number of seconds to wait for a response before giving up.
         response.raise_for_status() #If the request is unsuccessful, raise an exception
@@ -70,7 +71,7 @@ def download_sound(search_term, save_path, max_files=5,max_size=3.0,timeout=60.0
         if size > max_size:
             continue
 
-        download_files(file_url,save_path,timeout) #Download the file
+        download_file(file_url,save_path,timeout) #Download the file
 
         file_extension = os.path.splitext(file_url)[1][1:] #Adding the file extension to the list of download a file
         download_files.append(file_extension)

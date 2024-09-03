@@ -20,7 +20,7 @@ def get_proxy(proxy_list):
     #Choose a random proxy
     proxy = random.choice(proxy_list) # A function to pick a random proxy from the proxy list, for load balancing (distributing requests amongst proxies to prevent any proxy from becoming a bottleneck),avoid rate limiting (rotating through proxies without hitting some website's limits), anonymity and privacy (harder for websites to track activity),overcoming geographical restrictions(can access geographically restricted resources if have proxies in different locations)
 
-    return f'{username}:{password}@{proxy}'
+    return f'{username}:{password}@{proxy_list[0]}'
 
 def get_proxy_list(proxy_list_origin):
     '''Takes a list of proxies'origins and returns a list of proxies corresponding to each proxy.
