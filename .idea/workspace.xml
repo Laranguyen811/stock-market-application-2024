@@ -4,18 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4f5895f3-2d93-4355-bcbb-97c6701d0028" name="Changes" comment="- added history.py">
-      <change afterPath="$PROJECT_DIR$/stock_market/fl_multimodal_knowledge_graph/data_collection/data_collection_tools/start_transport_tool.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/stock_market/fl_multimodal_knowledge_graph/feature_extractor/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/stock_market/fl_multimodal_knowledge_graph/feature_extractor/mel_spectrogram_features.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/stock_market/unit_tests/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/stock_market/unit_tests/test_download_images.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/stock_market/unit_tests/test_download_sounds.py" afterDir="false" />
+    <list default="true" id="4f5895f3-2d93-4355-bcbb-97c6701d0028" name="Changes" comment="- added test_download_images.py&#10;- added test_download_sounds.py&#10;- added mel_spectrogram_features.py">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/stock_data_analysis.py" beforeDir="false" afterPath="$PROJECT_DIR$/stock_data_analysis.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/stock_market/Lib/site-packages/mpl_toolkits/mplot3d/tests/test_stock_data_analysis.py" beforeDir="false" afterPath="$PROJECT_DIR$/stock_market/Lib/site-packages/mpl_toolkits/mplot3d/tests/test_stock_data_analysis.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/stock_market/fl_multimodal_knowledge_graph/data_collection/data_collection_tools/download_sounds.py" beforeDir="false" afterPath="$PROJECT_DIR$/stock_market/fl_multimodal_knowledge_graph/data_collection/data_collection_tools/download_sounds.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/stock_market/fl_multimodal_knowledge_graph/data_collection/data_collection_tools/proxy_tool.py" beforeDir="false" afterPath="$PROJECT_DIR$/stock_market/fl_multimodal_knowledge_graph/data_collection/data_collection_tools/proxy_tool.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/stock_market/fl_multimodal_knowledge_graph/feature_extractor/mel_spectrogram_features.py" beforeDir="false" afterPath="$PROJECT_DIR$/stock_market/fl_multimodal_knowledge_graph/feature_extractor/mel_spectrogram_features.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -89,6 +80,7 @@
     "Python.add_tool.executor": "Run",
     "Python.add_tools.executor": "Run",
     "Python.download_sounds.executor": "Run",
+    "Python.mel_spectrogram_features.executor": "Run",
     "Python.proxy_tool (1).executor": "Run",
     "Python.proxy_tool.executor": "Run",
     "Python.stock_data_analysis.executor": "Run",
@@ -118,7 +110,7 @@
       <recent name="C:\Users\laran\PycharmProjects\ASX\misc" />
     </key>
   </component>
-  <component name="RunManager" selected="Python tests.Python tests for test_download_images.TestDownloadImages">
+  <component name="RunManager">
     <configuration name="add_tool" type="PythonConfigurationType" factoryName="Python">
       <module name="ASX" />
       <option name="ENV_FILES" value="" />
@@ -438,23 +430,8 @@
       <workItem from="1724822637925" duration="1343000" />
       <workItem from="1724991373495" duration="617000" />
       <workItem from="1725249952969" duration="11374000" />
-      <workItem from="1725341034249" duration="5361000" />
-    </task>
-    <task id="LOCAL-00009" summary="- Add seasonal decomposition&#10;- Add Mardia's test and Henze-Zirkler's test&#10;- Fix correlation heatmaps">
-      <option name="closed" value="true" />
-      <created>1711488479027</created>
-      <option name="number" value="00009" />
-      <option name="presentableId" value="LOCAL-00009" />
-      <option name="project" value="LOCAL" />
-      <updated>1711488479027</updated>
-    </task>
-    <task id="LOCAL-00010" summary="- Add correlation coefficients">
-      <option name="closed" value="true" />
-      <created>1711692708728</created>
-      <option name="number" value="00010" />
-      <option name="presentableId" value="LOCAL-00010" />
-      <option name="project" value="LOCAL" />
-      <updated>1711692708728</updated>
+      <workItem from="1725341034249" duration="5582000" />
+      <workItem from="1725426072568" duration="9070000" />
     </task>
     <task id="LOCAL-00011" summary="- Add correlation coefficients">
       <option name="closed" value="true" />
@@ -832,7 +809,23 @@
       <option name="project" value="LOCAL" />
       <updated>1723544580320</updated>
     </task>
-    <option name="localTasksCounter" value="58" />
+    <task id="LOCAL-00058" summary="- added test_download_images.py&#10;- added test_download_sounds.py&#10;- added mel_spectrogram_features.py">
+      <option name="closed" value="true" />
+      <created>1725346820250</created>
+      <option name="number" value="00058" />
+      <option name="presentableId" value="LOCAL-00058" />
+      <option name="project" value="LOCAL" />
+      <updated>1725346820251</updated>
+    </task>
+    <task id="LOCAL-00059" summary="- added test_download_images.py&#10;- added test_download_sounds.py&#10;- added mel_spectrogram_features.py">
+      <option name="closed" value="true" />
+      <created>1725346940015</created>
+      <option name="number" value="00059" />
+      <option name="presentableId" value="LOCAL-00059" />
+      <option name="project" value="LOCAL" />
+      <updated>1725346940015</updated>
+    </task>
+    <option name="localTasksCounter" value="60" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -850,7 +843,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Merge remote-tracking branch 'origin/master'" />
     <MESSAGE value="Merge remote-tracking branch 'origin/master'&#10;- Add histogram" />
     <MESSAGE value="- add Anderson-Darling test" />
     <MESSAGE value="- add ATR" />
@@ -875,7 +867,8 @@
     <MESSAGE value="- added deliver_content&#10;- added email" />
     <MESSAGE value="- added clear_tool.py" />
     <MESSAGE value="- added history.py" />
-    <option name="LAST_COMMIT_MESSAGE" value="- added history.py" />
+    <MESSAGE value="- added test_download_images.py&#10;- added test_download_sounds.py&#10;- added mel_spectrogram_features.py" />
+    <option name="LAST_COMMIT_MESSAGE" value="- added test_download_images.py&#10;- added test_download_sounds.py&#10;- added mel_spectrogram_features.py" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -918,6 +911,7 @@
     <SUITE FILE_PATH="coverage/ASX$Stock_Market_Application.coverage" NAME="Stock_Market_Application Coverage Results" MODIFIED="1709614658811" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/stock_market_application_2024$add_tool.coverage" NAME="add_tool Coverage Results" MODIFIED="1721710476112" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/stock_market/fl_multimodal_knowledge_graph/data_collection/data_collection_tools" />
     <SUITE FILE_PATH="coverage/stock_market_application_2024$uri_tool.coverage" NAME="uri_tool Coverage Results" MODIFIED="1721710488819" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/stock_market/fl_multimodal_knowledge_graph/data_collection/data_collection_tools" />
+    <SUITE FILE_PATH="coverage/stock_market_application_2024$mel_spectrogram_features.coverage" NAME="mel_spectrogram_features Coverage Results" MODIFIED="1725433353834" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/stock_market/fl_multimodal_knowledge_graph/feature_extractor" />
     <SUITE FILE_PATH="coverage/stock_market_application_2024$add_tools.coverage" NAME="uri_tool Coverage Results" MODIFIED="1721710446763" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/stock_market/fl_multimodal_knowledge_graph/data_collection/data_collection_tools" />
     <SUITE FILE_PATH="coverage/stock_market_application_2024$download_sounds.coverage" NAME="download_sounds Coverage Results" MODIFIED="1725260808373" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/stock_market/fl_multimodal_knowledge_graph/data_collection/data_collection_tools" />
     <SUITE FILE_PATH="coverage/stock_market_application_2024$uri_tools.coverage" NAME="uri_tools Coverage Results" MODIFIED="1721625015401" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/stock_market/fl_multimodal_knowledge_graph/data_collection/data_collection_tools" />
