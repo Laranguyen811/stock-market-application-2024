@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import librosa
 from stock_market.fl_multimodal_knowledge_graph.data_collection.data_collection_tools.download_sounds import download_sound
 import os
-# This module convert audio wave to mel spectrogram features
+# This module convert audio wave to mel spectrogram features for better signals and audio processing
 # Pre-emphasis is a technique used in audio preprocessing to amplify higher frequencies of an audio signal, especially useful to enhance signal-to-noise ratio
 # The pre-emphasis filter is typically a 1st-order high-pass filter, with the most common form of y[n] = x[n] - alpha . x[n-1]
 # Where:
@@ -128,3 +128,100 @@ if __name__ == '__main__':
     plt.ylabel("Amplitude")
     plt.tight_layout()
     plt.show()
+
+def hertz_to_mel(frequencies_hertz:np.ndarray) -> np.ndarray:
+    ''' Takes hertz frequencies and converts them to mel scale using HTK (Hidden Markov Model Toolkit, a software designed to build and manipulate Hidden Markov Model) formula, for better perceptual alignment, feature extraction, improved model performance and data efficiency.
+    Inputs:
+        frequencies_hertz(np.ndarray): np.ndarray of frequencies in hertz.
+    Returns:
+        np.ndarray: np.ndarray of the same size as frequencies_hertz containing corresponding values on the mel scale
+    '''
+
+    # Constants
+    _MEL_HIGH_FREQUENCY_Q = 2595.0
+    _MEL_BREAK_FREQUENCY_HERTZ = 700.0
+
+    # Parameter Validation
+    if np.any(frequencies_hertz < 0):
+        raise ValueError("Frequencies must be non-negative")
+
+    # Conversion
+    return _MEL_HIGH_FREQUENCY_Q * np.log(1.0 + (frequencies_hertz / _MEL_BREAK_FREQUENCY_HERTZ))
+
+def spectrogram_to_mel_matrix(num_mel_bins:int = 20, num_spectrogram_bins:int = 129, audio_sample_rate:int = 8000, lower_edge_hertz: float = 125.0,upper_edge_hertz: float = 3800.0) -> np.ndarray:
+    ''' Takes the number of Mel bands, the number of spectrogram bins, the sample rate of audio input, the lower bound of the frequencies to be included in the Mel spectrum and the upper bound of the frequencies to be included in the Mel spectrum and returns a numpy ndarray of the Mel spectrogram.
+    Inputs:
+        num_mel_bins(int): An integer specifying the number of Mel bands.
+        num_spectrogram_bins(int): An integer specifying the number of spectrogram bins.
+        audio_sample_rate(int): An integer specifying the sample rate of audio input.
+        lower_edge_hertz(float): A float specifying the lower bound of the frequencies to be included in the Mel.
+        upper_edge_hertz(float): A float specifying the upper bound of the frequencies to be included in the Mel.
+    Returns:
+        np.ndarray: A numpy ndarray of the Mel spectrogram
+    Raises:
+        ValueError: if frequency edges are incorrectly ordered or out of range.
+    '''
+
+    # Constants
+    nyquist_hertz = audio_sample_rate / 2.0  # Calculating the Nyquist frequency(the highest frequency that can be accurately represented in a digital system without introducing aliasing (distortion)), which is half the sample rate.
+
+    # Validation to check if the frequency edges are correctly ordered and within range
+
+    if lower_edge_hertz < 0.0:
+        raise ValueError(f"Lower edge Hertz {lower_edge_hertz} must be greater than or equal to zero.")
+    if lower_edge_hertz >= upper_edge_hertz:
+        raise ValueError(f"Lower Edge Hertz {lower_edge_hertz} >= Upper Edge Hertz {upper_edge_hertz}")
+    if upper_edge_hertz > nyquist_hertz:
+        raise ValueError(f"Upper Edge Hertz {upper_edge_hertz} is greater than Nyquist {nyquist_hertz}")
+
+    # Frequency Conversion
+
+    spectrogram_bins_hertz = np.linspace(0.0,nyquist_hertz,num_spectrogram_bins)  # Creating an array of an evenly spaced numbers over a specified interval (frequency values) corresponding to the bins of the spectrogram to map the spectrogram bins to Mel scale.
+    spectrogram_bins_mel = hertz_to_mel(spectrogram_bins_hertz)  # Converting from hertz to Mel based on the array of frequency values
+
+    # Calculating band edges
+    band_edges_mel = np.linspace(hertz_to_mel(lower_edge_hertz),hertz_to_mel(upper_edge_hertz),num_mel_bins + 2)  # Creating an array of an evenly spaced numbers over a specified interval by converting the lower edge hertz to Mel and the upper edge hertz to Mel with the number of mel bins adding two
+
+    # Initializing mel weights matrix
+    mel_weights_matrix = np.zeros((num_spectrogram_bins,num_mel_bins))  # Creating an numpy array of zeros with the shape of the number of spectrogram bins and the number of Mel bins
+
+    for i in range(num_mel_bins):
+        lower_edge_mel, center_mel, upper_edge_mel = band_edges_mel[i:i +3]  # Assigning lower edge mel, center mel and upper edge mel with a band edge each, with a distance of 3 Mel bins away from each other
+        lower_slope = (spectrogram_bins_mel - lower_edge_mel) / (center_mel - lower_edge_mel)  # Calculating the lower slope
+        upper_slope = (upper_edge_mel - spectrogram_bins_mel) / (upper_edge_mel - center_mel)  # Calculating the upper slope
+        mel_weights_matrix[:,i] = np.maximum(0.0,np.minimum(lower_slope,upper_slope))  # Calculating the Mel weights for the ith Mel bin in the Mel weights matrix by finding the minimum of the lower slope and the upper slope, ensuring all numbers are non-negative
+
+    # Ensuring that DC bin always gets a zero coefficient
+    mel_weights_matrix[0, :] = 0.0
+
+    return mel_weights_matrix
+
+def log_mel_spectrogram(data: np.ndarray, audio_sample_rate: int = 8000, log_offset: float = 1e-6, window_length_secs: float = 0.025, hop_length_secs: float = 0.010,**kwargs) -> np.ndarray:
+    ''' Takes audio waveform data and returns a log-magnitude mel-frequency.
+    Inputs:
+        data(np.ndarray): A numpy ndarray of audio waveform data
+        audio_sample_rate(int): An integer specifying the sample rate of the audio.
+        log_offset(float): A float of log offset to add to values when taking log to avoid negative infinites.
+        window_length_secs(float): A float specifying the window length in seconds to analyse.
+        **kwargs: additional keyword arguments to pass to spectrogram_to_mel_matrix().
+    Returns:
+        np.ndarray: A 2D numpy ndarray of (num_frames, num_mel_bins) containing log mel filterbank magnitude for successive rates.
+    '''
+
+    # Constants
+    window_length_samples = int(round(audio_sample_rate * window_length_secs))  # Assigning the sample length of a window to the rounded integer value of the sample rate of the audio multiplied by the window length in seconds to analyse
+    hop_length_samples = int(round(audio_sample_rate * hop_length_secs))  # Assigning the length of the samples in each hop to the rounded integer value of the sample rate of the audio multiplied by the window length.
+    fft_length = 2 ** int(np.ceil(np.log2(window_length_samples)))  # Assigning the length of the Fourier Form to the ceiling integer (the smallest number that is greater or equal to the specified number) of the length of samples in each window log squared.
+
+    # Calculating the STFT magnitude
+    spectrogram = stft_magnitude(data,fft_length=fft_length,hop_length=hop_length_samples, window_length=window_length_samples)
+
+    #Calculating the Mel spectrogram
+
+    mel_spectrogram = np.dot(spectrogram,spectrogram_to_mel_matrix(num_spectrogram_bins=spectrogram.shape[1],audio_sample_rate=audio_sample_rate,**kwargs))
+
+    # Returning the log Mel spectrogram
+    return np.log(mel_spectrogram + log_offset)
+
+
+
