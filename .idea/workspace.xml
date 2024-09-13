@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4f5895f3-2d93-4355-bcbb-97c6701d0028" name="Changes" comment="- added image_extractor.py&#10;- added load.py&#10;- added class SparseAutoencoder and KL divergence as a sparsity">
+    <list default="true" id="4f5895f3-2d93-4355-bcbb-97c6701d0028" name="Changes" comment="- added hypertuning &#10;- added training">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/stock_market/fl_multimodal_knowledge_graph/feature_extractor/image_extraction/image_extractor.py" beforeDir="false" afterPath="$PROJECT_DIR$/stock_market/fl_multimodal_knowledge_graph/feature_extractor/image_extraction/image_extractor.py" afterDir="false" />
     </list>
@@ -439,15 +439,8 @@
       <workItem from="1725921196679" duration="659000" />
       <workItem from="1725940922002" duration="5398000" />
       <workItem from="1726034791902" duration="5919000" />
-      <workItem from="1726117266533" duration="6680000" />
-    </task>
-    <task id="LOCAL-00015" summary="- Add box plots for outlier detection">
-      <option name="closed" value="true" />
-      <created>1712569040902</created>
-      <option name="number" value="00015" />
-      <option name="presentableId" value="LOCAL-00015" />
-      <option name="project" value="LOCAL" />
-      <updated>1712569040902</updated>
+      <workItem from="1726117266533" duration="7436000" />
+      <workItem from="1726193260881" duration="8780000" />
     </task>
     <task id="LOCAL-00016" summary="- Adding upper bound and lower bound outliers">
       <option name="closed" value="true" />
@@ -833,7 +826,15 @@
       <option name="project" value="LOCAL" />
       <updated>1726040682899</updated>
     </task>
-    <option name="localTasksCounter" value="64" />
+    <task id="LOCAL-00064" summary="- added hypertuning &#10;- added training">
+      <option name="closed" value="true" />
+      <created>1726124351936</created>
+      <option name="number" value="00064" />
+      <option name="presentableId" value="LOCAL-00064" />
+      <option name="project" value="LOCAL" />
+      <updated>1726124351936</updated>
+    </task>
+    <option name="localTasksCounter" value="65" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -851,7 +852,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="- add gemini model with parameters" />
     <MESSAGE value="- Creating agents" />
     <MESSAGE value="- Add fl-mmkg" />
     <MESSAGE value="- add uri tool" />
@@ -876,7 +876,8 @@
     <MESSAGE value="- added hertz_to_mel.py&#10;- added spectrogram_to_mel_matrix.py&#10;- added log_mel_spectrogram.py" />
     <MESSAGE value="- added image_extractor.py&#10;- added load.py&#10;- added class SparseAutoencoder" />
     <MESSAGE value="- added image_extractor.py&#10;- added load.py&#10;- added class SparseAutoencoder and KL divergence as a sparsity" />
-    <option name="LAST_COMMIT_MESSAGE" value="- added image_extractor.py&#10;- added load.py&#10;- added class SparseAutoencoder and KL divergence as a sparsity" />
+    <MESSAGE value="- added hypertuning &#10;- added training" />
+    <option name="LAST_COMMIT_MESSAGE" value="- added hypertuning &#10;- added training" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
