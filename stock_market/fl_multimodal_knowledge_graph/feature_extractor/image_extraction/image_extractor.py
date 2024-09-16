@@ -25,6 +25,7 @@ from tensorflow.keras.preprocessing import image
 import seaborn as sns
 from sklearn.decomposition import PCA
 from sklearn.manifold import TSNE
+from timm.models.layers import trunc_normal_  # a function to initialise weights of neural networks from a truncated normal distribution (bounding random variables either below, above or both, restricted to a specific range and preventing extreme values )
 
 
 TF_ENABLE_ONEDNN_OPTS=0
@@ -307,21 +308,110 @@ plt.title("Encoded Representations (t-SNE)")
 plt.show()
 
 class Mlp(nn.Module):
-    '''Multi-layer Perceptron (MLP) module with optional dropout and activation.
+    '''Multi-layer Perceptron (MLP, involving a feedforward propagation function, a loss function and a backpropagation function) module with optional dropout and activation.
 
     Args:
         encoded_features(int): An integer of the number of encoded features as input features.
         hidden_features(int): An integer of the number of hidden features.
         out_features(int): An integer of the number of output features.
-        act_layer (nn.Module,optional): activation layer, Defaults to nn.GELU.
+        act_layer (nn.Module,optional): activation layer, Defaults to nn.GELU (Gaussian Error Linear Unit, activation function (smooth and differentiable function across the real line, helping in gradient optimisation and mitigate the vanishing gradient problem) used in neural networks.
         drop(float,optional): Dropout rate. Defaults to 0.
-
-
     '''
     def __init__(self,encoded_features,hidden_features=None,out_features=None,act_layer=nn.GELU,drop=0.):
         super().__init__()
         out_features = out_features or encoded_features
         hidden_features = hidden_features or encoded_features
+        self.fc1 = nn.Linear(encoded_features,hidden_features)  # A fully-connected layer (where every neuron is connected to the previous neuron) using a linear function
+        self.act = act_layer()  # An activation layer
+        self.fc2 = nn.Linear(hidden_features,out_features)  # A fully-connected layer using a linear function
+        self.drop = nn.Dropout(drop)  # A dropout layer is a regularisation technique to prevent overfitting during training, using randomness making the the model less sensitive to specific neurons and weight, promoting independence and robustness
+        self.apply(self._init_weights)  # Applying initialised weights
+
+        def _init_weights(self,m):
+            if isinstance(m,nn.Linear):  # Check if initialised weights are only applied to an instance of nn.Linear (a fully-connected layer)
+                trunc_normal_(m.weight,std=.02)  # Applying weights from a truncated normal distribution with standard deviation of 0.02 to ensure that initial weights are small and close to 0 so that we can achieve stable and efficient training (preventing exploding/vanishing gradients, efficiency, empirical success, normaization)
+                if m.bias is not None:  # If we have assigned a value to bias
+                    nn.init.constant_(m.bias,0)  # Initialising bias to 0 to ensure that all neurons have the same initial value of bias (uniformity, simplicity,symetry breaking,empirical success)
+            elif isinstance(m,nn.LayerNorm):  # Check if initialised weights are applied to layer where Layer Normalisation is applied to a mini-batch of inputs (stabilising and accelerating the training of deep neural networks)
+                nn.init.constant_(m.bias,0)  # Initialising bias to 0
+                nn.init.constant_(m.weight,1.0)  #Initialising all weights to 1 to ensure that initial scaling does not affect the normalised values, ensuring the initial input is the same as the normalised input
+        def forward(self,x):  # A feedforward propagation function
+            x = self.fc1(x)
+            x = self.act(x)
+            x = self.drop(x)
+            x = self.fc2(x)
+            x = self.drop(x)
+            return x
+
+
+class GPSA(nn.Module):
+    '''
+    A gated positional self-attention (applying a gating mechanism to apply self-attention selectively, focusing on nearby regions of input) module.
+    Args:
+        dim (int): An integer of dimensionality of input.
+        num_heads (int): An integer of a number of attention heads. Defaults to 8.
+        qkv_bias (bool):  A boolean of whether to use bias in the linear layers of query, key, and value. Defaults to False.
+        qk_scale (float): A float number of scaling factor for the query and key. Defaults to None.
+        attn_drop (float): A float number of dropout rate for the attention mechanism. Defaults to 0.
+        proj_drop (float): A dropout rate for the projection layer. Defaults to 0.
+        locality_strength (float): A float number of the strength of the locality constraint. Defaults to 1.
+        use_local_init (bool): A boolean of whether to use local initialisation. Defaults to True.
+    '''
+    def __init__(self, dim: int, num_heads: int = 8, qkv_bias: bool = False, qk_scale: float = None, attn_drop: float = 0., proj_drop: float = 0.,locality_strength: float = 1.,use_local_init: bool = True):
+        super().__init__()
+        self.num_heads = num_heads
+        self.dim = dim
+        head_dim = dim // num_heads
+        self.scale = qk_scale or head_dim ** -0.5  # Setting the scaling to scaling the dot product by head_dim ** -0.5 (helps in stablising the gradients during training (leading to more stable and efficient training, ensuring attention scores are consistent across layers and attention heads no matter the dimensionality of vectors)) if qk_scale is not provided
+
+        self.qk = nn.Linear(dim, dim * 2, bias=qkv_bias)  # Setting the query and key to a fully-connected layer of a linear function with dimension as inputs and dimension * 2 (computing both key and query vectors in 1 go for efficient training)  as outputs, bias is qkv_bias
+        self.v = nn.Linear(dim,dim,bias=qkv_bias) # Setting the value to a fully-connected layer of a linear function with dimension as input and dimension as output and bias as qkv_bias
+
+        self.attn_drop = nn.Dropout(attn_drop)  # Setting the drop rate of attention to a dropout layer
+        self.proj = nn.Linear(dim, dim)
+        self.pos_proj = nn.Linear(3, num_heads)
+        self.proj_drop = nn.Dropout(proj_drop)
+        self.locality_strength = locality_strength
+        self.getting_param = nn.Parameter(torch.ones(self.num_heads))
+        self.apply(self._init_weights)
+        if use_local_init:
+            self.local_init(locality_strength=locality_strength)
+
+    def _init_weights(self,m):
+        if isinstance(m,nn.Linear):
+            nn.init.trunc_normal_(m.weight,std=.02)
+            if m.bias is not None:
+                nn.init.constant_(m.bias,0)
+                nn.init.constant_(m.weight,1.0)
+
+    def forward(self, x):
+        B, N, C = x.shape
+        if not hasattr(self,'real_indices') or self.real_indices.size(1) != N:
+            self.get_real_indices(N)
+
+        attn = self.get_attention(self)
+        v = self.v(x).reshape(B, N, 2, self.num_heads, C // self.num_heads).permute(2,0,3,1,4)
+        x = (attn @ v).transpose(1,2).reshape(B, N, C)
+        x = self.proj(x)
+        x = self.proj_drop(x)
+        return x
+    def get_attention(self, x):
+        B, N, C = x.shape
+        qk = self.qk(x).reshape(B, N, 2, self.num_heads, C // self.num_heads).permute(2, 0, 3, 1, 4)
+        q, k = qk[0], qk[1]
+        pos_score = self.real_indices.expand(B, -1, -1, -1)
+        pos_score = self.pos_proj(pos_score).permute(0, 3, 1, 2)
+        patch_score = (q @ k.transpose(-2, -1)) * self.scale
+        patch_score = patch_score.softmax(dim=-1)
+        pos_score = pos_score.softmax(dim=-1)
+
+        gating = self.gating_param.view(1, -1, 1, 1)
+        attn = (1. - torch.sigmoid(gating)) * patch_score + torch.sigmoid(gating) * pos_score
+        attn /= attn.sum(dim=-1, keepdim=True)
+        attn = self.attn_drop(attn)
+        return attn
+
+
 
 
 #def process_model(use_data_parallel: bool = False, device_ids: list = None) -> torch.nn.Models:
