@@ -368,50 +368,57 @@ class GPSA(nn.Module):
         self.v = nn.Linear(dim,dim,bias=qkv_bias) # Setting the value to a fully-connected layer of a linear function with dimension as input and dimension as output and bias as qkv_bias
 
         self.attn_drop = nn.Dropout(attn_drop)  # Setting the drop rate of attention to a dropout layer
-        self.proj = nn.Linear(dim, dim)
-        self.pos_proj = nn.Linear(3, num_heads)
-        self.proj_drop = nn.Dropout(proj_drop)
-        self.locality_strength = locality_strength
-        self.getting_param = nn.Parameter(torch.ones(self.num_heads))
-        self.apply(self._init_weights)
-        if use_local_init:
-            self.local_init(locality_strength=locality_strength)
+        self.proj = nn.Linear(dim, dim)  # Setting the projection layer (transforming input data to a different space, either higher or lower dimension) to a fully-connected layer (linear function) with input as dimensions and output as dimensions
+        self.pos_proj = nn.Linear(3, num_heads)  # Setting the positional projection layer (setting positional data as input) to a fully-connected layer (linear function), taking a 3-positional dimension input and projecting it to a space of number-of-head dimension
+        self.proj_drop = nn.Dropout(proj_drop)  # Setting a dropout rate for the projection layer to the dropout rate of a dropout layer
+        self.locality_strength = locality_strength  # Setting a float number of the strength of the locality constraint
+        self.gating_param = nn.Parameter(torch.ones(self.num_heads))  # Setting the gating parameters to a tensor of 1 with dimensions of the number of heads
+        self.apply(self._init_weights)  # Applying the initialised weights
+        if use_local_init:  # If initialising the model parameters on each local machine or node independently
+            self.local_init(locality_strength=locality_strength)  # use locality_strength for as a local initialisation
 
-    def _init_weights(self,m):
-        if isinstance(m,nn.Linear):
-            nn.init.trunc_normal_(m.weight,std=.02)
-            if m.bias is not None:
-                nn.init.constant_(m.bias,0)
-                nn.init.constant_(m.weight,1.0)
+    def _init_weights(self,m):  # Initialising weights
+        if isinstance(m,nn.Linear):  # If an object is an instance of nn.Linear
+            nn.init.xavier_uniform_(m.weight)  # Using Xavier Uniform initialisation for more balance across different layers (effective training)
+            if m.bias is not None:  # If bias is provided
+                nn.init.constant_(m.bias,0)  # Setting a bias term to a constant value of 0
 
-    def forward(self, x):
-        B, N, C = x.shape
-        if not hasattr(self,'real_indices') or self.real_indices.size(1) != N:
-            self.get_real_indices(N)
 
-        attn = self.get_attention(self)
-        v = self.v(x).reshape(B, N, 2, self.num_heads, C // self.num_heads).permute(2,0,3,1,4)
-        x = (attn @ v).transpose(1,2).reshape(B, N, C)
-        x = self.proj(x)
+    def forward(self, x):  # Forward pass
+        B, N, C = x.shape  # Setting B (batch size),N (the length of a sequence),C (embedding dimension) as the shape of x
+        if not hasattr(self,'real_indices') or self.real_indices.size(1) != N:  # Check the condition if the real_indices attribute exists and the correct size before proceeding
+            self.get_real_indices(N)  # If not, creating the real_indices tensor
+
+        attn = self.get_attention(self)  # Getting an attention mechanism from the get_attention method
+        v = self.v(x).reshape(B, N, 2, self.num_heads, C // self.num_heads).permute(2, 0, 3, 1, 4)  # Reshaping the tensor v to dimension (B,N,2,the number of heads, the dimension for each attention head) and permutating for a specific order (2,0,3,1,4)
+        x = (attn @ v).transpose(1, 2).reshape(B, N, C)  # Performing matrix multiplication between attn and v, then transposing to swap the second and third dimensions of the tensor and reshaping it to dimension of (B, N, C)
+        x = self.proj(x)  #  Setting x to the projection of x
         x = self.proj_drop(x)
         return x
     def get_attention(self, x):
         B, N, C = x.shape
-        qk = self.qk(x).reshape(B, N, 2, self.num_heads, C // self.num_heads).permute(2, 0, 3, 1, 4)
-        q, k = qk[0], qk[1]
-        pos_score = self.real_indices.expand(B, -1, -1, -1)
-        pos_score = self.pos_proj(pos_score).permute(0, 3, 1, 2)
-        patch_score = (q @ k.transpose(-2, -1)) * self.scale
-        patch_score = patch_score.softmax(dim=-1)
-        pos_score = pos_score.softmax(dim=-1)
+        qk = self.qk(x).reshape(B, N, 2, self.num_heads, C // self.num_heads).permute(2, 0, 3, 1, 4) # Reshaping the tensor qk to dimension (B,N,2,the number of heads, the dimension fo each attention head) and permutating for a specific order (2,0,3,1,4)
+        q, k = qk[0], qk[1]  # Assigning values of q and k
+        pos_score = self.real_indices.expand(B, -1, -1, -1)  # Ensuring the real_indices tensor is expanded to match the batch size B without changing other dimensions (aligning the positional information with batch size for further computations)
+        pos_score = self.pos_proj(pos_score).permute(0, 3, 1, 2)  # Permutating pos_score after being positionally projected to a specific order (0,3,1,2)
+        patch_score = (q @ k.transpose(-2, -1)) * self.scale  # Obtaining the scaled attention score by computing the matrix multiplication between query and key ( k with the last 2 dimensions transposed)
+        patch_score = patch_score.softmax(dim=-1)  # Applying softmax function to the scaled attention score with the same dimension
+        pos_score = pos_score.softmax(dim=-1)  # Applying the softmax function to positional information with the same dimension
 
-        gating = self.gating_param.view(1, -1, 1, 1)
-        attn = (1. - torch.sigmoid(gating)) * patch_score + torch.sigmoid(gating) * pos_score
-        attn /= attn.sum(dim=-1, keepdim=True)
-        attn = self.attn_drop(attn)
+        gating = self.gating_param.view(1, -1, 1, 1)  # Reshaping gating parameters without changing data with the specified dimension (1, -1, 1, 1) to align the dimension of gating parameters with other tensors to perform element-wise operations
+        attn = (1. - torch.sigmoid(gating)) * patch_score + torch.sigmoid(gating) * pos_score  # Assigning attention mechanism to 1 - sigmoided gating tensor times scaled attention score, adding sigmoided gating tensor times positional score (gating score controlled by sigmoid function to demonstrate the importance of each score)
+        attn /= attn.sum(dim=-1, keepdim=True)  # Each element in the last dimension is the result of the sum of the corresponding element in the original attn tensor
+        attn = self.attn_drop(attn)  # Applying the dropout rate to attn tensor
         return attn
 
+    def get_attention_map(self, x, return_map=False):
+        B, N, C = x.shape
+        qkv = self.qkv(x).reshape(B, N, 3, self.num_heads, C // self.num_heads).permute(2, 0, 3, 1, 4)  # Reshaping the tensor q,k,v to dimension (B,N,3,the number of heads, the dimension for each attention head) and permutating for a specific order (2,0,3,1,4)
+        qkv = qkv[0], qkv[1], qkv[2]
+        attn_map = (q @ k.transpose(-2, -1) * self.scale)  # Obtaining the scaled attention map by performing matrix multiplication between query and key (with the last and second to last dimensions transposed)
 
-
-
+        img_size = int(N ** 0.5)  # Resizing the image to the length of a sequence multiplied by 0.5
+        ind = torch.arange(img_size).view(1, -1) - torch.arange(img_size).view(-1, 1)  # Obtaining tensor ind (variable name for indices) with the difference between the i-th and j-th elements if the original sequence from reshaped img_size (with the same data)
+        indx = ind.repeat(img_size, img_size)  # Obtaining indx by repeating ind tensor across the entire image size (creating a larger grid to compute relative positions and distances for the entire image)
+        indy = ind.repeat_interleave(img_size,dim=0).repeat_interleave(img_size,dim=1)
 #def process_model(use_data_parallel: bool = False, device_ids: list = None) -> torch.nn.Models:

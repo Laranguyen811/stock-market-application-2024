@@ -4,9 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4f5895f3-2d93-4355-bcbb-97c6701d0028" name="Changes" comment="- added class SparseAutoEncoder&#10;- added MLP">
+    <list default="true" id="4f5895f3-2d93-4355-bcbb-97c6701d0028" name="Changes" comment="- added MLP&#10;- added GSPA">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/stock_market/fl_multimodal_knowledge_graph/feature_extractor/audio_extraction/mel_spectrogram_features.py" beforeDir="false" afterPath="$PROJECT_DIR$/stock_market/fl_multimodal_knowledge_graph/feature_extractor/audio_extraction/mel_spectrogram_features.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/stock_market/fl_multimodal_knowledge_graph/feature_extractor/image_extraction/image_extractor.py" beforeDir="false" afterPath="$PROJECT_DIR$/stock_market/fl_multimodal_knowledge_graph/feature_extractor/image_extraction/image_extractor.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -442,15 +441,8 @@
       <workItem from="1726034791902" duration="5919000" />
       <workItem from="1726117266533" duration="7436000" />
       <workItem from="1726193260881" duration="9354000" />
-      <workItem from="1726462835909" duration="8373000" />
-    </task>
-    <task id="LOCAL-00017" summary="- Adding upper bound and lower bound outliers">
-      <option name="closed" value="true" />
-      <created>1713247145847</created>
-      <option name="number" value="00017" />
-      <option name="presentableId" value="LOCAL-00017" />
-      <option name="project" value="LOCAL" />
-      <updated>1713247145847</updated>
+      <workItem from="1726462835909" duration="9790000" />
+      <workItem from="1726549475699" duration="8434000" />
     </task>
     <task id="LOCAL-00018" summary="- Add histogram">
       <option name="closed" value="true" />
@@ -836,7 +828,15 @@
       <option name="project" value="LOCAL" />
       <updated>1726203167325</updated>
     </task>
-    <option name="localTasksCounter" value="66" />
+    <task id="LOCAL-00066" summary="- added MLP&#10;- added GSPA">
+      <option name="closed" value="true" />
+      <created>1726471802805</created>
+      <option name="number" value="00066" />
+      <option name="presentableId" value="LOCAL-00066" />
+      <option name="project" value="LOCAL" />
+      <updated>1726471802805</updated>
+    </task>
+    <option name="localTasksCounter" value="67" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -854,7 +854,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="- Add fl-mmkg" />
     <MESSAGE value="- add uri tool" />
     <MESSAGE value="- add uri tooling" />
     <MESSAGE value="- add add_tools" />
@@ -879,7 +878,8 @@
     <MESSAGE value="- added image_extractor.py&#10;- added load.py&#10;- added class SparseAutoencoder and KL divergence as a sparsity" />
     <MESSAGE value="- added hypertuning &#10;- added training" />
     <MESSAGE value="- added class SparseAutoEncoder&#10;- added MLP" />
-    <option name="LAST_COMMIT_MESSAGE" value="- added class SparseAutoEncoder&#10;- added MLP" />
+    <MESSAGE value="- added MLP&#10;- added GSPA" />
+    <option name="LAST_COMMIT_MESSAGE" value="- added MLP&#10;- added GSPA" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
