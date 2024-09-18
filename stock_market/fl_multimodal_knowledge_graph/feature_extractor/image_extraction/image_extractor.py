@@ -399,26 +399,69 @@ class GPSA(nn.Module):
         B, N, C = x.shape
         qk = self.qk(x).reshape(B, N, 2, self.num_heads, C // self.num_heads).permute(2, 0, 3, 1, 4) # Reshaping the tensor qk to dimension (B,N,2,the number of heads, the dimension fo each attention head) and permutating for a specific order (2,0,3,1,4)
         q, k = qk[0], qk[1]  # Assigning values of q and k
+
+        # Positional scores
         pos_score = self.real_indices.expand(B, -1, -1, -1)  # Ensuring the real_indices tensor is expanded to match the batch size B without changing other dimensions (aligning the positional information with batch size for further computations)
         pos_score = self.pos_proj(pos_score).permute(0, 3, 1, 2)  # Permutating pos_score after being positionally projected to a specific order (0,3,1,2)
+
+        # Patch scores
         patch_score = (q @ k.transpose(-2, -1)) * self.scale  # Obtaining the scaled attention score by computing the matrix multiplication between query and key ( k with the last 2 dimensions transposed)
         patch_score = patch_score.softmax(dim=-1)  # Applying softmax function to the scaled attention score with the same dimension
         pos_score = pos_score.softmax(dim=-1)  # Applying the softmax function to positional information with the same dimension
 
+        # Gating mechanism
         gating = self.gating_param.view(1, -1, 1, 1)  # Reshaping gating parameters without changing data with the specified dimension (1, -1, 1, 1) to align the dimension of gating parameters with other tensors to perform element-wise operations
         attn = (1. - torch.sigmoid(gating)) * patch_score + torch.sigmoid(gating) * pos_score  # Assigning attention mechanism to 1 - sigmoided gating tensor times scaled attention score, adding sigmoided gating tensor times positional score (gating score controlled by sigmoid function to demonstrate the importance of each score)
-        attn /= attn.sum(dim=-1, keepdim=True)  # Each element in the last dimension is the result of the sum of the corresponding element in the original attn tensor
+        attn /= attn.sum(dim=-1, keepdim=True)  # Normalising the attention score. Each element in the last dimension is the result of the sum of the corresponding element in the original attn tensor
         attn = self.attn_drop(attn)  # Applying the dropout rate to attn tensor
         return attn
 
     def get_attention_map(self, x, return_map=False):
-        B, N, C = x.shape
-        qkv = self.qkv(x).reshape(B, N, 3, self.num_heads, C // self.num_heads).permute(2, 0, 3, 1, 4)  # Reshaping the tensor q,k,v to dimension (B,N,3,the number of heads, the dimension for each attention head) and permutating for a specific order (2,0,3,1,4)
-        qkv = qkv[0], qkv[1], qkv[2]
-        attn_map = (q @ k.transpose(-2, -1) * self.scale)  # Obtaining the scaled attention map by performing matrix multiplication between query and key (with the last and second to last dimensions transposed)
+        attn_map = self.get_attention(x).mean(0)  # Averaging attention head over batch
+        # Calculating the distances
 
-        img_size = int(N ** 0.5)  # Resizing the image to the length of a sequence multiplied by 0.5
-        ind = torch.arange(img_size).view(1, -1) - torch.arange(img_size).view(-1, 1)  # Obtaining tensor ind (variable name for indices) with the difference between the i-th and j-th elements if the original sequence from reshaped img_size (with the same data)
-        indx = ind.repeat(img_size, img_size)  # Obtaining indx by repeating ind tensor across the entire image size (creating a larger grid to compute relative positions and distances for the entire image)
-        indy = ind.repeat_interleave(img_size,dim=0).repeat_interleave(img_size,dim=1)
+        distances = self.rel_indices.squeeze()[:, :, -1] ** 0.5  # Calculating the Eucledian distances by taking the squared root
+        # Calculating the final distance
+        dist = torch.einsum('nm,hnm->h',(distances,attn_map))  # Computing the weighted sum using attention map (using Einstein summation convention)
+        dist /= distances.size(0)  # Normalising the results using the number of tokens
+        # Calculating the distances is crucial to understand spatial relationships amongst the data (understanding how attention is distributed across spatial locations and how one part of input is affected by another）. Weighted distance measure helps us understand the influence of different parts of input based on the spatial relationships. It is very useful for image processing and natural language processing
+
+        if return_map: # If there is return_map
+            return dist, attn_map  # Return the distance and the attention map
+        else:  # Otherwise
+            return dist  # Return the distance
+
+    def forward(self,x):  # Forward pass
+        B, N, C = x.shape  # Extracting the shape
+        qkv = self.qkv(x).reshape(B, N, 3, self.num_heads, C // self.num_heads).permute(2,0,3,1,4)  # Reshaping the tensor q,k,v to dimension (B,N,3,the number of heads, the dimension for each attention head) and permutating for a specific order (2,0,3,1,4)
+        q, k, v = qkv[0], qkv[1], qkv[2]
+        attn = (q @ k.transpose(-2, -1)) * self.scale  # Obtaining the scaled attention heads by performing matrix multiplication between query and key (with the last and second to last dimensions transposed)
+        attn = attn
+
+    def local_init(self,locality_strength=1.):
+        self.v.weight.data.copy_(torch.eye(self.dim))  # Initialising the values of weights to an identity matrix (a matrix that is product of the original matrix multiplied by the inverse matrix)
+        locality_distance = 1  # Setting the locality distance
+
+        kernel_size = int(self.num_heads ** 0.5)  # Calculating the kernel size based on square root of the number of heads
+        center = (kernel_size - 1) / 2 if kernel_size % 2 == 0 else kernel_size // 2  # Determining the center of the kernel
+        for h1 in range(kernel_size):  # Iterate over the kernel size
+            for h2 in range(kernel_size):
+                position = h1 + kernel_size * h2 # Calculate the position of the kernel
+                self.pos_proj.weight.data[position, 2] = -1  # Setting the projection kernel weight for the third dimension
+                self.pos_proj.weight.data[position, 1] = 2 * (h1 - center) * locality_distance  # Setting the positional weight for the second dimension
+                self.pos_proj.weight.data[position, 0] = 2 * (h2 - center) * locality_distance  # Setting the positional weight for the first dimension
+                self.pos_proj.weight.data *= locality_strength  # Scaling the positional project weights by the locality strength
+    def get_real_indices(self, num_patches):
+        img_size = int(num_patches ** 0.5)  # Calculating the image size based on the number of patches
+        rel_indices = torch.zeros(1, num_patches, num_patches, 3)  # Initialsing a tensor to store relative indices
+        ind = torch.arange(img_size).view(1, -1) - torch.arange(img_size).view(-1,1)  # Computing the relative indices (positional encoding, capturing the relative positions in a sequence or grid) for the x and y dimensions
+        indx = ind.repeat(img_size,img_size)  # Repeating the x indices to match the image size, representing the difference between x-coordinates of the patches
+        indy = ind.repeat_interleave(img_size,dim=0).repeat_interleave(img_size,dim=1)  # Repeating the y indices to match the image size, representing the difference in the y-coordinates of the patches
+        indd = indx ** 2 + indy ** 2  # Computing the squared Euclidean distances between patches
+        rel_indices[:, :, :, 2] = indd.unsqueeze(0)  # Setting the indices for the 3rd dimension (the distance)
+        rel_indices[:, :, :, 1] = indd.unsqueeze(0)  # Setting the indices for the 2nd dimension (indy)
+        rel_indices[:, :, :, 0] = indd.unsqueeze(0)  # Setting the indices for the 1st dimension (indx)
+        device = self.qk.weight.device  # Getting the device of the query-key weight
+        self.rel_indices = rel_indices.to(device)  # Moving the relative indices to the same device as the query-key weights
+
 #def process_model(use_data_parallel: bool = False, device_ids: list = None) -> torch.nn.Models:
