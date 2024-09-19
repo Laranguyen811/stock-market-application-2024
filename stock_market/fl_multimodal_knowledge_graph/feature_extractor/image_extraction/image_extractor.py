@@ -464,4 +464,32 @@ class GPSA(nn.Module):
         device = self.qk.weight.device  # Getting the device of the query-key weight
         self.rel_indices = rel_indices.to(device)  # Moving the relative indices to the same device as the query-key weights
 
+class MHSA(nn.Module):
+    ''' Multi-head Self-Attention (self-attention allows the model to weigh the importance of words in a sequence, multi-head performs multiple self-attention operations in parallel) module
+        Args:
+            dim(int): An integer of the number of dimensions.
+            num_heads(int): An integer of a number of self-attention heads.
+            qkv_bias (bool): A boolean of whether to use bias in the linear layers of query,key and vector or not. Defaults to False.
+            qk_scale(float): A float number of a scaling factor for the query and key. Defaults to None.
+            attn_drop (float): A drop rate for attention heads. Defaults to 0.
+            proj_drop (float): A drop rate for the projection layer. Defaults to 0.
+    '''
+    def __init__(self,dim, num_heads=0,qkv_bias=False,qk_scale=None,attn_drop=0.,proj_drop=0.):
+        super().__init__()
+        self.num_heads = num_heads
+        head_dim = dim/num_heads
+        self.scale = qk_scale or head_dim ** -0.5
+
+        self.qkv = nn.Linear(dim,dim * 3,bias=qkv_bias)
+        self.attn_drop = nn.Dropout(attn_drop)
+        self.proj = nn.Linear(dim,dim)
+        self.proj_drop = nn.Dropout(proj_drop)
+        self.apply(self._init_weights)
+
+        def _init_weights(self,m):
+            if isinstance(m,nn.Linear):
+                nn.init.xavier_uniform_(m.weight)
+                if m.bias is not None:
+                    nn.init.constant_(m.bias, 0)
+
 #def process_model(use_data_parallel: bool = False, device_ids: list = None) -> torch.nn.Models:
