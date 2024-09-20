@@ -475,21 +475,57 @@ class MHSA(nn.Module):
             proj_drop (float): A drop rate for the projection layer. Defaults to 0.
     '''
     def __init__(self,dim, num_heads=0,qkv_bias=False,qk_scale=None,attn_drop=0.,proj_drop=0.):
-        super().__init__()
-        self.num_heads = num_heads
-        head_dim = dim/num_heads
-        self.scale = qk_scale or head_dim ** -0.5
+        super().__init__()  # A super class (parent class) dictating behaviors of child classes
+        self.num_heads = num_heads  # A number of self-attention heads
+        head_dim = dim/num_heads  # The number of dimensions per head
+        self.scale = qk_scale or head_dim ** -0.5  # Setting the scaling factor to the scaling factor of the dot product between key and query (before being applied the softmax function) or the square root of number of dimensions per head if the key-query scale is not given.
 
-        self.qkv = nn.Linear(dim,dim * 3,bias=qkv_bias)
-        self.attn_drop = nn.Dropout(attn_drop)
-        self.proj = nn.Linear(dim,dim)
-        self.proj_drop = nn.Dropout(proj_drop)
-        self.apply(self._init_weights)
+        self.qkv = nn.Linear(dim,dim * 3,bias=qkv_bias)  # Setting query (information we want to find), key (relevance to the information we want to find) and value (actual value assigned to each word) vectors to a fully-connected layer (linear) with input as dimensions, output as 3 times dimensions (concatenating the query, key and value vectors into a single vector) and bias as qkv_bias
+        self.attn_drop = nn.Dropout(attn_drop)  # Assigning the dropout rate of the attention head to a dropout layer
+        self.proj = nn.Linear(dim,dim)  # Assigning the projection layer to a fully-connected layer with dimensions as inputs and dimensions as outputs
+        self.proj_drop = nn.Dropout(proj_drop)  # Assigning the dropout rate of the projection layer to a dropout layer
+        self.apply(self._init_weights)  # Applying the initialised weights
 
         def _init_weights(self,m):
-            if isinstance(m,nn.Linear):
-                nn.init.xavier_uniform_(m.weight)
-                if m.bias is not None:
-                    nn.init.constant_(m.bias, 0)
+            if isinstance(m,nn.Linear):  # If m is an instance of nn.Linear
+                nn.init.xavier_uniform_(m.weight)  # Initialising the weight using Xavier (Glorot) Uniform Initialisation for balance of weights amongst layers, hence, efficient training
+                if m.bias is not None:  # If bias is given
+                    nn.init.constant_(m.bias, 0)  # Initialising bias to a constant of 0 for efficient training
 
+        def get_attention_map(self,x,return_map=False):
+            B, N, C = x.shape  # Extracting the shape
+            qkv = self.qkv(x).reshape(B, N, 3, self.num_heads, C // self.num_heads).permute(2, 0, 3, 1, 4)  # Reshaping the tensor q,k,v to dimension (B,N,3,the number of heads, the dimension for each attention head) and permutating for a specific order (2,0,3,1,4)
+            q, k, v = qkv[0], qkv[1], qkv[2]  # Assigning query, key and value vectors
+            attn_map = (q @ k.transpose(-2, -1)) * self.scale  # Obtaining the scaled attention map by performing matrix multiplication between query and key vectors with the last and the second to last dimensions transposed
+            attn_map = attn_map.softmax(dim=-1).mean(0)  # Applying softmax function to the attention map with the same dimensions and calculating the mean along the columns to obtain the actual attention map
+
+            # Calculating the distances
+            img_size = int(N**.5)  # Assigning the image size as the integer of the square root of the number of batches
+            ind = torch.arange(img_size).view(1, -1) - torch.arange(img_size).view(-1, 1)  # Obtaining the ind tensor by getting the 1-D tensor using the x and y dimensions of the image size
+            indx = ind.repeat(img_size,img_size)  # Obtaining the indx tensor by repeating the image size as a row and the image soze as a column
+            indy = ind.repeat_interleave(img_size,dim=0).repeat_interleave(img_size,dim=1)  # Obtaining the indx tensor by expanding the grid (repeating the image size for the image size times)
+            indd = indx**2 + indy**2  # Obtaining indd tensor by adding the indx squared to indy squared
+            distances = indd**.5  # Obtaining the Euclidian distances by squaring indd
+            distances = distances.to('cuda')  # Putting distances to cuda
+
+            dist = torch.einsum('nm,nhm->h',(distances,attn_map)) # Calculating the dist tensor using Einstein summation eith nm as the indices of the first tensor, nhm as the indices of the second tensor and h as the output indices. For each element of the output h, sum over the indices n and m by multiplying the corresponding distances and attention map (performing a weighted sum of attn_map tensor using the distances tensor as weights, and the result will the output tensor with h shape)
+            dist /= N  # Dividing dist tensor with the number of batch to normalise
+            if return_map:  # If there is a return map
+                return attn_map,dist
+            if None:  # If there is not a return map
+                return dist
+
+        def forward(self, x):  # Forward pass
+            B, N, C = x.shape  # Extracting the shape of x
+            qkv = self.qkv(x).reshape(B, N, 3, self.num_heads, C // self.num_heads).permute(2, 0, 3, 1, 4)
+            q, k, v = qkv[0], qkv[1], qkv[2]
+
+            attn = (q @ k.transpose(-2,-1)) * self.scale  # Reshaping the tensor q,k,v to dimension (B,N,3,the number of heads, the dimension for each attention head) and permutating for a specific order (2,0,3,1,4)
+            attn = attn.softmax(dim=-1)  # Applying the softmax function to attention head with the same dimension
+            attn = self.attn_drop(attn)  # Applying a dropout rate to attention heads
+
+            x = (attn @ v).transpose(1,2).reshape(B, N, C)  # Obtaining the x tensor by performing matrix multiplication between attn and v tensors, transposing the first and the second dimensions, and reshaping them into the dimensions of (B, N, C)
+            x = self.proj(x)  # Applying the projection layer to x
+            x = self.proj_drop(x)  # Applying the dropout rate of the projection layer to x
+            return x
 #def process_model(use_data_parallel: bool = False, device_ids: list = None) -> torch.nn.Models:
