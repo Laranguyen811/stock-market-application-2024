@@ -602,7 +602,8 @@ class PatchEmbed(nn.Module):
 
     def forward(self,x):  # Forward pass
         B, C, H, W = x.shape  # Extracting the shape of x for the number of batches, the number of embedding dimensions, height and width respectively
-        assert H == self.img_size[0] and W == self.img_size[1], \ f"Input image size ({H}*{W} doesn't match model ({self.img_size[0]}*{self.img_size[1]})."
+        assert H == self.img_size[0] and W == self.img_size[1],\
+            f"Input image size ({H}*{W} doesn't match model ({self.img_size[0]}*{self.img_size[1]})."
         x = self.proj(x).flatten(2).transpose(1,2)
         return x
 
