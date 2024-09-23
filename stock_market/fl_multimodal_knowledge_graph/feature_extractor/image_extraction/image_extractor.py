@@ -327,21 +327,21 @@ class Mlp(nn.Module):
         self.drop = nn.Dropout(drop)  # A dropout layer is a regularisation technique to prevent overfitting during training, using randomness making the the model less sensitive to specific neurons and weight, promoting independence and robustness
         self.apply(self._init_weights)  # Applying initialised weights
 
-        def _init_weights(self,m):
-            if isinstance(m,nn.Linear):  # Check if initialised weights are only applied to an instance of nn.Linear (a fully-connected layer)
-                trunc_normal_(m.weight,std=.02)  # Applying weights from a truncated normal distribution with standard deviation of 0.02 to ensure that initial weights are small and close to 0 so that we can achieve stable and efficient training (preventing exploding/vanishing gradients, efficiency, empirical success, normaization)
-                if m.bias is not None:  # If we have assigned a value to bias
-                    nn.init.constant_(m.bias,0)  # Initialising bias to 0 to ensure that all neurons have the same initial value of bias (uniformity, simplicity,symetry breaking,empirical success)
-            elif isinstance(m,nn.LayerNorm):  # Check if initialised weights are applied to layer where Layer Normalisation is applied to a mini-batch of inputs (stabilising and accelerating the training of deep neural networks)
-                nn.init.constant_(m.bias,0)  # Initialising bias to 0
-                nn.init.constant_(m.weight,1.0)  #Initialising all weights to 1 to ensure that initial scaling does not affect the normalised values, ensuring the initial input is the same as the normalised input
-        def forward(self,x):  # A feedforward propagation function
-            x = self.fc1(x)
-            x = self.act(x)
-            x = self.drop(x)
-            x = self.fc2(x)
-            x = self.drop(x)
-            return x
+    def _init_weights(self,m):
+        if isinstance(m,nn.Linear):  # Check if initialised weights are only applied to an instance of nn.Linear (a fully-connected layer)
+            trunc_normal_(m.weight,std=.02)  # Applying weights from a truncated normal distribution with standard deviation of 0.02 to ensure that initial weights are small and close to 0 so that we can achieve stable and efficient training (preventing exploding/vanishing gradients, efficiency, empirical success, normaization)
+            if m.bias is not None:  # If we have assigned a value to bias
+                nn.init.constant_(m.bias,0)  # Initialising bias to 0 to ensure that all neurons have the same initial value of bias (uniformity, simplicity,symetry breaking,empirical success)
+        elif isinstance(m,nn.LayerNorm):  # Check if initialised weights are applied to layer where Layer Normalisation is applied to a mini-batch of inputs (stabilising and accelerating the training of deep neural networks)
+            nn.init.constant_(m.bias,0)  # Initialising bias to 0
+            nn.init.constant_(m.weight,1.0)  #Initialising all weights to 1 to ensure that initial scaling does not affect the normalised values, ensuring the initial input is the same as the normalised input
+    def forward(self,x):  # A feedforward propagation function
+        x = self.fc1(x)
+        x = self.act(x)
+        x = self.drop(x)
+        x = self.fc2(x)
+        x = self.drop(x)
+        return x
 
 
 class GPSA(nn.Module):
@@ -486,54 +486,55 @@ class MHSA(nn.Module):
         self.proj_drop = nn.Dropout(proj_drop)  # Assigning the dropout rate of the projection layer to a dropout layer
         self.apply(self._init_weights)  # Applying the initialised weights
 
-        def _init_weights(self,m):
-            if isinstance(m,nn.Linear):  # If m is an instance of nn.Linear
-                nn.init.xavier_uniform_(m.weight)  # Initialising the weight using Xavier (Glorot) Uniform Initialisation for balance of weights amongst layers, hence, efficient training
-                if m.bias is not None:  # If bias is given
-                    nn.init.constant_(m.bias, 0)  # Initialising bias to a constant of 0 for efficient training
+    def _init_weights(self,m):
+        if isinstance(m,nn.Linear):  # If m is an instance of nn.Linear
+            nn.init.xavier_uniform_(m.weight)  # Initialising the weight using Xavier (Glorot) Uniform Initialisation for balance of weights amongst layers, hence, efficient training
+            if m.bias is not None:  # If bias is given
+                nn.init.constant_(m.bias, 0)  # Initialising bias to a constant of 0 for efficient training
 
-        def get_attention_map(self,x,return_map=False):
-            B, N, C = x.shape  # Extracting the shape
-            qkv = self.qkv(x).reshape(B, N, 3, self.num_heads, C // self.num_heads).permute(2, 0, 3, 1, 4)  # Reshaping the tensor q,k,v to dimension (B,N,3,the number of heads, the dimension for each attention head) and permutating for a specific order (2,0,3,1,4)
-            q, k, v = qkv[0], qkv[1], qkv[2]  # Assigning query, key and value vectors
-            attn_map = (q @ k.transpose(-2, -1)) * self.scale  # Obtaining the scaled attention map by performing matrix multiplication between query and key vectors with the last and the second to last dimensions transposed
-            attn_map = attn_map.softmax(dim=-1).mean(0)  # Applying softmax function to the attention map with the same dimensions and calculating the mean along the columns to obtain the actual attention map
+    def get_attention_map(self,x,return_map=False):
+        B, N, C = x.shape  # Extracting the shape
+        qkv = self.qkv(x).reshape(B, N, 3, self.num_heads, C // self.num_heads).permute(2, 0, 3, 1, 4)  # Reshaping the tensor q,k,v to dimension (B,N,3,the number of heads, the dimension for each attention head) and permutating for a specific order (2,0,3,1,4)
+        q, k, v = qkv[0], qkv[1], qkv[2]  # Assigning query, key and value vectors
+        attn_map = (q @ k.transpose(-2, -1)) * self.scale  # Obtaining the scaled attention map by performing matrix multiplication between query and key vectors with the last and the second to last dimensions transposed
+        attn_map = attn_map.softmax(dim=-1).mean(0)  # Applying softmax function to the attention map with the same dimensions and calculating the mean along the columns to obtain the actual attention map
 
-            # Calculating the distances
-            img_size = int(N**.5)  # Assigning the image size as the integer of the square root of the number of batches
-            ind = torch.arange(img_size).view(1, -1) - torch.arange(img_size).view(-1, 1)  # Obtaining the ind tensor by getting the 1-D tensor using the x and y dimensions of the image size
-            indx = ind.repeat(img_size,img_size)  # Obtaining the indx tensor by repeating the image size as a row and the image soze as a column
-            indy = ind.repeat_interleave(img_size,dim=0).repeat_interleave(img_size,dim=1)  # Obtaining the indx tensor by expanding the grid (repeating the image size for the image size times)
-            indd = indx**2 + indy**2  # Obtaining indd tensor by adding the indx squared to indy squared
-            distances = indd**.5  # Obtaining the Euclidian distances by squaring indd
-            distances = distances.to('cuda')  # Putting distances to cuda
+        # Calculating the distances
+        img_size = int(N**.5)  # Assigning the image size as the integer of the square root of the number of batches
+        ind = torch.arange(img_size).view(1, -1) - torch.arange(img_size).view(-1, 1)  # Obtaining the ind tensor by getting the 1-D tensor using the x and y dimensions of the image size
+        indx = ind.repeat(img_size,img_size)  # Obtaining the indx tensor by repeating the image size as a row and the image soze as a column
+        indy = ind.repeat_interleave(img_size,dim=0).repeat_interleave(img_size,dim=1)  # Obtaining the indx tensor by expanding the grid (repeating the image size for the image size times)
+        indd = indx**2 + indy**2  # Obtaining indd tensor by adding the indx squared to indy squared
+        distances = indd**.5  # Obtaining the Euclidian distances by squaring indd
+        distances = distances.to('cuda')  # Putting distances to cuda
 
-            dist = torch.einsum('nm,nhm->h',(distances,attn_map)) # Calculating the dist tensor using Einstein summation eith nm as the indices of the first tensor, nhm as the indices of the second tensor and h as the output indices. For each element of the output h, sum over the indices n and m by multiplying the corresponding distances and attention map (performing a weighted sum of attn_map tensor using the distances tensor as weights, and the result will the output tensor with h shape)
-            dist /= N  # Dividing dist tensor with the number of batch to normalise
-            if return_map:  # If there is a return map
-                return attn_map,dist
-            if None:  # If there is not a return map
-                return dist
+        dist = torch.einsum('nm,nhm->h',(distances,attn_map)) # Calculating the dist tensor using Einstein summation eith nm as the indices of the first tensor, nhm as the indices of the second tensor and h as the output indices. For each element of the output h, sum over the indices n and m by multiplying the corresponding distances and attention map (performing a weighted sum of attn_map tensor using the distances tensor as weights, and the result will the output tensor with h shape)
+        dist /= N  # Dividing dist tensor with the number of batch to normalise
+        if return_map:  # If there is a return map
+            return attn_map,dist
+        if None:  # If there is not a return map
+            return dist
 
-        def forward(self, x):  # Forward pass
-            B, N, C = x.shape  # Extracting the shape of x
-            qkv = self.qkv(x).reshape(B, N, 3, self.num_heads, C // self.num_heads).permute(2, 0, 3, 1, 4)
-            q, k, v = qkv[0], qkv[1], qkv[2]
+    def forward(self, x):  # Forward pass
+        B, N, C = x.shape  # Extracting the shape of x
+        qkv = self.qkv(x).reshape(B, N, 3, self.num_heads, C // self.num_heads).permute(2, 0, 3, 1, 4)
+        q, k, v = qkv[0], qkv[1], qkv[2]
 
-            attn = (q @ k.transpose(-2,-1)) * self.scale  # Reshaping the tensor q,k,v to dimension (B,N,3,the number of heads, the dimension for each attention head) and permutating for a specific order (2,0,3,1,4)
-            attn = attn.softmax(dim=-1)  # Applying the softmax function to attention head with the same dimension
-            attn = self.attn_drop(attn)  # Applying a dropout rate to attention heads
+        attn = (q @ k.transpose(-2,-1)) * self.scale  # Reshaping the tensor q,k,v to dimension (B,N,3,the number of heads, the dimension for each attention head) and permutating for a specific order (2,0,3,1,4)
+        attn = attn.softmax(dim=-1)  # Applying the softmax function to attention head with the same dimension
+        attn = self.attn_drop(attn)  # Applying a dropout rate to attention heads
 
-            x = (attn @ v).transpose(1,2).reshape(B, N, C)  # Obtaining the x tensor by performing matrix multiplication between attn and v tensors, transposing the first and the second dimensions, and reshaping them into the dimensions of (B, N, C)
-            x = self.proj(x)  # Applying the projection layer to x
-            x = self.proj_drop(x)  # Applying the dropout rate of the projection layer to x
-            return x
+        x = (attn @ v).transpose(1,2).reshape(B, N, C)  # Obtaining the x tensor by performing matrix multiplication between attn and v tensors, transposing the first and the second dimensions, and reshaping them into the dimensions of (B, N, C)
+        x = self.proj(x)  # Applying the projection layer to x
+        x = self.proj_drop(x)  # Applying the dropout rate of the projection layer to x
+        return x
 
 
 class Block(nn.Module):
     '''
     A neural network block with optional GPSA or MHSA attention, normalisation, and MLP.
     '''
+    super().__init__()
     def __init__(self, dim: int, num_heads:int,mlp_ratio:float = 4.,qkv_bias: bool = False, qk_scale: float = None, drop: float = 0., attn_drop: float = 0., drop_path: float = 0., act_layer: nn.Module = nn.GELU, norm_layer: nn.Module = nn.LayerNorm,use_gpsa: bool = True, **kwargs):
         '''
         Initialises the Block.
@@ -551,7 +552,6 @@ class Block(nn.Module):
             use_gpsa (bool): A boolean of using GPSA.
             **kwargs: Additional arguments.
         '''
-        super().__init__()
         self.norm1 = norm_layer(dim)  # Applying a normalisation layer with dimensions as input
         self.use_gpsa = use_gpsa
         if self.use_gpsa:  # If using GPSA
@@ -561,18 +561,18 @@ class Block(nn.Module):
             mlp_hidden_dim = int(dim * mlp_ratio)  # Obtaining the hidden dimensions for MLP as integer product between dimensions and the ratio for MLP hidden dimension (necessary for performance optimization, efficiency, and generalization capabilities)
             self.mlp = Mlp(encoded_features = dim, hidden_features=mlp_hidden_dim,act_layer=act_layer,drop=drop)
 
-            def forward(self, x: torch.Tensor) -> torch.Tensor:
-                '''
-                Forward pass of the Block.
-                Args:
-                    x (torch.Tensor): Input tensor.
+    def forward(self, x: torch.Tensor) -> torch.Tensor:
+        '''
+        Forward pass of the Block.
+        Args:
+            x (torch.Tensor): Input tensor.
 
-                Returns:
-                    torch.Tensor: Output tensor.
-                '''
-                x = x + self.drop_path(self.attn(self.norm1(x)))
-                x = x + self.drop_path(self.mlp(self.norm2(x)))
-                return x
+        Returns:
+            torch.Tensor: Output tensor.
+        '''
+        x = x + self.drop_path(self.attn(self.norm1(x)))
+        x = x + self.drop_path(self.mlp(self.norm2(x)))
+        return x
 
 class PatchEmbed(nn.Module):
     '''
@@ -651,16 +651,16 @@ class HybridEmbed(nn.Module):
             self.proj = nn.Linear(feature_dim, embed_dim)  # Assigning the projection layer to the Linear layer with feature dimension as input and embedding dimension as output.
             self.apply(self._init_weights)  # Applying initialised weights
 
-        def _init_weights(self, m):
-            if isinstance(m,nn.Linear): # If m is an instance of nn.Linear
-                nn.init.xavier_uniform_(m.weight)  # Initialising the weight using Xavier Uniform Initialisation for balance weights amongst layers and, hence, more efficient training
-                if m.bias is not None:  # If bias is provided
-                    nn.init.constant_(m.bias,0)  # Initialising bias as a constant of 0 for more efficient training
+    def _init_weights(self, m):
+        if isinstance(m,nn.Linear): # If m is an instance of nn.Linear
+            nn.init.xavier_uniform_(m.weight)  # Initialising the weight using Xavier Uniform Initialisation for balance weights amongst layers and, hence, more efficient training
+            if m.bias is not None:  # If bias is provided
+                nn.init.constant_(m.bias,0)  # Initialising bias as a constant of 0 for more efficient training
 
 
-        def forward(self, x):  # Forward pass
-            x = self.backbone(x)[-1]  # Assigning variable x to the last column of x as the output of the backbone model
-            x = x.flatten(2).transpose(1,2)  # Flattening x to the second-level and transpose the second and the third columns
-            x = self.proj(x)  #  Projecting x
-            return x
+    def forward(self, x):  # Forward pass
+        x = self.backbone(x)[-1]  # Assigning variable x to the last column of x as the output of the backbone model
+        x = x.flatten(2).transpose(1,2)  # Flattening x to the second-level and transpose the second and the third columns
+        x = self.proj(x)  #  Projecting x
+        return x
 #def process_model(use_data_parallel: bool = False, device_ids: list = None) -> torch.nn.Models:

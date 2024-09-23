@@ -1738,3 +1738,28 @@ to use download_sounds in the test
 - incorporate other types of AI models
 - read KG paper if have time
 - read paper "Attention is all you need"
+
+23/09/2024
+
+***Things I learned today:***
+- 3 reasons of self-attention in Tranformer: reducing computational complexity per layer, ensuring every computation is parallised, reducing the length of path between long-range dependencies
+- flatten: collapsing dimensions
+- backbone of CNN: can be used to extract features
+- kernel: a filter, a matrix to multiply with image for model to pay attention to specific features
+
+***Things I did well today:***
+- Coding HybridEmbed
+- Finished second pass "Attention is all you need"
+- understand more about the architecture of ConviTransformer
+
+***Things I did not do well today:***
+- Not reading KG paper
+- Not finished convit yet
+
+
+***Things I will do better next time:***
+- 3rd pass Attention paper
+- Finished convit
+- feature importance
+- other types of AI models
+- KG paper if have time
