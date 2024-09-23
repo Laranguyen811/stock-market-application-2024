@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4f5895f3-2d93-4355-bcbb-97c6701d0028" name="Changes" comment="- added MHSA class">
+    <list default="true" id="4f5895f3-2d93-4355-bcbb-97c6701d0028" name="Changes" comment="- finished MHSA class">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/misc/Stock App Review.md" beforeDir="false" afterPath="$PROJECT_DIR$/misc/Stock App Review.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/stock_market/fl_multimodal_knowledge_graph/feature_extractor/image_extraction/image_extractor.py" beforeDir="false" afterPath="$PROJECT_DIR$/stock_market/fl_multimodal_knowledge_graph/feature_extractor/image_extraction/image_extractor.py" afterDir="false" />
@@ -446,15 +446,8 @@
       <workItem from="1726549475699" duration="10412000" />
       <workItem from="1726635663841" duration="9334000" />
       <workItem from="1726725711803" duration="2727000" />
-      <workItem from="1726808540554" duration="8484000" />
-    </task>
-    <task id="LOCAL-00021" summary="Merge remote-tracking branch 'origin/master'">
-      <option name="closed" value="true" />
-      <created>1718172965758</created>
-      <option name="number" value="00021" />
-      <option name="presentableId" value="LOCAL-00021" />
-      <option name="project" value="LOCAL" />
-      <updated>1718172965758</updated>
+      <workItem from="1726808540554" duration="8665000" />
+      <workItem from="1727067643586" duration="7634000" />
     </task>
     <task id="LOCAL-00022" summary="Merge remote-tracking branch 'origin/master'">
       <option name="closed" value="true" />
@@ -840,7 +833,15 @@
       <option name="project" value="LOCAL" />
       <updated>1726739909689</updated>
     </task>
-    <option name="localTasksCounter" value="70" />
+    <task id="LOCAL-00070" summary="- finished MHSA class">
+      <option name="closed" value="true" />
+      <created>1726819057887</created>
+      <option name="number" value="00070" />
+      <option name="presentableId" value="LOCAL-00070" />
+      <option name="project" value="LOCAL" />
+      <updated>1726819057888</updated>
+    </task>
+    <option name="localTasksCounter" value="71" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -858,7 +859,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="- add add_relation function" />
     <MESSAGE value="- add fetch_tool.py" />
     <MESSAGE value="- add transform_path&#10;- add get_page&#10;- add get_node&#10;- add combine_pages&#10;- add get_edge&#10;- add get_multi_model" />
     <MESSAGE value="- add save_to_local&#10;- add acceptable_element" />
@@ -883,7 +883,8 @@
     <MESSAGE value="- added comments&#10;- added get_attention and get_attention_map" />
     <MESSAGE value="- finished GPSA" />
     <MESSAGE value="- added MHSA class" />
-    <option name="LAST_COMMIT_MESSAGE" value="- added MHSA class" />
+    <MESSAGE value="- finished MHSA class" />
+    <option name="LAST_COMMIT_MESSAGE" value="- finished MHSA class" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -916,6 +917,11 @@
           <url>file://$PROJECT_DIR$/stock_market/Lib/site-packages/mpl_toolkits/mplot3d/tests/test_stock_data_analysis.py</url>
           <line>9</line>
           <option name="timeStamp" value="11" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/stock_market/fl_multimodal_knowledge_graph/feature_extractor/image_extraction/image_extractor.py</url>
+          <line>572</line>
+          <option name="timeStamp" value="12" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

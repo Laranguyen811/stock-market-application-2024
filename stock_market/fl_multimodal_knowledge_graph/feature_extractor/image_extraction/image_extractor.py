@@ -528,4 +528,139 @@ class MHSA(nn.Module):
             x = self.proj(x)  # Applying the projection layer to x
             x = self.proj_drop(x)  # Applying the dropout rate of the projection layer to x
             return x
+
+
+class Block(nn.Module):
+    '''
+    A neural network block with optional GPSA or MHSA attention, normalisation, and MLP.
+    '''
+    def __init__(self, dim: int, num_heads:int,mlp_ratio:float = 4.,qkv_bias: bool = False, qk_scale: float = None, drop: float = 0., attn_drop: float = 0., drop_path: float = 0., act_layer: nn.Module = nn.GELU, norm_layer: nn.Module = nn.LayerNorm,use_gpsa: bool = True, **kwargs):
+        '''
+        Initialises the Block.
+        Args:
+            dim (int): An integer of the dimension of the input.
+            num_heads (int): An integer of the number of heads.
+            mlp_ratio (float): A float number of the ratio for MLP hidden dimension.
+            qkv_bias (bool): A boolean of bias in QKV.
+            qk_scale (float): A float number of scale for QK.
+            drop (float): A float number of dropout rate.
+            attn_drop (float): A float number of attention dropout rate.
+            drop_path (float): A float number of drop path rate.
+            act_layer (nn.Module): An activation layer.
+            norm_layer (nn.Module): A normalisation layer.
+            use_gpsa (bool): A boolean of using GPSA.
+            **kwargs: Additional arguments.
+        '''
+        super().__init__()
+        self.norm1 = norm_layer(dim)  # Applying a normalisation layer with dimensions as input
+        self.use_gpsa = use_gpsa
+        if self.use_gpsa:  # If using GPSA
+            self.attn = GPSA(dim,num_heads=num_heads, qkv_bias=qkv_bias, qk_scale=qk_scale, attn_drop=attn_drop,proj_drop=drop, **kwargs)
+            self.drop_path = DropPath(drop_path) if drop_path > 0. else nn.Identity()  # DropPath is a regularization technique similar to dropout. nn.Identity() returns input as output
+            self.norm2 = norm_layer(dim)  # Applying a normalisation layer with dimensions as input
+            mlp_hidden_dim = int(dim * mlp_ratio)  # Obtaining the hidden dimensions for MLP as integer product between dimensions and the ratio for MLP hidden dimension (necessary for performance optimization, efficiency, and generalization capabilities)
+            self.mlp = Mlp(encoded_features = dim, hidden_features=mlp_hidden_dim,act_layer=act_layer,drop=drop)
+
+            def forward(self, x: torch.Tensor) -> torch.Tensor:
+                '''
+                Forward pass of the Block.
+                Args:
+                    x (torch.Tensor): Input tensor.
+
+                Returns:
+                    torch.Tensor: Output tensor.
+                '''
+                x = x + self.drop_path(self.attn(self.norm1(x)))
+                x = x + self.drop_path(self.mlp(self.norm2(x)))
+                return x
+
+class PatchEmbed(nn.Module):
+    '''
+        A module of image to patch embedding.
+
+    Args:
+        img_size (int): An integer of image size.
+        patch_size (int): An integer of patch size.
+    '''
+    super().__init__()
+    def __init__(self,img_size=224,patch_size=16, in_chans=3,embed_dim=768):
+        ''' Args:
+        img_size(int): An integer of image size.
+        patch_size(int): An integer of patch size.
+        in_chans (int): An integer of the number of input channels.
+        embed_dim (int): An integer of the number of embedding dimensions.
+        '''
+        img_size = to_2tuple(img_size)  # Converting image size of a tuple of 2 elements
+        patch_size = to_2tuple(patch_size)  # Converting patch size of a tuple of 2 elements
+        num_patches = (img_size[1] // patch_size[1] * (img_size[0] // patch_size[0]))
+        self.img_size = img_size
+        self.patch_size = patch_size
+        self.num_patches = num_patches
+
+        self.proj = nn.Conv2d(in_chans,embed_dim,kernel_size=patch_size,stride=patch_size)  # Setting the projection layer to a 2D Convolutional Layer
+        self.apply(self._init_weights)  # Applying initialised weights
+
+    def forward(self,x):  # Forward pass
+        B, C, H, W = x.shape  # Extracting the shape of x for the number of batches, the number of embedding dimensions, height and width respectively
+        assert H == self.img_size[0] and W == self.img_size[1], \ f"Input image size ({H}*{W} doesn't match model ({self.img_size[0]}*{self.img_size[1]})."
+        x = self.proj(x).flatten(2).transpose(1,2)
+        return x
+
+    def _init_weights(self,m):
+        if isinstance(m, nn.Linear):  # If m is an instance of nn.Linear
+            nn.init.xavier_uniform_(m.weight)  # Initialising weights using Xavier Uniform Initialisation
+            if isinstance(m,nn.Linear) and m.bias is not None:  # If m is an instance of nn.Linear and bias is given
+                nn.init.constant_(m.bias,0)  # Initialising bias as a constant 0 for efficient training
+            elif isinstance(m,nn.LayerNorm):  # If m is a constant of nn.LayerNorm
+                nn.init.constant_(m.bias,0)  # Initialising bias as a constant 0 to keep the normalised layer the same
+                nn.init.constant_(m.weight,1.0)  # Initialising weight as a constant 1 to keep the initial input the same as the normalised input
+
+
+class HybridEmbed(nn.Module):
+    '''
+        CNN Feature Map Embedding as a module, from timm, used as a feature extractor.
+        Args:
+            backbone (nn.Module): CNN backbone to extract features.
+            img_size (int or tuple): A int or tuple of input image size.
+            feature_size (tuple,optional): A tuple of the size of the feature map.
+            in_chans (int): A integer of the number of input channels.
+            embed_dim (int): An integer of the dimension of the embedding.
+    '''
+    def __init__(self,backbone,img_size=224,feature_size=None,in_chans=3,embed_dim=768):
+        super().__init__()
+        assert isinstance(backbone,nn.Module), "backbone must be an instance of nn.Module"  # An assertion to ensure that backbone is an instance of nn.Module
+        img_size = to_2tuple(img_size)  # Converting image size into a tuple of 2 elements
+        self.img_size = img_size
+        self.backbone = backbone
+
+        if feature_size is None: # If feature size is not provided
+            with torch.no_grad():  # Using torch with no gradient calculation
+                training = backbone.training  # Training with backbone
+                if training:  # If using training
+                    backbone.eval()  # Using evaluation
+                o = self.backbone(torch.zeros(1, in_chans,img_size[0], img_size[1]))[-1]  # Assigning the variable o to the last output of the backbone model after filling the input with zero-filled tensor with the specified shape.
+                feature_size = o.shape[-2:]  # Assigning feature size to the tensor of o from the second to last column onwards.
+                feature_dim = o.shape[1]  # Assigning feature dimension as the number of columns of tensor o
+                backbone.train(training)  #Training backbone model
+
+        else:
+            feature_size = to_2tuple(feature_size)  # Converting the feature size to a tuple of 2 elements
+            feature_dim = self.backbone.feature_info.channels(-1)  # Assigning the feature dimension to the second to last channel of the backbone model
+
+            self.num_patches = feature_size[0]  * feature_size[1]  # Assigning the number of patches to the multiplication of the height and the width of the feature size
+            self.proj = nn.Linear(feature_dim, embed_dim)  # Assigning the projection layer to the Linear layer with feature dimension as input and embedding dimension as output.
+            self.apply(self._init_weights)  # Applying initialised weights
+
+        def _init_weights(self, m):
+            if isinstance(m,nn.Linear): # If m is an instance of nn.Linear
+                nn.init.xavier_uniform_(m.weight)  # Initialising the weight using Xavier Uniform Initialisation for balance weights amongst layers and, hence, more efficient training
+                if m.bias is not None:  # If bias is provided
+                    nn.init.constant_(m.bias,0)  # Initialising bias as a constant of 0 for more efficient training
+
+
+        def forward(self, x):  # Forward pass
+            x = self.backbone(x)[-1]  # Assigning variable x to the last column of x as the output of the backbone model
+            x = x.flatten(2).transpose(1,2)  # Flattening x to the second-level and transpose the second and the third columns
+            x = self.proj(x)  #  Projecting x
+            return x
 #def process_model(use_data_parallel: bool = False, device_ids: list = None) -> torch.nn.Models:

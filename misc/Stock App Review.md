@@ -1662,3 +1662,79 @@ to use download_sounds in the test
 - ensure I understand the math behind gpsa
 - include feature importance
 - incorporate other types of AI models
+
+17/09/2024
+***Things I learned today:***
+- if not hasattr: check condition if has attribute
+
+***Things I did well today:***
+- continued convit
+- read KG paper
+- starting to understand the math behind GPSA
+***Things I did not do well today:***
+- not including feature importance
+- not incorporating other types of AI models
+***Things I will do better next time:***
+- including feature importance 
+- continuing convit
+- reading KG paper
+- understand the math behind GPSA
+- incorporating other types of AI models
+
+18/09/2024
+
+***Things I learned today:***
+- the GPSA includes: calculating attention heads, obtaining an attention map, calculating positional scores, calculating patch scores, forward pass. calculating relative indices 
+
+***Things I did well today:***
+- finished GPSA 
+- read Knowledge Graph
+- understanding more about the math behind GPSA
+
+***Things I did not do well today:***
+- not included feature importance
+- not incorporated other types of AI models
+
+***Things I will do better next time:***
+- including feature importance 
+- incorporating other types of AI models
+- understanding the concept behind attention mechanism: how query, key, and value vectors computed; how attention scores computed and used to weigh the value vectors; understand positional encoding (how it is used, and the role of relative indices), understand softmax function (how it is used to normalised, how softmax ensures att scores sum to one) understanding gating mechanism (combining patch scores and positional scores, how sigmoid control the influences of each type of score), matrix multiplications (matrix ops for computing attn scores, how these ops are implemented for efficient coding), how to implement GPSA, how to debug and optimize  
+
+19/09/2024
+***Things I learned today:***
+- multi-head self-attention: a module used in transformer model, self-attention: how a model focuses on words in a sequence, multi-head: how the model distributes attention
+
+***Things I did well today:***
+- read "Attention is all you need"
+- coding MHSA
+
+***Things I did not do well today:***
+- did not finish MHSA
+- did not finish paper
+
+***Things I will do better next time:***
+- understand the paper more
+- read KG
+- include feature importance 
+- incorporate other types of AI models
+- finish MHSA
+
+20/09/2024
+
+***Things I learned today:***
+- Euclidean distance: measuring the distance between two points, in units, based on Pythagorean theorem
+- incorporating other types of AI models depends on the problems at hand. Pros: enhanced performance, improved generalisation, task-specific optimisation, flexibility and adaptability. Cons: complexity, integration, evaluation
+
+***Things I did well today:***
+- finished MHSA
+- read paper “Attention is all you need"
+
+***Things I did not do well today:***
+- not including feature importance
+- not incorporating other types of AI models
+
+***Things I will do better next time:***
+- include feature importance
+- incorporate other types of AI models
+- read KG paper if have time
+- read paper "Attention is all you need"
