@@ -26,7 +26,7 @@ import seaborn as sns
 from sklearn.decomposition import PCA
 from sklearn.manifold import TSNE
 from timm.models.layers import trunc_normal_  # a function to initialise weights of neural networks from a truncated normal distribution (bounding random variables either below, above or both, restricted to a specific range and preventing extreme values )
-
+import shap
 
 TF_ENABLE_ONEDNN_OPTS=0
 def load(path: str) -> np.array:
@@ -534,7 +534,6 @@ class Block(nn.Module):
     '''
     A neural network block with optional GPSA or MHSA attention, normalisation, and MLP.
     '''
-    super().__init__()
     def __init__(self, dim: int, num_heads:int,mlp_ratio:float = 4.,qkv_bias: bool = False, qk_scale: float = None, drop: float = 0., attn_drop: float = 0., drop_path: float = 0., act_layer: nn.Module = nn.GELU, norm_layer: nn.Module = nn.LayerNorm,use_gpsa: bool = True, **kwargs):
         '''
         Initialises the Block.
@@ -552,6 +551,7 @@ class Block(nn.Module):
             use_gpsa (bool): A boolean of using GPSA.
             **kwargs: Additional arguments.
         '''
+        super().__init__()
         self.norm1 = norm_layer(dim)  # Applying a normalisation layer with dimensions as input
         self.use_gpsa = use_gpsa
         if self.use_gpsa:  # If using GPSA
@@ -582,7 +582,6 @@ class PatchEmbed(nn.Module):
         img_size (int): An integer of image size.
         patch_size (int): An integer of patch size.
     '''
-    super().__init__()
     def __init__(self,img_size=224,patch_size=16, in_chans=3,embed_dim=768):
         ''' Args:
         img_size(int): An integer of image size.
@@ -590,6 +589,7 @@ class PatchEmbed(nn.Module):
         in_chans (int): An integer of the number of input channels.
         embed_dim (int): An integer of the number of embedding dimensions.
         '''
+        super().__init__()
         img_size = to_2tuple(img_size)  # Converting image size of a tuple of 2 elements
         patch_size = to_2tuple(patch_size)  # Converting patch size of a tuple of 2 elements
         num_patches = (img_size[1] // patch_size[1] * (img_size[0] // patch_size[0]))
@@ -636,7 +636,7 @@ class HybridEmbed(nn.Module):
 
         if feature_size is None: # If feature size is not provided
             with torch.no_grad():  # Using torch with no gradient calculation
-                training = backbone.training  # Training with backbone
+                training = backbone.training  # Assigning the current training state of backbone to variable training
                 if training:  # If using training
                     backbone.eval()  # Using evaluation
                 o = self.backbone(torch.zeros(1, in_chans,img_size[0], img_size[1]))[-1]  # Assigning the variable o to the last output of the backbone model after filling the input with zero-filled tensor with the specified shape.
@@ -660,8 +660,127 @@ class HybridEmbed(nn.Module):
 
 
     def forward(self, x):  # Forward pass
-        x = self.backbone(x)[-1]  # Assigning variable x to the last column of x as the output of the backbone model
-        x = x.flatten(2).transpose(1,2)  # Flattening x to the second-level and transpose the second and the third columns
+        x = self.backbone(x)[-1]  # Assigning variable x to the last element of x as the output of the backbone model
+        x = x.flatten(2).transpose(1,2)  # Flattening x from the second dimension and transpose the second and the third dimensions
         x = self.proj(x)  #  Projecting x
+        # Create an explainer
+        explainer = shap.Explainer(self.backbone)
+
+        # Calculate SHAP values
+        shap_values = explainer(x)
+
+        # Summary plot
+        shap.summary_plot(shap_values, x)
+
+        # Dependency plot
+        shap.dependence_plot("RM", shap_values, x)
         return x
+
+
+class VisionTransformer(nn.Module):
+    '''
+        Vision Transformer with support for patch or hybrid CNN input stage.
+        Args:
+            img_size(int): An integer of image size.
+            patch_size(int): An integer of patch size.
+            in_chans(int): An integer of the number of input channels.
+            num_classes(int): An integer of the number of classes.
+            embed_dim(int): An integer of the embedding dimension.
+            depth(int): An integer of the depth of the image.
+            num_heads(int): An integer of the number of heads.
+            mlp_ratio(float): A float number of the ratio for MLP.
+            qkv_bias(boolean): A boolean of whether to use bias for Query, Key, Value.
+            qk_scale(float): An integer of scaling for query and key.
+            drop_rate(float): A float number of drop rate.
+            attn_drop_rate(float): A float number of drop rate for attention.
+            drop_path_rate(float): A float number of drop path rate.
+            hybrid_backbone(nn.Module): Hybrid backbone, combining different neural networks to promote their strengths. Defaults to None.
+            norm_layer(nn.LayerNorm): A normalising layer
+            global_pool(nn.Module): A global pool, reducing each feature channel to a single value.
+            local_up_to_layer(int): An integer of the number of initialisation blocks used in VisionTransformer. Defaults to 10.
+            locality_strength(float): A float number of locality strength, referring to the ability of the model to capture the local information of an image.
+            use_pos_embed(boolean): A boolean of whether to use positional embeddings or not.
+
+    '''
+    def __init__(self,img_size=224,patch_size=16,in_chans=3,num_classes=1000,embed_dim=48,depth=12,num_heads=12,mlp_ratio=4.,qkv_bias=False,qk_scale=None,drop_rate=0.,attn_drop_rate=0.,drop_path_rate=0.,hybrid_backbone=None,norm_layer=nn.LayerNorm,global_pool=None,local_up_to_layer=10,locality_strength=1.,use_pose_embed=True):
+        super().__init__()
+
+        # Initialize parameters
+        self.num_classes = num_classes
+        self.local_up_to_layer = local_up_to_layer
+        self.num_features = self.embed_dim = embed_dim  # Assigning the number of features to the embedding dimension
+        self.locality_strength = locality_strength
+        self.use_pos_embed = use_pose_embed
+
+        # Patch embedding
+        if hybrid_backbone is not None: # If hybrid backbone is provided
+            self.patch_embed = HybridEmbed(hybrid_backbone,img_size=img_size,in_chans=in_chans,embed_dim=embed_dim)  # Applying HybridEmbed with hybrid backbone to patch embeddings
+        else:
+            self.patch_embed = PatchEmbed(img_size=img_size,patch_size=patch_size,in_chans=in_chans,embed_dim=embed_dim)  # Applying PatchEmbed to patch embeddings
+            self.num_classes = self.patch_embed.num_patches
+
+            # Class token and positional embedding
+            self.cls_token = nn.Parameter(torch.zeros(1,1,embed_dim))  # Assigning class token as a parameter tensor filled with 0 with the specified shape
+            self.pos_drop = nn.Dropout(p=drop_rate)  # Assigning positional dropout layer as the Dropout layer
+
+            if self.use_pos_embed:
+                self.pos_embed = nn.Parameter(torch.zeros(1,self.num_patches,embed_dim))  # Assigning positional embedding as a parameter tensor filled with zeros with the specified shape
+                trunc_normal_(self.pos_embed,std=.02)
+
+        # Stochastic depth decay rule
+        dpr = [x.item() for x in torch.linspace(0,drop_path_rate,depth)]  # Assigning the stochastic depth decay rul to items in linear space starting with 0, increasing at drop path rate and ending at depth
+
+        # Transformer blocks
+        self.blocks = nn.ModuleList([Block(dim=embed_dim,num_heads=num_heads,mlp_ratio=mlp_ratio,qkv_bias=qkv_bias,qk_scale=qk_scale,drop=drop_rate,attn_drop=attn_drop_rate,
+                                           drop_path=dpr[i],norm_layer=norm_layer,use_gpsa=False) if i < local_up_to_layer else
+        Block(dim=embed_dim,num_heads=num_heads,mlp_ratio=mlp_ratio,qkv_bias=qkv_bias,qk_scale=qk_scale,drop=drop_rate,attn_drop=attn_drop_rate,drop_path=dpr[i],norm_layer=norm_layer,use_gpsa=False) for i in range(depth)]) # Assigning Transformer blocks to submodules with the length of depth and each index is smaller than the number if initialising blocks
+        self.norm = norm_layer(embed_dim)  # Assigning normalising layer to a normalising layer with embedding dimensions as input
+
+        # Classifier head
+        self.feature_info = [dict(num_chs=embed_dim,reduction=0,module='head')]  # Creating a dictionary called feature_info with the information given
+        self.head = nn.Linear(embed_dim, num_classes) if num_classes > 0 else nn.Identity()  # Assigning head as a Linear layer with embedding dimensions as inputs and number of classes as output if number classes is greater than 0, otherwise, use nn.Identity
+
+        # Initialise weights
+        trunc_normal_(self.cls_token, std=.02)  # Initialising weights using truncated normal distribution with class token
+        self.head.apply(self._init_weights)  # Applying initialised weights to head
+
+    def _init_weights(self,m):
+        if isinstance(m, nn.Linear):  # If m is an instance of nn.Linear
+            nn.init.xavier_uniform_(m.weight)  # Using Xavier Uniform Initialisation
+            if m.bias is not None:  # If bias is provided
+                nn.init.constant_(m.bias, 0)  # Initialising bias as a constant of 0
+        elif isinstance(m, nn.LayerNorm):  # If m is an instance of nn.LayerNorm
+            nn.init.constant_(m.bias, 0)  # Initialising bias as a constant of 0
+            nn.init.constant_(m.weight,1.0)  # Initialising weight as a constant of 1 to ensure the initial input is the same as the normalised input
+
+    @torch.jit.ignore  # A decorator to indicate that a specific method of function should be ignored as left as a regular Python function
+    def no_weight_decay(self):
+        return {'pos_embed', 'cls_token'}
+
+    def get_classifier(self):
+        return self.head
+
+    def reset_classifier(self, num_classes, global_pool=''):
+        self.num_classes = num_classes
+        self.head = nn.Linear(self.embed_dim,num_classes) if num_classes > 0 else nn.Identity()  # Assigning head as a Linear layer with embedding dimensions as inputs and number of classes as output if number classes is greater than 0, otherwise, use nn.Identity
+
+    def forward_features(self, x):
+        B = x.shape[0]  # Extracting the first column of x as the number of batches
+        x = self.patch_embed(x)  # Applying patch embeddings to x
+        cls_tokens = self.cls_token.expand(B, -1, -1)  # Expanding class tokens to the specified shape
+        if self.use_pos_embed:
+            x = x + self.pos_embed  # Adding positional embeddings to x
+        x = self.pos_drop(x)
+        for u, blk in enumerate(self.blocks):
+            if u == self.local_up_to_layer:  # if u is equal to the number of blocks
+                x = torch.cat((cls_tokens, x), dim=1)  # Concatenating class tokens tensor with x tensor horizontally
+            x = blk(x)  # Applying blk to x
+        x = self.norm(x)  # Normalising x
+        return x[:, 0]
+
+    def forward(self, x):
+        x = self.forward_features(x)  # Applying forward_features to x
+        x = self.head(x)  # Applying head to x
+        return x
+
 #def process_model(use_data_parallel: bool = False, device_ids: list = None) -> torch.nn.Models:
