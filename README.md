@@ -144,11 +144,10 @@ I'd like to thank the open-source community and the contributors who made this a
 
 * Statista. (n.d.). ESG and impact investing. Retrieved from https://www.statista.com/topics/7463/esg-and-impact-investing/#topicOverview
 
-* Stockhead. (n.d.). The ethical investor: How to research and screen potential ethical stocks and some tools you can use. Retrieved from https://stockhead.com.au/environment-social-and-governance/the-ethical-investor-how-to-research- and-screen-potential-ethical-stocks-and-some-tools-you-can-use/
+* Weinbrenner, H. L. (2023). Impact investment intentions of Generation Z: Exploring the factors that drive young private investors to decide for environmental, social, and governance (ESG) funds (Master’s thesis, Universitat de Barcelona). Dipòsit Digital de la Universitat de Barcelona. https://diposit.ub.edu/dspace/handle/2445/201365
+* Selvamuthu, D., Kumar, V. & Mishra, A. Indian stock market prediction using artificial neural networks on tick data. Financ Innov 5, 16 (2019). https://doi.org/10.1186/s40854-019-0131-7
 
-* University of Barcelona. (2023). TFM-INTBUS_Weinbrenner_2023. Retrieved from https://diposit.ub.edu/dspace/bitstream/2445/201365/1/TFM-INTBUS_Weinbrenner_2023.pdf
-
-* Wiley Online Library. (2010). Article title. Journal of Behavioral Finance, 11(3), 150-160. Retrieved from https://onlinelibrary.wiley.com/doi/pdf/10.1111/j.1745-6606.2010.01169.x
+* Remund, D. L. (2010). Financial literacy explicated: The case for a clearer definition in an increasingly complex economy. Journal of Consumer Affairs, 44(2), 276-295. https://doi.org/10.1111/j.1745-6606.2010.01169.x
 
 * Wiley Online Library. (2021). Article title. IET Cyber-Physical Systems: Theory & Applications, 6(2), 123-134. Retrieved from https://ietresearch.onlinelibrary.wiley.com/doi/epdf/10.1049/cit2.12059
 
