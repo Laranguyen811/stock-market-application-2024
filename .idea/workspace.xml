@@ -4,8 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4f5895f3-2d93-4355-bcbb-97c6701d0028" name="Changes" comment="- finished HybridEmbed class">
+    <list default="true" id="4f5895f3-2d93-4355-bcbb-97c6701d0028" name="Changes" comment="- finished Conviformers&#10;- added SHAP">
+      <change afterPath="$PROJECT_DIR$/hidden_markov_model.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stock_market/fl_multimodal_knowledge_graph/data_collection/data_collection_tools/download_texts.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/misc/Stock App Review.md" beforeDir="false" afterPath="$PROJECT_DIR$/misc/Stock App Review.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/stock_market/fl_multimodal_knowledge_graph/feature_extractor/image_extraction/image_extractor.py" beforeDir="false" afterPath="$PROJECT_DIR$/stock_market/fl_multimodal_knowledge_graph/feature_extractor/image_extraction/image_extractor.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -447,15 +450,8 @@
       <workItem from="1726725711803" duration="2727000" />
       <workItem from="1726808540554" duration="8665000" />
       <workItem from="1727067643586" duration="8671000" />
-      <workItem from="1727150507553" duration="9649000" />
-    </task>
-    <task id="LOCAL-00025" summary="- add ATR">
-      <option name="closed" value="true" />
-      <created>1718607053340</created>
-      <option name="number" value="00025" />
-      <option name="presentableId" value="LOCAL-00025" />
-      <option name="project" value="LOCAL" />
-      <updated>1718607053340</updated>
+      <workItem from="1727150507553" duration="10147000" />
+      <workItem from="1727237070986" duration="6458000" />
     </task>
     <task id="LOCAL-00026" summary="- add ATR">
       <option name="closed" value="true" />
@@ -841,7 +837,15 @@
       <option name="project" value="LOCAL" />
       <updated>1727078551448</updated>
     </task>
-    <option name="localTasksCounter" value="74" />
+    <task id="LOCAL-00074" summary="- finished Conviformers&#10;- added SHAP">
+      <option name="closed" value="true" />
+      <created>1727160772453</created>
+      <option name="number" value="00074" />
+      <option name="presentableId" value="LOCAL-00074" />
+      <option name="project" value="LOCAL" />
+      <updated>1727160772454</updated>
+    </task>
+    <option name="localTasksCounter" value="75" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -859,7 +863,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="- add transform_path&#10;- add get_page&#10;- add get_node&#10;- add combine_pages&#10;- add get_edge&#10;- add get_multi_model" />
     <MESSAGE value="- add save_to_local&#10;- add acceptable_element" />
     <MESSAGE value="- add need_extension&#10;- add filter_node&#10;- add delete_uri&#10;-" />
     <MESSAGE value="- adding download_images.py" />
@@ -884,7 +887,8 @@
     <MESSAGE value="- added MHSA class" />
     <MESSAGE value="- finished MHSA class" />
     <MESSAGE value="- finished HybridEmbed class" />
-    <option name="LAST_COMMIT_MESSAGE" value="- finished HybridEmbed class" />
+    <MESSAGE value="- finished Conviformers&#10;- added SHAP" />
+    <option name="LAST_COMMIT_MESSAGE" value="- finished Conviformers&#10;- added SHAP" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

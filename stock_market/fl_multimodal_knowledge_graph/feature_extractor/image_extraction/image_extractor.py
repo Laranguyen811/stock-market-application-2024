@@ -368,7 +368,7 @@ class GPSA(nn.Module):
         self.v = nn.Linear(dim,dim,bias=qkv_bias) # Setting the value to a fully-connected layer of a linear function with dimension as input and dimension as output and bias as qkv_bias
 
         self.attn_drop = nn.Dropout(attn_drop)  # Setting the drop rate of attention to a dropout layer
-        self.proj = nn.Linear(dim, dim)  # Setting the projection layer (transforming input data to a different space, either higher or lower dimension) to a fully-connected layer (linear function) with input as dimensions and output as dimensions
+        self.proj = nn.Linear(dim, dim)  # Setting the projection layer (transforming input data to a different space, either higher or lower dimension) to a fully-connected layer (linear function) with input as dimensions and output as dimensions.
         self.pos_proj = nn.Linear(3, num_heads)  # Setting the positional projection layer (setting positional data as input) to a fully-connected layer (linear function), taking a 3-positional dimension input and projecting it to a space of number-of-head dimension
         self.proj_drop = nn.Dropout(proj_drop)  # Setting a dropout rate for the projection layer to the dropout rate of a dropout layer
         self.locality_strength = locality_strength  # Setting a float number of the strength of the locality constraint

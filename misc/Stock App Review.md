@@ -1763,3 +1763,21 @@ to use download_sounds in the test
 - feature importance
 - other types of AI models
 - KG paper if have time
+
+24/09/2024
+***Things I learned today:***
+- SHAP (Shapely Additive exPlanations): visualising outputs from models and assigning Shapely values
+- hybrid backbone: backbone models use a combination of different neural networks
+
+***Things I did well today:***
+- finished Conviformers
+- applied SHAP
+- implementing "Attention is all you need"
+
+***Things I did not do well today:***
+- not reading KG paper
+- not incorporating other types of AI models
+
+***Things I will do better next time:***
+- Reading KG paper if have time
+- Incorporating other types of AI models
