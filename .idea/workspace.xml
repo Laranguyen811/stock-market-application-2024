@@ -4,12 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4f5895f3-2d93-4355-bcbb-97c6701d0028" name="Changes" comment="- finished Conviformers&#10;- added SHAP">
-      <change afterPath="$PROJECT_DIR$/hidden_markov_model.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/stock_market/fl_multimodal_knowledge_graph/data_collection/data_collection_tools/download_texts.py" afterDir="false" />
+    <list default="true" id="4f5895f3-2d93-4355-bcbb-97c6701d0028" name="Changes" comment="- added hmm&#10;- added download_texts.py">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/misc/Stock App Review.md" beforeDir="false" afterPath="$PROJECT_DIR$/misc/Stock App Review.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/stock_market/fl_multimodal_knowledge_graph/feature_extractor/image_extraction/image_extractor.py" beforeDir="false" afterPath="$PROJECT_DIR$/stock_market/fl_multimodal_knowledge_graph/feature_extractor/image_extraction/image_extractor.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/stock_market/fl_multimodal_knowledge_graph/data_collection/data_collection_tools/download_texts.py" beforeDir="false" afterPath="$PROJECT_DIR$/stock_market/fl_multimodal_knowledge_graph/data_collection/data_collection_tools/download_texts.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -451,15 +449,8 @@
       <workItem from="1726808540554" duration="8665000" />
       <workItem from="1727067643586" duration="8671000" />
       <workItem from="1727150507553" duration="10147000" />
-      <workItem from="1727237070986" duration="6458000" />
-    </task>
-    <task id="LOCAL-00026" summary="- add ATR">
-      <option name="closed" value="true" />
-      <created>1718952929030</created>
-      <option name="number" value="00026" />
-      <option name="presentableId" value="LOCAL-00026" />
-      <option name="project" value="LOCAL" />
-      <updated>1718952929030</updated>
+      <workItem from="1727237070986" duration="7234000" />
+      <workItem from="1727325134801" duration="5501000" />
     </task>
     <task id="LOCAL-00027" summary="- add Gemini">
       <option name="closed" value="true" />
@@ -845,7 +836,15 @@
       <option name="project" value="LOCAL" />
       <updated>1727160772454</updated>
     </task>
-    <option name="localTasksCounter" value="75" />
+    <task id="LOCAL-00075" summary="- added hmm&#10;- added download_texts.py">
+      <option name="closed" value="true" />
+      <created>1727247399379</created>
+      <option name="number" value="00075" />
+      <option name="presentableId" value="LOCAL-00075" />
+      <option name="project" value="LOCAL" />
+      <updated>1727247399379</updated>
+    </task>
+    <option name="localTasksCounter" value="76" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -863,7 +862,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="- add save_to_local&#10;- add acceptable_element" />
     <MESSAGE value="- add need_extension&#10;- add filter_node&#10;- add delete_uri&#10;-" />
     <MESSAGE value="- adding download_images.py" />
     <MESSAGE value="- adding download_sounds.py&#10;- adding extend_tool.py" />
@@ -888,7 +886,8 @@
     <MESSAGE value="- finished MHSA class" />
     <MESSAGE value="- finished HybridEmbed class" />
     <MESSAGE value="- finished Conviformers&#10;- added SHAP" />
-    <option name="LAST_COMMIT_MESSAGE" value="- finished Conviformers&#10;- added SHAP" />
+    <MESSAGE value="- added hmm&#10;- added download_texts.py" />
+    <option name="LAST_COMMIT_MESSAGE" value="- added hmm&#10;- added download_texts.py" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

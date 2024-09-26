@@ -713,7 +713,7 @@ class VisionTransformer(nn.Module):
         self.use_pos_embed = use_pose_embed
 
         # Patch embedding
-        if hybrid_backbone is not None: # If hybrid backbone is provided
+        if hybrid_backbone is not None:  # If hybrid backbone is provided
             self.patch_embed = HybridEmbed(hybrid_backbone,img_size=img_size,in_chans=in_chans,embed_dim=embed_dim)  # Applying HybridEmbed with hybrid backbone to patch embeddings
         else:
             self.patch_embed = PatchEmbed(img_size=img_size,patch_size=patch_size,in_chans=in_chans,embed_dim=embed_dim)  # Applying PatchEmbed to patch embeddings
@@ -753,7 +753,7 @@ class VisionTransformer(nn.Module):
             nn.init.constant_(m.bias, 0)  # Initialising bias as a constant of 0
             nn.init.constant_(m.weight,1.0)  # Initialising weight as a constant of 1 to ensure the initial input is the same as the normalised input
 
-    @torch.jit.ignore  # A decorator to indicate that a specific method of function should be ignored as left as a regular Python function
+    @torch.jit.ignore  # A decorator to indicate that a specific method or function should be ignored and left as a regular Python function
     def no_weight_decay(self):
         return {'pos_embed', 'cls_token'}
 
