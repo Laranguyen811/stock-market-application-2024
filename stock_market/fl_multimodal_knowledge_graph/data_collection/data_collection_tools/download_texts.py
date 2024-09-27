@@ -5,6 +5,7 @@ import alpha_vantage as av
 import os
 import json
 from typing import Dict, Any
+from bs4 import BeautifulSoup
 
 twelve_data_api_url = 'https://api.twelvedata.com'
 polygon_io_api_url = 'https://api.polygon.io/v2'
@@ -47,8 +48,17 @@ def main():
     if __name__ == "__main__":
         main()
 
-stock_exchange_list = ['nyse.com','nasdaq.com','jpx.co.jp','sse.com.cn','hkex.com.hk','londonstockexchange.com','euronext.com','tsx.com','asx.com.au','bseindia.com','nseindia.com','deutsche-boerse.com','six-group.com','moex.com','jse.co.za']
+stock_exchange_list = ["nyse.com/listings_directory/stock","nasdaq.com/market-activity/stocks/screener","jpx.co.jp","sse.com.cn","hkex.com.hk","londonstockexchange.com","euronext.com","tsx.com","asx.com.au","bseindia.com","nseindia.com","deutsche-boerse.com","six-group.com","moex.com","jse.co.za"]
 
 for stock_exchange in stock_exchange_list:
-    url = 'https://www.' + stock_exchange
+    url = "https://www." + stock_exchange + "listed-companies"
+    # Sending a GET request to the website
+    response = requests.get(url)
+
+    # Parsing the HTML content
+    soup = BeautifulSoup(response.content,'html.parser')
+
+
+
+    # Finding all company names (adjust
 

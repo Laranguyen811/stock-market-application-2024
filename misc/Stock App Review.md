@@ -1781,3 +1781,40 @@ to use download_sounds in the test
 ***Things I will do better next time:***
 - Reading KG paper if have time
 - Incorporating other types of AI models
+
+25/09/2024
+***Things I learned today***
+- hidden markov model: each state depends on the prev state
+
+***Things I did well today***
+- Hidden Markov Model
+- code to download texts
+- 3rd pass attention
+- read KG
+
+***Things I did not do well today***
+- not finished 3rd pass attention
+
+***Things I will do better next time***
+- finish 3rd pass attention
+- continue coding to download texts
+- create account to obtain APIs
+
+26/09/2024
+***Things I learned today:***
+- To obtain listed companies' name, we can use stock exchange websites. 
+
+***Things I did well today:***
+- learned how to use Twitter API
+- learned how to obtain information via coding
+- finished 3rd pass "Attention is All You Need"
+
+***Things I did not do well today:***
+- not finished coding regarding Twitter API
+- not reading Hidden Markov Model
+- not reading KG paper
+
+***Things I will do better next time:***
+- finish coding regarding Twitter API
+- reading Hidden Markov Model
+- reading KG paper

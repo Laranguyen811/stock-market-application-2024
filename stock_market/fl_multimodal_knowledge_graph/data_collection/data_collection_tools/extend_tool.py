@@ -6,6 +6,7 @@ import logging
 from stock_market.fl_multimodal_knowledge_graph.data_collection.data_collection_tools.uri_tool import uri_to_label
 from stock_market.fl_multimodal_knowledge_graph.data_collection.data_collection_tools import fetch_tool,download_sounds,download_images
 from stock_market.fl_multimodal_knowledge_graph.data_collection.data_collection_tools import download_visuals
+from stock_market.fl_multimodal_knowledge_graph.data_collection.data_collection_tools import download_texts
 def multimodal_path(uri,model):
     '''Takes a URI of a node or edge and a specified modal type and returns a path to a file.
     Inputs:
@@ -180,17 +181,42 @@ def add_multimodel_node_visual(text : str,path : str) -> List[str]:
     #Setting up logging
     logging.basicConfig(level=logging.INFO) #Configuring the logging systems with basic configs using a convenience function logging.basicConfig
 
-    #Ensuring the directory exists
-    if not os.path.exists(path): #If the path does not exist
-        os.makedirs(path) #Creating a path
-        logging.info(f"Created directory at {path}") #Emitting log messages using the logging.info method
-    try: #Attempting a block of code before throwing an exception
+    # Ensuring the directory exists
+    if not os.path.exists(path): # If the path does not exist
+        os.makedirs(path) # Creating a path
+        logging.info(f"Created directory at {path}") # Emitting log messages using the logging.info method
+    try: # Attempting a block of code before throwing an exception
         file_formats = download_visuals.download_visual(text,path)
-        logging.info(f"Download visual files: {file_formats}") #Emitting log messages using the logging.info method
+        logging.info(f"Download visual files: {file_formats}") # Emitting log messages using the logging.info method
         return file_formats
-    except Exception as e:#Throwing an exception as variable e
-        logging.error(f"An error occurred: {e}") #Logging error messages indicating serious problems using logging.error method
+    except Exception as e:  # Throwing an exception as variable e
+        logging.error(f"An error occurred: {e}")  # Logging error messages indicating serious problems using logging.error method
         return []
+
+def add_multimodal_text(text: str, path: str) -> List[str]:
+    '''
+    Takes a path to save text files and a text used for searching and returns a list of file formats.
+    Inputs:
+        string(text): A string of a text used for search text files.
+        string(path): A string representing the path used for saving.
+    Returns:
+        list: A list of file formats for the saved text file, e.g, [.txt,.rtf,.html]
+    '''
+    logging.basicConfig(level=logging.INFO)  # Configuring the logging systems with basic configs using a convenience function logging.basicConfig
+
+    # Ensuring the directory exists
+    if not os.path.exists(path):  # If the path does not exist
+        os.makedirs(path)  # Creating a path
+        logging.info(f"Created directory at {path}")  # Emitting log messages using the logging.info method
+
+    try: # Attempting a block of code before throwing an exception
+        file_formats = download_texts.download_text(text,path)
+        logging.info(f"Download text files: {file_formats}") # Emitting log messages using the logging.info method
+        return file_formats
+    except Exception as e:  # Throwing an exception as variable e
+        logging.error(f"An error occurred: {e}")  # Logging error messages indicating serious problems using logging.error method
+        return []
+
 
 
 def add_multimodel(page:Dict[str,Any],model_type:str) -> Dict[str,Any]:
@@ -202,25 +228,26 @@ def add_multimodel(page:Dict[str,Any],model_type:str) -> Dict[str,Any]:
             Dict[str,Any]:The updated page dicctionary with multimodal information.
     '''
     uri = page['@id']
-    model_info = {} #Using a temporary dictionary to record the newly added multimodal information fields
+    model_info = {}  # Using a temporary dictionary to record the newly added multimodal information fields
     text = get_text(uri)
 
-    logging.basicConfig(level=logging.INFO) #Setting up a basic config for logging
+    logging.basicConfig(level=logging.INFO)  # Setting up a basic config for logging
     def add_multimodal_node(node_type:str,add_function):
-        newly_added = add_function(text,multimodal_path(uri,node_type)) #Downloading information and returning the list of newly added items
+        newly_added = add_function(text,multimodal_path(uri,node_type))  # Downloading information and returning the list of newly added items
         if len(newly_added) > 0:
-            model_info[node_type] = [] #Initialising the list as empty
+            model_info[node_type] = []  # Initialising the list as empty
             for i,form in enumerate(newly_added):
-                entry = {'@id': multimodel_uri(uri,node_type) + str(i),'form': form} #Creating an entry using id as key, value is the base URI and the number of iteration and form
+                entry = {'@id': multimodel_uri(uri,node_type) + str(i),'form': form}  # Creating an entry using id as key, value is the base URI and the number of iteration and form
                 if node_type == 'visual':
                     entry['with-audio'] = form[0]
                     entry['form'] = form[1]
                 model_info[node_type].append(entry)
             logging.info(f'{node_type} added')
-    #Adding audio, image, and visual nodes
+    #Adding audio, image, text and visual nodes
     add_multimodal_node('audio',add_multimodel_node_audio)
     add_multimodal_node('image',add_multimodel_node_image)
     add_multimodal_node('visuals',add_multimodel_node_visual)
+    add_multimodal_node('text')
 
 
 
