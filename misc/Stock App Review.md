@@ -1818,3 +1818,10 @@ to use download_sounds in the test
 - finish coding regarding Twitter API
 - reading Hidden Markov Model
 - reading KG paper
+
+27/09/2024
+***Things I learned today:***
+- Inspecting HTML elements to see what corresponds to company's name. 
+- HMM consists of a state transition model, an observation model, and a state distribution
+***Things I did well today:***
+- Adding add_multimodal_text_node

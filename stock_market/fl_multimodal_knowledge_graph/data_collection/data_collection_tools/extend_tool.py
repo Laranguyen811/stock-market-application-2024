@@ -193,7 +193,7 @@ def add_multimodel_node_visual(text : str,path : str) -> List[str]:
         logging.error(f"An error occurred: {e}")  # Logging error messages indicating serious problems using logging.error method
         return []
 
-def add_multimodal_text(text: str, path: str) -> List[str]:
+def add_multimodal_node_text(text: str, path: str) -> List[str]:
     '''
     Takes a path to save text files and a text used for searching and returns a list of file formats.
     Inputs:
@@ -247,7 +247,7 @@ def add_multimodel(page:Dict[str,Any],model_type:str) -> Dict[str,Any]:
     add_multimodal_node('audio',add_multimodel_node_audio)
     add_multimodal_node('image',add_multimodel_node_image)
     add_multimodal_node('visuals',add_multimodel_node_visual)
-    add_multimodal_node('text')
+    add_multimodal_node('text',add_multimodal_node_text)
 
 
 
