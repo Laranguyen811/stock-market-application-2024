@@ -4,11 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4f5895f3-2d93-4355-bcbb-97c6701d0028" name="Changes" comment="- added twitter api">
+    <list default="true" id="4f5895f3-2d93-4355-bcbb-97c6701d0028" name="Changes" comment="- added add_multimodel_node_text">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/misc/Stock App Review.md" beforeDir="false" afterPath="$PROJECT_DIR$/misc/Stock App Review.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/stock_market/fl_multimodal_knowledge_graph/data_collection/data_collection_tools/download_texts.py" beforeDir="false" afterPath="$PROJECT_DIR$/stock_market/fl_multimodal_knowledge_graph/data_collection/data_collection_tools/download_texts.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/stock_market/fl_multimodal_knowledge_graph/data_collection/data_collection_tools/extend_tool.py" beforeDir="false" afterPath="$PROJECT_DIR$/stock_market/fl_multimodal_knowledge_graph/data_collection/data_collection_tools/extend_tool.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/stock_market/fl_multimodal_knowledge_graph/data_collection/data_collection_tools/proxy_tool.py" beforeDir="false" afterPath="$PROJECT_DIR$/stock_market/fl_multimodal_knowledge_graph/data_collection/data_collection_tools/proxy_tool.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/stock_market/fl_multimodal_knowledge_graph/feature_extractor/image_extraction/image_extractor.py" beforeDir="false" afterPath="$PROJECT_DIR$/stock_market/fl_multimodal_knowledge_graph/feature_extractor/image_extraction/image_extractor.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -82,6 +83,7 @@
     &quot;Python.add_tool.executor&quot;: &quot;Run&quot;,
     &quot;Python.add_tools.executor&quot;: &quot;Run&quot;,
     &quot;Python.download_sounds.executor&quot;: &quot;Run&quot;,
+    &quot;Python.image_extractor.executor&quot;: &quot;Run&quot;,
     &quot;Python.mel_spectrogram_features.executor&quot;: &quot;Run&quot;,
     &quot;Python.proxy_tool (1).executor&quot;: &quot;Run&quot;,
     &quot;Python.proxy_tool.executor&quot;: &quot;Run&quot;,
@@ -452,31 +454,9 @@
       <workItem from="1727150507553" duration="10147000" />
       <workItem from="1727237070986" duration="7234000" />
       <workItem from="1727325134801" duration="6613000" />
-      <workItem from="1727413298147" duration="6495000" />
-    </task>
-    <task id="LOCAL-00028" summary="- add Gemini">
-      <option name="closed" value="true" />
-      <created>1719472635746</created>
-      <option name="number" value="00028" />
-      <option name="presentableId" value="LOCAL-00028" />
-      <option name="project" value="LOCAL" />
-      <updated>1719472635746</updated>
-    </task>
-    <task id="LOCAL-00029" summary="- add gemini model with parameters">
-      <option name="closed" value="true" />
-      <created>1719826809445</created>
-      <option name="number" value="00029" />
-      <option name="presentableId" value="LOCAL-00029" />
-      <option name="project" value="LOCAL" />
-      <updated>1719826809445</updated>
-    </task>
-    <task id="LOCAL-00030" summary="- Creating agents">
-      <option name="closed" value="true" />
-      <created>1720422351544</created>
-      <option name="number" value="00030" />
-      <option name="presentableId" value="LOCAL-00030" />
-      <option name="project" value="LOCAL" />
-      <updated>1720422351544</updated>
+      <workItem from="1727413298147" duration="7137000" />
+      <workItem from="1727672794984" duration="4975000" />
+      <workItem from="1727755232788" duration="6668000" />
     </task>
     <task id="LOCAL-00031" summary="- Add fl-mmkg">
       <option name="closed" value="true" />
@@ -846,7 +826,31 @@
       <option name="project" value="LOCAL" />
       <updated>1727333075336</updated>
     </task>
-    <option name="localTasksCounter" value="77" />
+    <task id="LOCAL-00077" summary="- added add_multimodel_node_text">
+      <option name="closed" value="true" />
+      <created>1727423419074</created>
+      <option name="number" value="00077" />
+      <option name="presentableId" value="LOCAL-00077" />
+      <option name="project" value="LOCAL" />
+      <updated>1727423419075</updated>
+    </task>
+    <task id="LOCAL-00078" summary="- added add_multimodel_node_text">
+      <option name="closed" value="true" />
+      <created>1727423618429</created>
+      <option name="number" value="00078" />
+      <option name="presentableId" value="LOCAL-00078" />
+      <option name="project" value="LOCAL" />
+      <updated>1727423618429</updated>
+    </task>
+    <task id="LOCAL-00079" summary="- added add_multimodel_node_text">
+      <option name="closed" value="true" />
+      <created>1727423654773</created>
+      <option name="number" value="00079" />
+      <option name="presentableId" value="LOCAL-00079" />
+      <option name="project" value="LOCAL" />
+      <updated>1727423654773</updated>
+    </task>
+    <option name="localTasksCounter" value="80" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -864,7 +868,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="- adding download_images.py" />
     <MESSAGE value="- adding download_sounds.py&#10;- adding extend_tool.py" />
     <MESSAGE value="- adding functions to extend_tool.py" />
     <MESSAGE value="- finishing extend_tool.py" />
@@ -889,7 +892,8 @@
     <MESSAGE value="- finished Conviformers&#10;- added SHAP" />
     <MESSAGE value="- added hmm&#10;- added download_texts.py" />
     <MESSAGE value="- added twitter api" />
-    <option name="LAST_COMMIT_MESSAGE" value="- added twitter api" />
+    <MESSAGE value="- added add_multimodel_node_text" />
+    <option name="LAST_COMMIT_MESSAGE" value="- added add_multimodel_node_text" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -928,6 +932,7 @@
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/ASX$Stock_Data_Visualisation.coverage" NAME="Stock_Data_Visualisation Coverage Results" MODIFIED="1704341453752" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/stock_market_application_2024$image_extractor.coverage" NAME="image_extractor Coverage Results" MODIFIED="1727676512627" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/stock_market/fl_multimodal_knowledge_graph/feature_extractor/image_extraction" />
     <SUITE FILE_PATH="coverage/stock_market_application_2024$stock_data_analysis.coverage" NAME="stock_data_analysis Coverage Results" MODIFIED="1719469535367" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/ASX$Stock_Market_Application.coverage" NAME="Stock_Market_Application Coverage Results" MODIFIED="1709614658811" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/stock_market_application_2024$add_tool.coverage" NAME="add_tool Coverage Results" MODIFIED="1721710476112" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/stock_market/fl_multimodal_knowledge_graph/data_collection/data_collection_tools" />
@@ -940,6 +945,6 @@
     <SUITE FILE_PATH="coverage/stock_market_application_2024$Stock_Data_Analysis.coverage" NAME="Stock_Data_Analysis Coverage Results" MODIFIED="1714972902864" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/stock_market_application_2024$.coverage" NAME=" Coverage Results" MODIFIED="1725346158000" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/stock_market/unit_tests" />
     <SUITE FILE_PATH="coverage/stock_market_application_2024$Stock_Market_Application.coverage" NAME="Stock_Market_Application Coverage Results" MODIFIED="1710731373947" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/stock_market_application_2024$proxy_tool.coverage" NAME="proxy_tool Coverage Results" MODIFIED="1721710467930" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/stock_market/fl_multimodal_knowledge_graph/data_collection/data_collection_tools" />
+    <SUITE FILE_PATH="coverage/stock_market_application_2024$proxy_tool.coverage" NAME="proxy_tool Coverage Results" MODIFIED="1727677854211" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/stock_market/fl_multimodal_knowledge_graph/data_collection/data_collection_tools" />
   </component>
 </project>

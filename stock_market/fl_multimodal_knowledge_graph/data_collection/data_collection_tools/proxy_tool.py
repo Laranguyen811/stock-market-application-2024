@@ -38,3 +38,4 @@ def get_proxy_list(proxy_list_origin):
 
     proxy_list = [f'{username}:{password}@{proxy}' for proxy in proxy_list_origin] #Obtaining a list of proxies and corresponding username and password for each proxy
     return proxy_list
+    print(f"Proxy list: {proxy_list_origin}")

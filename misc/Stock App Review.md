@@ -1825,3 +1825,33 @@ to use download_sounds in the test
 - HMM consists of a state transition model, an observation model, and a state distribution
 ***Things I did well today:***
 - Adding add_multimodal_text_node
+- Looking at how to access listed companies' names via stock exchange websites
+- Reading HMM tutorials
+***Things I did not do well today:***
+- Not reading KG paper
+- Not finished coding regarding Twitter API yet
+***Things I will do better next time:***
+- Finish reading HMM tutorial
+- Finish coding regarding Twitter API
+- Solve how to access listed companies' names via websites
+- Read KG paper if have time 
+
+30/09/2024
+***Things I learned today:***
+- creating a proxy list requires downloading proxy software 
+- the forward-backward algo: using a dynamic programming algo with message passing, can use to compute filtered/smoothed marginals. In a forward algo, we use filtered marginals using a predict-update cycle, the prediction uses one-step predict density. 
+In the update state, the observed data is absorbed using Bayes rule. In the forward-backward algo, we compute smoothed marginals using backward messages.
+- The Viterbi algo: compute the most probable sequence of hidden states, also has a forward-backward pass, however, we can use log domain here
+- The Baum-Welch algo: an Expectation-Maximisation algo for HMM.
+***Things I did well today:***
+- looking at creating a proxy list
+- checking code
+- reading HMM
+***Things I did not do well today:***
+- not reading KG paper
+- not finish proxy list yet
+***Things I will do better next time:***
+- finish proxy list
+- finish 2nd pass HMM
+- read KG paper if have time
+- solving coding regarding Twitter API

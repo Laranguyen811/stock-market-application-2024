@@ -52,6 +52,7 @@ def load(path: str) -> np.array:
 resolver = tf.distribute.cluster_resolver.TPUClusterResolver(tpu='')  # Creating a TPUClusterResolver object which identifies and connects to TPU cluster, with default tpu address.
 tf.config.experimental_connect_to_cluster(resolver)  # Connecting TPU runtime to cluster with specified resolver, setting up communication between our code and the TPU
 tf.tpu.experimental.initialize_tpu_system(resolver)  # Initializing the TPU system, performing any needed configuration and setup for it to be ready for use
+print("All devices: ", tf.config.list_logical_devices('TPU'))
 
 # Creating a TPU strategy
 strategy = tf.distribute.experimental.TPUStrategy(resolver)  # Creating a TPU strategy object for distributing the training across TPU devices, handling any distribution of data and model across the TPU cores.
@@ -782,5 +783,7 @@ class VisionTransformer(nn.Module):
         x = self.forward_features(x)  # Applying forward_features to x
         x = self.head(x)  # Applying head to x
         return x
+
+
 
 #def process_model(use_data_parallel: bool = False, device_ids: list = None) -> torch.nn.Models:
