@@ -4,12 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4f5895f3-2d93-4355-bcbb-97c6701d0028" name="Changes" comment="- added add_multimodel_node_text">
+    <list default="true" id="4f5895f3-2d93-4355-bcbb-97c6701d0028" name="Changes" comment="- finished traversing stock market exchange websites">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hidden_markov_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/hidden_markov_model.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/misc/Stock App Review.md" beforeDir="false" afterPath="$PROJECT_DIR$/misc/Stock App Review.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/stock_market/fl_multimodal_knowledge_graph/data_collection/data_collection_tools/download_texts.py" beforeDir="false" afterPath="$PROJECT_DIR$/stock_market/fl_multimodal_knowledge_graph/data_collection/data_collection_tools/download_texts.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/stock_market/fl_multimodal_knowledge_graph/data_collection/data_collection_tools/proxy_tool.py" beforeDir="false" afterPath="$PROJECT_DIR$/stock_market/fl_multimodal_knowledge_graph/data_collection/data_collection_tools/proxy_tool.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/stock_market/fl_multimodal_knowledge_graph/feature_extractor/image_extraction/image_extractor.py" beforeDir="false" afterPath="$PROJECT_DIR$/stock_market/fl_multimodal_knowledge_graph/feature_extractor/image_extraction/image_extractor.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -456,15 +454,8 @@
       <workItem from="1727325134801" duration="6613000" />
       <workItem from="1727413298147" duration="7137000" />
       <workItem from="1727672794984" duration="4975000" />
-      <workItem from="1727755232788" duration="6668000" />
-    </task>
-    <task id="LOCAL-00031" summary="- Add fl-mmkg">
-      <option name="closed" value="true" />
-      <created>1720508484409</created>
-      <option name="number" value="00031" />
-      <option name="presentableId" value="LOCAL-00031" />
-      <option name="project" value="LOCAL" />
-      <updated>1720508484409</updated>
+      <workItem from="1727755232788" duration="7937000" />
+      <workItem from="1727841665754" duration="4089000" />
     </task>
     <task id="LOCAL-00032" summary="- add uri tool">
       <option name="closed" value="true" />
@@ -850,7 +841,15 @@
       <option name="project" value="LOCAL" />
       <updated>1727423654773</updated>
     </task>
-    <option name="localTasksCounter" value="80" />
+    <task id="LOCAL-00080" summary="- finished traversing stock market exchange websites">
+      <option name="closed" value="true" />
+      <created>1727765358452</created>
+      <option name="number" value="00080" />
+      <option name="presentableId" value="LOCAL-00080" />
+      <option name="project" value="LOCAL" />
+      <updated>1727765358453</updated>
+    </task>
+    <option name="localTasksCounter" value="81" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -868,7 +867,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="- adding download_sounds.py&#10;- adding extend_tool.py" />
     <MESSAGE value="- adding functions to extend_tool.py" />
     <MESSAGE value="- finishing extend_tool.py" />
     <MESSAGE value="- finished download_visuals.py" />
@@ -893,7 +891,8 @@
     <MESSAGE value="- added hmm&#10;- added download_texts.py" />
     <MESSAGE value="- added twitter api" />
     <MESSAGE value="- added add_multimodel_node_text" />
-    <option name="LAST_COMMIT_MESSAGE" value="- added add_multimodel_node_text" />
+    <MESSAGE value="- finished traversing stock market exchange websites" />
+    <option name="LAST_COMMIT_MESSAGE" value="- finished traversing stock market exchange websites" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
