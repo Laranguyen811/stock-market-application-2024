@@ -1855,3 +1855,16 @@ In the update state, the observed data is absorbed using Bayes rule. In the forw
 - finish 2nd pass HMM
 - read KG paper if have time
 - solving coding regarding Twitter API
+
+1/10/2024
+***Things I learned today***
+- building a model from scratch to have a good grasp of data structures and algorithms
+- HMM
+***Things I did well today:***
+- Coding 
+- HMM paper 3rd pass
+***Things I did not do well today:***
+- not finished HMM yet
+***Things I will do better next time:***
+- Understand the paper to the T
+- keep on building

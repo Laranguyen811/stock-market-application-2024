@@ -4,7 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4f5895f3-2d93-4355-bcbb-97c6701d0028" name="Changes" comment="- finished traversing stock market exchange websites">
+    <list default="true" id="4f5895f3-2d93-4355-bcbb-97c6701d0028" name="Changes" comment="- added forward-backward algorithm for HMM">
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2024_9_25_16_58__Changes_.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/hidden_markov_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/hidden_markov_model.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/misc/Stock App Review.md" beforeDir="false" afterPath="$PROJECT_DIR$/misc/Stock App Review.md" afterDir="false" />
@@ -455,15 +456,8 @@
       <workItem from="1727413298147" duration="7137000" />
       <workItem from="1727672794984" duration="4975000" />
       <workItem from="1727755232788" duration="7937000" />
-      <workItem from="1727841665754" duration="4089000" />
-    </task>
-    <task id="LOCAL-00032" summary="- add uri tool">
-      <option name="closed" value="true" />
-      <created>1720681961759</created>
-      <option name="number" value="00032" />
-      <option name="presentableId" value="LOCAL-00032" />
-      <option name="project" value="LOCAL" />
-      <updated>1720681961759</updated>
+      <workItem from="1727841665754" duration="6461000" />
+      <workItem from="1727928082690" duration="6625000" />
     </task>
     <task id="LOCAL-00033" summary="- add uri tool">
       <option name="closed" value="true" />
@@ -849,7 +843,15 @@
       <option name="project" value="LOCAL" />
       <updated>1727765358453</updated>
     </task>
-    <option name="localTasksCounter" value="81" />
+    <task id="LOCAL-00081" summary="- added forward-backward algorithm for HMM">
+      <option name="closed" value="true" />
+      <created>1727851269961</created>
+      <option name="number" value="00081" />
+      <option name="presentableId" value="LOCAL-00081" />
+      <option name="project" value="LOCAL" />
+      <updated>1727851269961</updated>
+    </task>
+    <option name="localTasksCounter" value="82" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -860,14 +862,25 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="master" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
           </value>
         </entry>
       </map>
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="- adding functions to extend_tool.py" />
     <MESSAGE value="- finishing extend_tool.py" />
     <MESSAGE value="- finished download_visuals.py" />
     <MESSAGE value="- added transport_tool.py" />
@@ -892,7 +905,8 @@
     <MESSAGE value="- added twitter api" />
     <MESSAGE value="- added add_multimodel_node_text" />
     <MESSAGE value="- finished traversing stock market exchange websites" />
-    <option name="LAST_COMMIT_MESSAGE" value="- finished traversing stock market exchange websites" />
+    <MESSAGE value="- added forward-backward algorithm for HMM" />
+    <option name="LAST_COMMIT_MESSAGE" value="- added forward-backward algorithm for HMM" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
