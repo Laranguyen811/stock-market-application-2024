@@ -4,8 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4f5895f3-2d93-4355-bcbb-97c6701d0028" name="Changes" comment="- added forward-backward algorithm for HMM">
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2024_9_25_16_58__Changes_.xml" beforeDir="false" />
+    <list default="true" id="4f5895f3-2d93-4355-bcbb-97c6701d0028" name="Changes" comment="- added viterbi algo">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/hidden_markov_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/hidden_markov_model.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/misc/Stock App Review.md" beforeDir="false" afterPath="$PROJECT_DIR$/misc/Stock App Review.md" afterDir="false" />
@@ -14,6 +13,11 @@
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ChangesViewManager">
+    <option name="groupingKeys">
+      <option value="repository" />
+    </option>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -457,31 +461,8 @@
       <workItem from="1727672794984" duration="4975000" />
       <workItem from="1727755232788" duration="7937000" />
       <workItem from="1727841665754" duration="6461000" />
-      <workItem from="1727928082690" duration="6625000" />
-    </task>
-    <task id="LOCAL-00033" summary="- add uri tool">
-      <option name="closed" value="true" />
-      <created>1721026131566</created>
-      <option name="number" value="00033" />
-      <option name="presentableId" value="LOCAL-00033" />
-      <option name="project" value="LOCAL" />
-      <updated>1721026131566</updated>
-    </task>
-    <task id="LOCAL-00034" summary="- add uri tooling">
-      <option name="closed" value="true" />
-      <created>1721112628774</created>
-      <option name="number" value="00034" />
-      <option name="presentableId" value="LOCAL-00034" />
-      <option name="project" value="LOCAL" />
-      <updated>1721112628774</updated>
-    </task>
-    <task id="LOCAL-00035" summary="- add add_tools">
-      <option name="closed" value="true" />
-      <created>1721213251034</created>
-      <option name="number" value="00035" />
-      <option name="presentableId" value="LOCAL-00035" />
-      <option name="project" value="LOCAL" />
-      <updated>1721213251034</updated>
+      <workItem from="1727928082690" duration="9029000" />
+      <workItem from="1728010853473" duration="6973000" />
     </task>
     <task id="LOCAL-00036" summary="- add add_relation function">
       <option name="closed" value="true" />
@@ -851,7 +832,31 @@
       <option name="project" value="LOCAL" />
       <updated>1727851269961</updated>
     </task>
-    <option name="localTasksCounter" value="82" />
+    <task id="LOCAL-00082" summary="- added viterbi algo">
+      <option name="closed" value="true" />
+      <created>1727936750922</created>
+      <option name="number" value="00082" />
+      <option name="presentableId" value="LOCAL-00082" />
+      <option name="project" value="LOCAL" />
+      <updated>1727936750923</updated>
+    </task>
+    <task id="LOCAL-00083" summary="- added viterbi algo">
+      <option name="closed" value="true" />
+      <created>1727936859297</created>
+      <option name="number" value="00083" />
+      <option name="presentableId" value="LOCAL-00083" />
+      <option name="project" value="LOCAL" />
+      <updated>1727936859297</updated>
+    </task>
+    <task id="LOCAL-00084" summary="- added viterbi algo">
+      <option name="closed" value="true" />
+      <created>1727936884887</created>
+      <option name="number" value="00084" />
+      <option name="presentableId" value="LOCAL-00084" />
+      <option name="project" value="LOCAL" />
+      <updated>1727936884887</updated>
+    </task>
+    <option name="localTasksCounter" value="85" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -881,7 +886,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="- finishing extend_tool.py" />
     <MESSAGE value="- finished download_visuals.py" />
     <MESSAGE value="- added transport_tool.py" />
     <MESSAGE value="- added deliver_content&#10;- added email" />
@@ -906,7 +910,8 @@
     <MESSAGE value="- added add_multimodel_node_text" />
     <MESSAGE value="- finished traversing stock market exchange websites" />
     <MESSAGE value="- added forward-backward algorithm for HMM" />
-    <option name="LAST_COMMIT_MESSAGE" value="- added forward-backward algorithm for HMM" />
+    <MESSAGE value="- added viterbi algo" />
+    <option name="LAST_COMMIT_MESSAGE" value="- added viterbi algo" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

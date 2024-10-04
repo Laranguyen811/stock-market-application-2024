@@ -97,11 +97,79 @@ def viterbi_algorithm(X,A, B, pi):
         for j in range(K):
             max_val = -np.inf  # Common practice for an algorithm finding a maximum value in a set of comparisons
             max_state = 0
-            for i in range(K):
-                val = delta[t-1,i] + np.log(A[i,j])
+            for i in range(K):  # Iterating through K
+                val = delta[t-1,i] + np.log(A[i,j])  # Assigning value to the addition between delta at time step t-1 and ith element and log of matrix A of state transition from i to j
                 if val > max_val:
-                    max_val = val
-                    max_state = i
+                    max_val = val  # Replacing max value with val every time val is greater than the current max value
+                    max_state = i  # Replacing the max state with the ith state of the resulted max value
+            delta[t,j] = max_val + np.log(B[j,X[t]])  # Assigning delta at time step t and state transition j to the addition between max value and the log of matrix B at state j and observation X at time step t
+            psi[t,j] = max_state # Assigning matrix psi at time step t and state transition j to max state
+
+    # Termination
+    path = np.zeros(N, dtype=int)  # Creating an array of path filled with zeros with N dimension
+    path[N-1] = np.argmax(delta[N-1])  # Assigning the N-1 th element of path to the output of the amximum function with input of the N-1 th element of delta
+
+    # Backtracing
+    for t in range(N-2, -1, -1):
+        path[t] = psi[t+1,path[t+1]]  # Assigning path at time step t to psi at time step t+1 and path at time step t+1
+
+    return path
+
+
+def baum_welch_algorithm(X,A,B,pi, n_iter=100):
+    ''' The Baum-Welch algorithm.
+        Args:
+            X(np.array): An np.array of sequence X of the observations
+            A (np.array): An np.array of the transition matrix A transitioning from state Z_{i} to state Z_{j}
+            B (np.array): An np.array of the probability distribution B of the observations
+            alpha (np.array): An np.array of the probability distribution alpha of the observations up to the current time step (the filtered belief state)
+            beta (np.array): An np.array of the conditional likelihood beta of the future evidence
+    '''
+    N = len(X)
+    M = B.shape[1]  # Assigning M step to the number of rows of matrix B
+    K = A.shape[0]  # Assigning K to the number of columns of matrix A
+
+
+    for _ in range(n_iter):
+        # E-step
+        alpha = np.zeros((N,K))  # Filling alpha matrix with zeros with the dimensions of N and K
+        beta = np.zeros((N,K))  # Filling beta matrix with zeros with the dimensions of N and K
+        xi = np.zeros((N-1,K,K))  # Filling beta matrix with zeros with the dimensions of N-1,K and K
+        gamma = np.zeros((N,K))  # Filling gamma matrix with zeros with the dimensions of N and K
+
+        # Forward pass
+        alpha[0] = pi * B[:, X[0]]  # Assigning the first element of alpha to the Hadamard product between pi and matrix B of the first observation of sequence X
+        for t in range(1,N):  # In Baum-Welch algorithm the first step (t=0) is dealt with separately during initialisation. The loop then starts from t =1 and goes up to t=N-1, hence, we use range(1,N) to cover all the necessary steps.
+            for i in range(K):
+                beta[t,i] = np.sum(A[i,:] * B[:,X[t+1]] * beta[t+1])  # Assigning the matrix beta at time step t and state i to the sum of the Hadamard product between matrix A at state i and matrix B of matrix X of time step t + 1 and matrix beta at time step t + 1
+
+        # Backward pass
+        beta[-1] = 1
+        for t in range(N-2, -1, -1):
+            for j in range(K):
+                alpha[t,j] = np.sum(alpha[t-1] * A[:,j]) *  B[j,X[t]]
+
+        # Computing xi and gamma
+        for t in range(N-1):
+            denominator = np.sum(alpha[t] * beta[t])
+            for i in range(K):
+                gamma[t,i] = (alpha[t,i] * beta[t,i]) / denominator
+                xi[t,i,:] = (alpha[t,i] * A[i,:] * B[:,X[t+1]] *beta[t+1]) / denominator
+
+        gamma[-1] = alpha[-1] / np.sum(alpha[-1])  # Assigning the last elements of matrix gamma to the last elements of matrix alpha divided by the sum of the last elements of matrix alpha
+
+        # M-step
+        A = np.sum(xi,axis=0) / np.sum(gamma[:-1],axis=0)[:,None]  # Assigning matrix A to the sum of elements of the columns of matrix xi divided by the sum of the last elements of the columns of matrix gamma
+        for j in range(M):
+            mask = (X == j)  # Creating a boolean mask where in sequence X the observation is equal to j
+            B[:,j] = np.sum(gamma[mask],axis=0) / np.sum(gamma,axis=0)
+        pi = gamma[0]
+    return A,B,pi
+
+
+
+
+
 
 
 
