@@ -4,9 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4f5895f3-2d93-4355-bcbb-97c6701d0028" name="Changes" comment="- added Baum-Welch algo">
+    <list default="true" id="4f5895f3-2d93-4355-bcbb-97c6701d0028" name="Changes" comment="- improved viterbi and baum-welch algorithm&#10;- added evaluation with K-fold">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hidden_markov_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/hidden_markov_model.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/misc/Stock App Review.md" beforeDir="false" afterPath="$PROJECT_DIR$/misc/Stock App Review.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -466,23 +465,7 @@
       <workItem from="1728010853473" duration="8942000" />
       <workItem from="1728271165548" duration="7445000" />
       <workItem from="1728281702702" duration="660000" />
-      <workItem from="1728357960076" duration="8493000" />
-    </task>
-    <task id="LOCAL-00037" summary="- add fetch_tool.py">
-      <option name="closed" value="true" />
-      <created>1721718022305</created>
-      <option name="number" value="00037" />
-      <option name="presentableId" value="LOCAL-00037" />
-      <option name="project" value="LOCAL" />
-      <updated>1721718022305</updated>
-    </task>
-    <task id="LOCAL-00038" summary="- add transform_path&#10;- add get_page&#10;- add get_node&#10;- add combine_pages&#10;- add get_edge&#10;- add get_multi_model">
-      <option name="closed" value="true" />
-      <created>1721800656952</created>
-      <option name="number" value="00038" />
-      <option name="presentableId" value="LOCAL-00038" />
-      <option name="project" value="LOCAL" />
-      <updated>1721800656952</updated>
+      <workItem from="1728357960076" duration="10027000" />
     </task>
     <task id="LOCAL-00039" summary="- add transform_path&#10;- add get_page&#10;- add get_node&#10;- add combine_pages&#10;- add get_edge&#10;- add get_multi_model">
       <option name="closed" value="true" />
@@ -860,7 +843,23 @@
       <option name="project" value="LOCAL" />
       <updated>1728019317810</updated>
     </task>
-    <option name="localTasksCounter" value="86" />
+    <task id="LOCAL-00086" summary="- improved viterbi and baum-welch algorithm&#10;- added evaluation with K-fold">
+      <option name="closed" value="true" />
+      <created>1728367220470</created>
+      <option name="number" value="00086" />
+      <option name="presentableId" value="LOCAL-00086" />
+      <option name="project" value="LOCAL" />
+      <updated>1728367220470</updated>
+    </task>
+    <task id="LOCAL-00087" summary="- improved viterbi and baum-welch algorithm&#10;- added evaluation with K-fold">
+      <option name="closed" value="true" />
+      <created>1728367289884</created>
+      <option name="number" value="00087" />
+      <option name="presentableId" value="LOCAL-00087" />
+      <option name="project" value="LOCAL" />
+      <updated>1728367289884</updated>
+    </task>
+    <option name="localTasksCounter" value="88" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -890,7 +889,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="- added transport_tool.py" />
     <MESSAGE value="- added deliver_content&#10;- added email" />
     <MESSAGE value="- added clear_tool.py" />
     <MESSAGE value="- added history.py" />
@@ -915,7 +913,8 @@
     <MESSAGE value="- added forward-backward algorithm for HMM" />
     <MESSAGE value="- added viterbi algo" />
     <MESSAGE value="- added Baum-Welch algo" />
-    <option name="LAST_COMMIT_MESSAGE" value="- added Baum-Welch algo" />
+    <MESSAGE value="- improved viterbi and baum-welch algorithm&#10;- added evaluation with K-fold" />
+    <option name="LAST_COMMIT_MESSAGE" value="- improved viterbi and baum-welch algorithm&#10;- added evaluation with K-fold" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -960,7 +959,7 @@
     <SUITE FILE_PATH="coverage/stock_market_application_2024$add_tool.coverage" NAME="add_tool Coverage Results" MODIFIED="1721710476112" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/stock_market/fl_multimodal_knowledge_graph/data_collection/data_collection_tools" />
     <SUITE FILE_PATH="coverage/stock_market_application_2024$uri_tool.coverage" NAME="uri_tool Coverage Results" MODIFIED="1721710488819" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/stock_market/fl_multimodal_knowledge_graph/data_collection/data_collection_tools" />
     <SUITE FILE_PATH="coverage/stock_market_application_2024$mel_spectrogram_features.coverage" NAME="mel_spectrogram_features Coverage Results" MODIFIED="1725862772415" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/stock_market/fl_multimodal_knowledge_graph/feature_extractor/audio_extraction" />
-    <SUITE FILE_PATH="coverage/stock_market_application_2024$hidden_markov_model.coverage" NAME="hidden_markov_model Coverage Results" MODIFIED="1728366535523" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/stock_market_application_2024$hidden_markov_model.coverage" NAME="hidden_markov_model Coverage Results" MODIFIED="1728368864920" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/stock_market_application_2024$add_tools.coverage" NAME="uri_tool Coverage Results" MODIFIED="1721710446763" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/stock_market/fl_multimodal_knowledge_graph/data_collection/data_collection_tools" />
     <SUITE FILE_PATH="coverage/stock_market_application_2024$download_sounds.coverage" NAME="download_sounds Coverage Results" MODIFIED="1725260808373" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/stock_market/fl_multimodal_knowledge_graph/data_collection/data_collection_tools" />
     <SUITE FILE_PATH="coverage/stock_market_application_2024$uri_tools.coverage" NAME="uri_tools Coverage Results" MODIFIED="1721625015401" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/stock_market/fl_multimodal_knowledge_graph/data_collection/data_collection_tools" />

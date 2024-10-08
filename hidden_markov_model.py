@@ -201,7 +201,7 @@ def baum_welch_algorithm(X, A, B, pi, n_iter=100):
 
         # M-step
         A = np.sum(xi, axis=0) / np.sum(gamma[:-1], axis=0)[:, None]  # Assigning A to the sum of matrix x along the rows divided by the sum of matrix gamma till the last column along the rows, and turning this into a column vector
-        B = np.array([np.sum(gamma[:, X == j], axis=1) for j in range(M)]).T  # Assigning B to the array of the column of the sum of matrix gamma where observation X is at state j
+        B = np.array([np.sum(gamma[:, X == j], axis=1) for j in range(M)]).T  # Assigning B to the transposed array of the column of the sum of matrix gamma where observation X is at state j
         B /= np.sum(gamma, axis=0)[:, None]  # Dividing matrix B by the column vector sum of matrix gamma
         pi = gamma[0]
 
