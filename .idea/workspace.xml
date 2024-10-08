@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4f5895f3-2d93-4355-bcbb-97c6701d0028" name="Changes" comment="- added viterbi algo">
+    <list default="true" id="4f5895f3-2d93-4355-bcbb-97c6701d0028" name="Changes" comment="- added Baum-Welch algo">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/hidden_markov_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/hidden_markov_model.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/misc/Stock App Review.md" beforeDir="false" afterPath="$PROJECT_DIR$/misc/Stock App Review.md" afterDir="false" />
@@ -71,44 +71,45 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Python tests.Python tests for test_download_images.TestDownloadImages.executor&quot;: &quot;Run&quot;,
-    &quot;Python tests.Python tests for test_download_sounds.TestDownloadSound.executor&quot;: &quot;Run&quot;,
-    &quot;Python tests.Python tests for test_stock_data_analysis.test_calculate_corr_coeffs.executor&quot;: &quot;Run&quot;,
-    &quot;Python tests.Python tests in test_download_images.py.executor&quot;: &quot;Run&quot;,
-    &quot;Python tests.Python tests in test_download_sounds.py.executor&quot;: &quot;Run&quot;,
-    &quot;Python tests.Python tests in test_normal_distribution_detection.py.executor&quot;: &quot;Run&quot;,
-    &quot;Python tests.Python tests in test_stock_data_analysis.py.executor&quot;: &quot;Debug&quot;,
-    &quot;Python.Stock_Data_Analysis.executor&quot;: &quot;Run&quot;,
-    &quot;Python.Stock_Data_Visualisation.executor&quot;: &quot;Run&quot;,
-    &quot;Python.Stock_Market_Application.executor&quot;: &quot;Run&quot;,
-    &quot;Python.add_tool.executor&quot;: &quot;Run&quot;,
-    &quot;Python.add_tools.executor&quot;: &quot;Run&quot;,
-    &quot;Python.download_sounds.executor&quot;: &quot;Run&quot;,
-    &quot;Python.image_extractor.executor&quot;: &quot;Run&quot;,
-    &quot;Python.mel_spectrogram_features.executor&quot;: &quot;Run&quot;,
-    &quot;Python.proxy_tool (1).executor&quot;: &quot;Run&quot;,
-    &quot;Python.proxy_tool.executor&quot;: &quot;Run&quot;,
-    &quot;Python.stock_data_analysis.executor&quot;: &quot;Run&quot;,
-    &quot;Python.uri_tool.executor&quot;: &quot;Run&quot;,
-    &quot;Python.uri_tools.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;ToolWindowPlots.ShowToolbar&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/laran/PycharmProjects/ARENA tutorials _Superposition_&amp;_SAEs&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Python tests.Python tests for test_download_images.TestDownloadImages.executor": "Run",
+    "Python tests.Python tests for test_download_sounds.TestDownloadSound.executor": "Run",
+    "Python tests.Python tests for test_stock_data_analysis.test_calculate_corr_coeffs.executor": "Run",
+    "Python tests.Python tests in test_download_images.py.executor": "Run",
+    "Python tests.Python tests in test_download_sounds.py.executor": "Run",
+    "Python tests.Python tests in test_normal_distribution_detection.py.executor": "Run",
+    "Python tests.Python tests in test_stock_data_analysis.py.executor": "Debug",
+    "Python.Stock_Data_Analysis.executor": "Run",
+    "Python.Stock_Data_Visualisation.executor": "Run",
+    "Python.Stock_Market_Application.executor": "Run",
+    "Python.add_tool.executor": "Run",
+    "Python.add_tools.executor": "Run",
+    "Python.download_sounds.executor": "Run",
+    "Python.hidden_markov_model.executor": "Run",
+    "Python.image_extractor.executor": "Run",
+    "Python.mel_spectrogram_features.executor": "Run",
+    "Python.proxy_tool (1).executor": "Run",
+    "Python.proxy_tool.executor": "Run",
+    "Python.stock_data_analysis.executor": "Run",
+    "Python.uri_tool.executor": "Run",
+    "Python.uri_tools.executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "ToolWindowPlots.ShowToolbar": "false",
+    "git-widget-placeholder": "master",
+    "ignore.virus.scanning.warn.message": "true",
+    "last_opened_file_path": "C:/Users/laran/PycharmProjects/ARENA tutorials _Superposition_&_SAEs",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\laran\PycharmProjects\ASX\stock_market\fl_multimodal_knowledge_graph\feature_extractor\audio_extraction" />
@@ -118,7 +119,7 @@
       <recent name="C:\Users\laran\PycharmProjects\ASX\misc" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.add_tool">
+  <component name="RunManager">
     <configuration name="add_tool" type="PythonConfigurationType" factoryName="Python">
       <module name="ASX" />
       <option name="ENV_FILES" value="" />
@@ -462,15 +463,10 @@
       <workItem from="1727755232788" duration="7937000" />
       <workItem from="1727841665754" duration="6461000" />
       <workItem from="1727928082690" duration="9029000" />
-      <workItem from="1728010853473" duration="6973000" />
-    </task>
-    <task id="LOCAL-00036" summary="- add add_relation function">
-      <option name="closed" value="true" />
-      <created>1721632948178</created>
-      <option name="number" value="00036" />
-      <option name="presentableId" value="LOCAL-00036" />
-      <option name="project" value="LOCAL" />
-      <updated>1721632948178</updated>
+      <workItem from="1728010853473" duration="8942000" />
+      <workItem from="1728271165548" duration="7445000" />
+      <workItem from="1728281702702" duration="660000" />
+      <workItem from="1728357960076" duration="8493000" />
     </task>
     <task id="LOCAL-00037" summary="- add fetch_tool.py">
       <option name="closed" value="true" />
@@ -856,7 +852,15 @@
       <option name="project" value="LOCAL" />
       <updated>1727936884887</updated>
     </task>
-    <option name="localTasksCounter" value="85" />
+    <task id="LOCAL-00085" summary="- added Baum-Welch algo">
+      <option name="closed" value="true" />
+      <created>1728019317809</created>
+      <option name="number" value="00085" />
+      <option name="presentableId" value="LOCAL-00085" />
+      <option name="project" value="LOCAL" />
+      <updated>1728019317810</updated>
+    </task>
+    <option name="localTasksCounter" value="86" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -886,7 +890,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="- finished download_visuals.py" />
     <MESSAGE value="- added transport_tool.py" />
     <MESSAGE value="- added deliver_content&#10;- added email" />
     <MESSAGE value="- added clear_tool.py" />
@@ -911,7 +914,8 @@
     <MESSAGE value="- finished traversing stock market exchange websites" />
     <MESSAGE value="- added forward-backward algorithm for HMM" />
     <MESSAGE value="- added viterbi algo" />
-    <option name="LAST_COMMIT_MESSAGE" value="- added viterbi algo" />
+    <MESSAGE value="- added Baum-Welch algo" />
+    <option name="LAST_COMMIT_MESSAGE" value="- added Baum-Welch algo" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -956,6 +960,7 @@
     <SUITE FILE_PATH="coverage/stock_market_application_2024$add_tool.coverage" NAME="add_tool Coverage Results" MODIFIED="1721710476112" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/stock_market/fl_multimodal_knowledge_graph/data_collection/data_collection_tools" />
     <SUITE FILE_PATH="coverage/stock_market_application_2024$uri_tool.coverage" NAME="uri_tool Coverage Results" MODIFIED="1721710488819" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/stock_market/fl_multimodal_knowledge_graph/data_collection/data_collection_tools" />
     <SUITE FILE_PATH="coverage/stock_market_application_2024$mel_spectrogram_features.coverage" NAME="mel_spectrogram_features Coverage Results" MODIFIED="1725862772415" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/stock_market/fl_multimodal_knowledge_graph/feature_extractor/audio_extraction" />
+    <SUITE FILE_PATH="coverage/stock_market_application_2024$hidden_markov_model.coverage" NAME="hidden_markov_model Coverage Results" MODIFIED="1728366535523" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/stock_market_application_2024$add_tools.coverage" NAME="uri_tool Coverage Results" MODIFIED="1721710446763" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/stock_market/fl_multimodal_knowledge_graph/data_collection/data_collection_tools" />
     <SUITE FILE_PATH="coverage/stock_market_application_2024$download_sounds.coverage" NAME="download_sounds Coverage Results" MODIFIED="1725260808373" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/stock_market/fl_multimodal_knowledge_graph/data_collection/data_collection_tools" />
     <SUITE FILE_PATH="coverage/stock_market_application_2024$uri_tools.coverage" NAME="uri_tools Coverage Results" MODIFIED="1721625015401" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/stock_market/fl_multimodal_knowledge_graph/data_collection/data_collection_tools" />
