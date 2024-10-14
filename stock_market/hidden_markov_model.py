@@ -10,7 +10,7 @@ from sklearn.model_selection import StratifiedGroupKFold, StratifiedKFold, KFold
 
 # The Forward-Backward Algorithm (a dynamic programming algorithm using message passing)
 
-def normalize(u):
+def log_normalize(log_u):
     ''' Normalize the vector input.
     Args:
         u(np.array): An np.array of input vector
@@ -18,12 +18,14 @@ def normalize(u):
         np.array: A normalized vector alpha
         int: a normalized constant
     '''
-    C = np.sum(u)
-    alpha = u/C
-    return alpha, C
+    max_log_u = np.sum(log_u)
+    if max_log_u == 0:
+        max_log_u = np.finfo(float).eps
+    alpha = log_u - max_log_u - np.log(np.sum(np.exp(log_u - max_log_u)))
+    return alpha
 
 
-def forward(A, psi, pi):
+def forward_algorithm(log_A, log_B, log_pi):
     ''' Forward pass of the algorithm
     Args:
         A(np.array): An np.array of state transition matrix A
@@ -33,21 +35,20 @@ def forward(A, psi, pi):
         np.array: A np.array of the sequence of normalised vector alpha from 1 to N
         float: A float of log probability of the observations X_{t} given the observation X_{1:t-1}
     '''
-    N = len(psi)  # Assigning N to the length of psi
-    alpha = np.zeros((N, len(pi)))  # Assigning alpha to a matrix filled with zeros with N as the number of columns and length of pi as a the number of rows
-    C = np.zeros(N)  # Assigning C to a vector filled with zeros with the length of N
+    N,K = log_B.shape # Assigning N,K to the dimensions of log_B with N equals the number of columns and K equal the number of rows
+    log_alpha = np.zeros((N, K))  # Assigning alpha to a matrix filled with zeros with N as the number of columns and length of pi as a the number of rows
 
-    # Initializing alpha_1 and C_1
-    alpha[0], C[0] = normalize(psi[0] * pi)
+    # Initializing log_alpha
+    log_alpha[0] = log_normalize(log_B[0] + log_pi)
 
     # Iterating through the sequence
     for t in range(1, N):
-        alpha[t], C[t] = normalize(psi[t] * (A.T @ alpha[t-1]))  # Assigning alpha and C at time t to the normalized dot product between psi at time t time the transposed matrix A times matrix alpha at time t -1
+        log_alpha[t], log_B[t] = log_normalize(log_B[t] * (log_A.T @ log_alpha[t-1]))  # Assigning alpha and C at time t to the normalized dot product between psi at time t time the transposed matrix A times matrix alpha at time t -1
 
-    log_prob = np.sum(np.log(C))
-    return alpha, log_prob
+    log_probs = np.sum(log_normalize(log_alpha[-1]))  # Adding a small constant to avoid log(0)
+    return log_alpha, log_probs
 
-def backward_algorithm(A, psi, alpha):
+def backward_algorithm(log_A,log_B):
     ''' A backward pass of the algorithm.
         Args:
             A(np.array): An np.array of state transition matrix A
@@ -58,19 +59,19 @@ def backward_algorithm(A, psi, alpha):
             np.array: A np.array of the normalised matrix gamma (the smoothed posterior, probability distribution of hidden states of the model given all the observations up to and include current time step and future observations) from 1 to N of the normalised product between matrix A and the dot product between the matrix psi at time t+1 and matrix beta at time t+1
 
     '''
-    N = len(psi)
-    beta = np.zeros((N,len(alpha[0])))  # beta is the conditional likelihood of the future evidence
-    gamma = np.zeros((N, len(alpha[0])))
+    N,K = log_B.shape  # Assigning N,K to the dimensions of log_B with N equals the number of columns and K equal the number of rows
+    beta = np.zeros((N,K))  # beta is the conditional likelihood of the future evidence
+    gamma = np.zeros_like((N,K))
 
     # Initializing beta_N (beta of the Nth element of the sequence)
-    beta[N - 1] = 1
+    beta[N-1] = 1
 
     # Iterating through the sequence in reverse
     for t in range(N -2, -1, - 1):
-            beta[t], _ = normalize(A @ (psi[t+1] * beta[t+1]))  # Assigning beta at time t the normalised product between matrix A and the product between matrix psi at time t + 1 and matrix beta at t +1
+            beta[t], _ = log_normalize(A @ (psi[t+1] * beta[t+1]))  # Assigning beta at time t the normalised product between matrix A and the product between matrix psi at time t + 1 and matrix beta at t +1
     # Computing gamma
     for t in range(N):
-        gamma[t], _ = normalize(alpha[t] * beta[t])
+        gamma[t], _ = log_normalize(alpha[t] * beta[t])
 
     return gamma
 
@@ -132,8 +133,7 @@ def viterbi_algorithm_2(X, A, B, pi):
     Returns:
         np.ndarray: An np.ndarray of the most probable sequence Z from 1 to N hidden states
     '''
-    N = len(X)
-    K = A.shape[0] # Assigning K to the number of matrices A
+    N,K = len(X), A.shape[0]  # Assigning N to the length of X and K to the number of matrices A
 
     # Initializing delta and psi
     delta: ndarray[Any, dtype[floating[_64Bit] | float_]] = np.zeros((N,K)) # delta is the probability as the combination of the transition from the previous state i at time t-1 and the most probable path leading to i
@@ -142,9 +142,9 @@ def viterbi_algorithm_2(X, A, B, pi):
 
     for t in range(1,N):
         for j in range(K):
-            temp = delta[t-1] + np.log(A.T)
-            delta[t] = np.max(delta[t-1] + np.log(A[:,j]) + np.log(B[j,X[t]]))  # Assigning matrix delta at time step t and state j to the maximum value of the addition between matrix delta at time step t-1  and the log of matrix A at state j and the matrix B of observation X at time t
-            psi[t,j] = np.argmax(delta[t-1] + np.log(A[:,j]))  # Assigning matrix psi to the output of the maximum function for the addition between matrix delta at time t-1 and the log of matrix A at state j
+            temp = delta[t-1] + np.log(A[:,j])
+            delta[t,j] = np.max(temp) + np.log(B[j,X[t]])  # Assigning matrix delta at time step t and state j to the maximum value of the addition between matrix delta at time step t-1  and the log of matrix A at state j and the matrix B of observation X at time t
+            psi[t,j] = np.argmax(temp)  # Assigning matrix psi to the output of the maximum function for the addition between matrix delta at time t-1 and the log of matrix A at state j
 
     # Termination
     path = np.zeros(N, dtype=int)  # Filled the matrix path with zeros of N dimension
@@ -155,7 +155,16 @@ def viterbi_algorithm_2(X, A, B, pi):
         path[N-1] = psi[t+1,path[t+1]]  # Assigning path at time step t to psi at time step t+1 and path at time step t+1
 
     return path
-
+def log_sum_exp(log_probs):
+    '''
+    Takes log probabilities and returns the log transformation
+    Inputs:
+        log_probs(float): A float number of log probabilities.
+    Returns:
+        float: A float number of log transformation
+    '''
+    max_log_prob = np.max(log_probs)
+    return max_log_prob + np.log(np.sum(np.exp(log_probs - max_log_prob)))
 def baum_welch_algorithm(X, A, B, pi, n_iter=100):
     ''' The Baum-Welch algorithm.
     Args:
@@ -167,44 +176,46 @@ def baum_welch_algorithm(X, A, B, pi, n_iter=100):
     Returns:
         A, B, pi: Updated model parameters
     '''
-    N = len(X)
-    M = B.shape[1]  # Assigning M step to the number of rows of matrix B
-    K = A.shape[0]  # Assigning K to the number of columns of matrix A
+    N, M, K = len(X), B.shape[1], A.shape[0]  # Assigning M step to the number of rows of matrix B and K to the number of columns of matrix A
 
     for _ in range(n_iter):
         # E-step
-        alpha = np.zeros((N, K))  # Filling alpha matrix with zeros with the dimensions of N and K
-        beta = np.zeros((N, K))  # Filling beta matrix with zeros with the dimensions of N and K
+        log_alpha = np.zeros((N, K))  # Filling alpha matrix with zeros with the dimensions of N and K
+        log_beta = np.zeros((N, K))  # Filling beta matrix with zeros with the dimensions of N and K
         xi = np.zeros((N-1, K, K))  # Filling beta matrix with zeros with the dimensions of N-1,K and K
         gamma = np.zeros((N, K))  # Filling gamma matrix with zeros with the dimensions of N and K
 
         # Forward pass
-        alpha[0] = pi * B[:, X[0]]  # Assigning the first element of alpha to the Hadamard product between pi and matrix B of the first observation of sequence X
-        for t in range(1,N):  # In Baum-Welch algorithm the first step (t=0) is dealt with separately during initialisation. The loop then starts from t =1 and goes up to t=N-1, hence, we use range(1,N) to cover all the necessary steps.
-            for j in range(K):
-                alpha[t, j] = np.sum(alpha[t-1] * A[:, j]) * B[j, X[t]]  # Assigning the matrix beta at time step t and state i to the sum of the Hadamard product between matrix A at state i and matrix B of matrix X of time step t + 1 and matrix beta at time step t + 1
+        log_alpha[0] = np.log(pi) * np.log(B[:, X[0]])  # Assigning the first element of alpha to the Hadamard product between pi and matrix B of the first observation of sequence X
+        for t in range(1, N):  # In Baum-Welch algorithm the first step (t=0) is dealt with separately during initialisation. The loop then starts from t =1 and goes up to t=N-1, hence, we use range(1,N) to cover all the necessary steps.
+            log_alpha[t] = log_sum_exp(log_alpha[t-1] + np.log(A)) * np.log(B[:, X[t]])  # Assigning the matrix beta at time step t and state i to the sum of the Hadamard product between matrix A at state i and matrix B of matrix X of time step t + 1 and matrix beta at time step t + 1
 
         # Backward pass
-        beta[-1] = 1
+        log_beta[-1] = 0
         for t in range(N-2, -1, -1):
-            for i in range(K):
-                beta[t, i] = np.sum(A[i, :] * B[:, X[t+1]] * beta[t+1])  # Assigning matrix beta at time step t and state j to the sum of matrix A at state j and matrix B at observation of time step t +1 and matrix beta at time step t + 1
+            log_beta[t] = log_sum_exp(np.log(A) + np.log(B[:, X[t+1]]) * log_beta[t+1])  # Assigning matrix beta at time step t and state j to the sum of matrix A at state j and matrix B at observation of time step t +1 and matrix beta at time step t + 1
 
         # Computing xi and gamma
         for t in range(N-1):
-            denominator = np.sum(alpha[t] * beta[t])
-            for i in range(K):
-                gamma[t,i] = (alpha[t, i] * beta[t, i]) / denominator
-                xi[t,i] =np.outer(alpha[t], B[:,X[t+1]] * beta[t+1]) * A / denominator  # Assigning matrix xi at time step t to the outer product of matrix alpha at time step t and state i and the Hadamard product between matrix B of observation X at time step t + 1, multiplied with matrix A divided by the denominator
+            log_denominator = log_sum_exp(log_alpha[t] + log_beta[t])
+            if log_denominator == 0:
+                log_denominator = np.finfo(float).eps # use a small non-zero value instead of 0
+            gamma[t] = np.exp(log_alpha[t] + log_beta[t] - log_denominator)
+            xi[t] = np.exp(log_alpha[t] + np.log(A) + np.log(B[:,X[t+1]]) + log_beta[t+1] - log_denominator)  # Assigning matrix xi at time step t to the outer product of matrix alpha at time step t and state i and the Hadamard product between matrix B of observation X at time step t + 1, multiplied with matrix A divided by the denominator
 
-        gamma[-1] = alpha[-1] / np.sum(alpha[-1])  # Assigning the last elements of matrix gamma to the last elements of matrix alpha divided by the sum of the last elements of matrix alpha
+        gamma[-1] = np.exp(log_alpha[-1] - log_sum_exp(log_alpha[-1]))  # Assigning the last elements of matrix gamma to the last elements of matrix alpha divided by the sum of the last elements of matrix alpha
 
         # M-step
-        A = np.sum(xi, axis=0) / np.sum(gamma[:-1], axis=0)[:, None]  # Assigning A to the sum of matrix x along the rows divided by the sum of matrix gamma till the last column along the rows, and turning this into a column vector
-        B = np.array([np.sum(gamma[:, X == j], axis=1) for j in range(M)]).T  # Assigning B to the transposed array of the column of the sum of matrix gamma where observation X is at state j
-        B /= np.sum(gamma, axis=0)[:, None]  # Dividing matrix B by the column vector sum of matrix gamma
-        pi = gamma[0]
+       # A = np.sum(xi, axis=0) / np.sum(gamma[:-1], axis=0)[:, None]  # Assigning A to the sum of matrix x along the rows divided by the sum of matrix gamma till the last column along the rows, and turning this into a column vector
+    #    B[:, j] = np.array([np.sum(gamma[:, X == j], axis=0) for j in range(M)]).T  # Assigning B to the transposed array of the column of the sum of matrix gamma where observation X is at state j
+     #   B /= np.sum(gamma, axis=0)[:, None]  # Dividing matrix B by the column vector sum of matrix gamma
+      #  pi = gamma[0]
 
+        A = np.sum(xi, axis=0) / np.sum(gamma[:-1, :, np.newaxis], axis=0)
+        for j in range(M):
+            B[:, j] = np.sum(gamma[X == j], axis=0)
+        B /= np.sum(gamma, axis=0)[:, np.newaxis]
+        pi = gamma[0]
     return A, B, pi
 
 def train_and_evaluate_hmm(X: np.ndarray, n_states: int, n_observations: int,n_iter: int = 100, n_folds: int =5) -> Tuple[List[float], List[float]]:
@@ -241,12 +252,12 @@ def train_and_evaluate_hmm(X: np.ndarray, n_states: int, n_observations: int,n_i
         A, B, pi = baum_welch_algorithm(X_train, A, B, pi, n_iter)
 
         # Evaluating on test set
-        alpha, log_likelihood = forward(A, B[:,X_test], pi)
+        alpha, log_likelihood = forward_algorithm(A, B[:,X_test], pi)
         log_likelihoods.append(log_likelihood)
 
         # Computing accuracy using Viterbi algorithm
         predicted_states = viterbi_algorithm_2(X_test, A, B, pi)
-        true_states = np.argmax(B[:, X_test], axis=0)  # Assuming the most likely state is the true state
+        true_states = np.array([np.argmax(B[:, obs]) for obs in X_test])  # Assuming the most likely state is the true state
         accuracy = np.mean(predicted_states == true_states)
         accuracies.append(accuracy)
 
@@ -256,20 +267,6 @@ def train_and_evaluate_hmm(X: np.ndarray, n_states: int, n_observations: int,n_i
     return log_likelihoods, accuracies
 
 
-# Example usage
-if __name__ == "__main__":
-    # Generate some sample data
-    np.random.seed(42)
-    n_samples = 1000
-    n_states = 3
-    n_observations = 5
-    X = np.random.randint(0, n_observations, size=n_samples)
-
-    log_likelihoods, accuracies = train_and_evaluate_hmm(X, n_states, n_observations)
-
-    print("\nOverall Results:")
-    print(f"Average Log-likelihood: {np.mean(log_likelihoods):.4f} ± {np.std(log_likelihoods):.4f}")
-    print(f"Average Accuracy: {np.mean(accuracies):.4f} ± {np.std(accuracies):.4f}")
 
 
 
