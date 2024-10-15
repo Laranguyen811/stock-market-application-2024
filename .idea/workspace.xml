@@ -4,13 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4f5895f3-2d93-4355-bcbb-97c6701d0028" name="Changes" comment="- fixed baum-welch algo comment">
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+    <list default="true" id="4f5895f3-2d93-4355-bcbb-97c6701d0028" name="Changes" comment="- added evolutionary_algorithm.py">
       <change afterPath="$PROJECT_DIR$/simple_stock_market_prediction.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/stock_market/evolutionary_algorithm.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stock_market/performance_calculation.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hidden_markov_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/stock_market/hidden_markov_model.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/misc/Stock App Review.md" beforeDir="false" afterPath="$PROJECT_DIR$/misc/Stock App Review.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/stock_market/evolutionary_algorithm.py" beforeDir="false" afterPath="$PROJECT_DIR$/stock_market/evolutionary_algorithm.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -474,15 +473,8 @@
       <workItem from="1728443316823" duration="7464000" />
       <workItem from="1728529658896" duration="8387000" />
       <workItem from="1728615694628" duration="3331000" />
-      <workItem from="1728853522266" duration="2192000" />
-    </task>
-    <task id="LOCAL-00040" summary="- add save_to_local&#10;- add acceptable_element">
-      <option name="closed" value="true" />
-      <created>1721887214082</created>
-      <option name="number" value="00040" />
-      <option name="presentableId" value="LOCAL-00040" />
-      <option name="project" value="LOCAL" />
-      <updated>1721887214082</updated>
+      <workItem from="1728853522266" duration="2442000" />
+      <workItem from="1728961278567" duration="2500000" />
     </task>
     <task id="LOCAL-00041" summary="- add need_extension&#10;- add filter_node&#10;- add delete_uri&#10;-">
       <option name="closed" value="true" />
@@ -868,7 +860,15 @@
       <option name="project" value="LOCAL" />
       <updated>1728376940206</updated>
     </task>
-    <option name="localTasksCounter" value="89" />
+    <task id="LOCAL-00089" summary="- added evolutionary_algorithm.py">
+      <option name="closed" value="true" />
+      <created>1728885549049</created>
+      <option name="number" value="00089" />
+      <option name="presentableId" value="LOCAL-00089" />
+      <option name="project" value="LOCAL" />
+      <updated>1728885549049</updated>
+    </task>
+    <option name="localTasksCounter" value="90" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -898,7 +898,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="- added clear_tool.py" />
     <MESSAGE value="- added history.py" />
     <MESSAGE value="- added test_download_images.py&#10;- added test_download_sounds.py&#10;- added mel_spectrogram_features.py" />
     <MESSAGE value="- added framing.py&#10;- added symmetric_hann_window.py&#10;- added stft_magnitude.py" />
@@ -923,7 +922,8 @@
     <MESSAGE value="- added Baum-Welch algo" />
     <MESSAGE value="- improved viterbi and baum-welch algorithm&#10;- added evaluation with K-fold" />
     <MESSAGE value="- fixed baum-welch algo comment" />
-    <option name="LAST_COMMIT_MESSAGE" value="- fixed baum-welch algo comment" />
+    <MESSAGE value="- added evolutionary_algorithm.py" />
+    <option name="LAST_COMMIT_MESSAGE" value="- added evolutionary_algorithm.py" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

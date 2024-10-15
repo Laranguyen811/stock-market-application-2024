@@ -10,6 +10,9 @@ def initialise_population(population_size, param_ranges):
 
     '''
     population = []
-    for _ in range(population_size):
-        individual = {param: random.uniform(*range_) for param,range_ in param_ranges.items()}
+    for _ in range(population_size):  # The underscore _ conveys that the variable is not needed in the loop body
+        individual = {param: random.uniform(*range_) for param,range_ in param_ranges.items()}  # random.uniform generates random floating points
         population.append(individual)
+    return population
+
+#def evaluate_fitness(individual,)
