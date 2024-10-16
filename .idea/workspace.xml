@@ -4,12 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4f5895f3-2d93-4355-bcbb-97c6701d0028" name="Changes" comment="- added evolutionary_algorithm.py">
+    <list default="true" id="4f5895f3-2d93-4355-bcbb-97c6701d0028" name="Changes" comment="- added performance_calculation.py">
       <change afterPath="$PROJECT_DIR$/simple_stock_market_prediction.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/stock_market/performance_calculation.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/misc/Stock App Review.md" beforeDir="false" afterPath="$PROJECT_DIR$/misc/Stock App Review.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/stock_market/evolutionary_algorithm.py" beforeDir="false" afterPath="$PROJECT_DIR$/stock_market/evolutionary_algorithm.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/stock_market/performance_calculation.py" beforeDir="false" afterPath="$PROJECT_DIR$/stock_market/performance_calculation.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -474,31 +473,8 @@
       <workItem from="1728529658896" duration="8387000" />
       <workItem from="1728615694628" duration="3331000" />
       <workItem from="1728853522266" duration="2442000" />
-      <workItem from="1728961278567" duration="2500000" />
-    </task>
-    <task id="LOCAL-00041" summary="- add need_extension&#10;- add filter_node&#10;- add delete_uri&#10;-">
-      <option name="closed" value="true" />
-      <created>1721975300713</created>
-      <option name="number" value="00041" />
-      <option name="presentableId" value="LOCAL-00041" />
-      <option name="project" value="LOCAL" />
-      <updated>1721975300713</updated>
-    </task>
-    <task id="LOCAL-00042" summary="- adding download_images.py">
-      <option name="closed" value="true" />
-      <created>1722322738307</created>
-      <option name="number" value="00042" />
-      <option name="presentableId" value="LOCAL-00042" />
-      <option name="project" value="LOCAL" />
-      <updated>1722322738307</updated>
-    </task>
-    <task id="LOCAL-00043" summary="- adding download_images.py">
-      <option name="closed" value="true" />
-      <created>1722322787260</created>
-      <option name="number" value="00043" />
-      <option name="presentableId" value="LOCAL-00043" />
-      <option name="project" value="LOCAL" />
-      <updated>1722322787260</updated>
+      <workItem from="1728961278567" duration="3777000" />
+      <workItem from="1729047674875" duration="2264000" />
     </task>
     <task id="LOCAL-00044" summary="- adding download_images.py">
       <option name="closed" value="true" />
@@ -868,7 +844,31 @@
       <option name="project" value="LOCAL" />
       <updated>1728885549049</updated>
     </task>
-    <option name="localTasksCounter" value="90" />
+    <task id="LOCAL-00090" summary="- added performance_calculation.py">
+      <option name="closed" value="true" />
+      <created>1728971243397</created>
+      <option name="number" value="00090" />
+      <option name="presentableId" value="LOCAL-00090" />
+      <option name="project" value="LOCAL" />
+      <updated>1728971243398</updated>
+    </task>
+    <task id="LOCAL-00091" summary="- added performance_calculation.py">
+      <option name="closed" value="true" />
+      <created>1728971330569</created>
+      <option name="number" value="00091" />
+      <option name="presentableId" value="LOCAL-00091" />
+      <option name="project" value="LOCAL" />
+      <updated>1728971330569</updated>
+    </task>
+    <task id="LOCAL-00092" summary="- added performance_calculation.py">
+      <option name="closed" value="true" />
+      <created>1728971354156</created>
+      <option name="number" value="00092" />
+      <option name="presentableId" value="LOCAL-00092" />
+      <option name="project" value="LOCAL" />
+      <updated>1728971354156</updated>
+    </task>
+    <option name="localTasksCounter" value="93" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -898,7 +898,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="- added history.py" />
     <MESSAGE value="- added test_download_images.py&#10;- added test_download_sounds.py&#10;- added mel_spectrogram_features.py" />
     <MESSAGE value="- added framing.py&#10;- added symmetric_hann_window.py&#10;- added stft_magnitude.py" />
     <MESSAGE value="- added hertz_to_mel.py&#10;- added spectrogram_to_mel_matrix.py&#10;- added log_mel_spectrogram.py" />
@@ -923,7 +922,8 @@
     <MESSAGE value="- improved viterbi and baum-welch algorithm&#10;- added evaluation with K-fold" />
     <MESSAGE value="- fixed baum-welch algo comment" />
     <MESSAGE value="- added evolutionary_algorithm.py" />
-    <option name="LAST_COMMIT_MESSAGE" value="- added evolutionary_algorithm.py" />
+    <MESSAGE value="- added performance_calculation.py" />
+    <option name="LAST_COMMIT_MESSAGE" value="- added performance_calculation.py" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
