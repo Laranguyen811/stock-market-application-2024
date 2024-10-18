@@ -4,12 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4f5895f3-2d93-4355-bcbb-97c6701d0028" name="Changes" comment="- continued performance_calculation.py">
+    <list default="true" id="4f5895f3-2d93-4355-bcbb-97c6701d0028" name="Changes" comment="- continued performance_calculations.py">
       <change afterPath="$PROJECT_DIR$/simple_stock_market_prediction.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/misc/Stock App Review.md" beforeDir="false" afterPath="$PROJECT_DIR$/misc/Stock App Review.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/stock_market/hidden_markov_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/stock_market/hidden_markov_model.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/stock_market/performance_calculation.py" beforeDir="false" afterPath="$PROJECT_DIR$/stock_market/performance_calculation.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -476,15 +474,7 @@
       <workItem from="1728853522266" duration="2442000" />
       <workItem from="1728961278567" duration="3777000" />
       <workItem from="1729047674875" duration="2829000" />
-      <workItem from="1729224077005" duration="3421000" />
-    </task>
-    <task id="LOCAL-00045" summary="- adding download_sounds.py&#10;- adding extend_tool.py">
-      <option name="closed" value="true" />
-      <created>1722406975943</created>
-      <option name="number" value="00045" />
-      <option name="presentableId" value="LOCAL-00045" />
-      <option name="project" value="LOCAL" />
-      <updated>1722406975943</updated>
+      <workItem from="1729224077005" duration="4086000" />
     </task>
     <task id="LOCAL-00046" summary="- adding functions to extend_tool.py">
       <option name="closed" value="true" />
@@ -870,7 +860,15 @@
       <option name="project" value="LOCAL" />
       <updated>1729057737792</updated>
     </task>
-    <option name="localTasksCounter" value="94" />
+    <task id="LOCAL-00094" summary="- continued performance_calculations.py">
+      <option name="closed" value="true" />
+      <created>1729230276894</created>
+      <option name="number" value="00094" />
+      <option name="presentableId" value="LOCAL-00094" />
+      <option name="project" value="LOCAL" />
+      <updated>1729230276895</updated>
+    </task>
+    <option name="localTasksCounter" value="95" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -900,7 +898,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="- added framing.py&#10;- added symmetric_hann_window.py&#10;- added stft_magnitude.py" />
     <MESSAGE value="- added hertz_to_mel.py&#10;- added spectrogram_to_mel_matrix.py&#10;- added log_mel_spectrogram.py" />
     <MESSAGE value="- added image_extractor.py&#10;- added load.py&#10;- added class SparseAutoencoder" />
     <MESSAGE value="- added image_extractor.py&#10;- added load.py&#10;- added class SparseAutoencoder and KL divergence as a sparsity" />
@@ -925,7 +922,8 @@
     <MESSAGE value="- added evolutionary_algorithm.py" />
     <MESSAGE value="- added performance_calculation.py" />
     <MESSAGE value="- continued performance_calculation.py" />
-    <option name="LAST_COMMIT_MESSAGE" value="- continued performance_calculation.py" />
+    <MESSAGE value="- continued performance_calculations.py" />
+    <option name="LAST_COMMIT_MESSAGE" value="- continued performance_calculations.py" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
