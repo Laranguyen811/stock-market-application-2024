@@ -13,7 +13,7 @@ from sklearn.model_selection import StratifiedGroupKFold, StratifiedKFold, KFold
 def log_normalize(log_u):
     ''' Normalize the vector input.
     Args:
-        u(np.array): An np.array of input vector
+        log_u(np.array): An np.array of logged input vector
     Returns:
         np.array: A normalized vector alpha
         int: a normalized constant
@@ -28,8 +28,8 @@ def log_normalize(log_u):
 def forward_algorithm(log_A, log_B, log_pi):
     ''' Forward pass of the algorithm
     Args:
-        A(np.array): An np.array of state transition matrix A
-        psi(np.array): An np.array of the probability distribution of state Z_{t} given the observation Z_{1:T}
+        log_A(np.array): An np.array of logged state transition matrix A
+        log_B(np.array): An np.array of the logged probability distribution of observation O at time t given the states Z_{1:T}
         pi(np.array): An np.array of the probability distribution of initial states Z_{1}
     Returns:
         np.array: A np.array of the sequence of normalised vector alpha from 1 to N
@@ -39,13 +39,13 @@ def forward_algorithm(log_A, log_B, log_pi):
     log_alpha = np.zeros((N, K))  # Assigning alpha to a matrix filled with zeros with N as the number of columns and length of pi as a the number of rows
 
     # Initializing log_alpha
-    log_alpha[0] = log_normalize(log_B[0] + log_pi)
+    log_alpha[0] = log_normalize(log_B[0] * log_pi)
 
     # Iterating through the sequence
     for t in range(1, N):
-        log_alpha[t], log_B[t] = log_normalize(log_B[t] * (log_A.T @ log_alpha[t-1]))  # Assigning alpha and C at time t to the normalized dot product between psi at time t time the transposed matrix A times matrix alpha at time t -1
+        log_alpha[t] = log_normalize(log_B[t] * (log_A.T @ log_alpha[t-1]))  # Assigning alpha and C at time t to the normalized dot product between psi at time t time the transposed matrix A times matrix alpha at time t -1
 
-    log_probs = np.sum(log_normalize(log_alpha[-1]))  # Adding a small constant to avoid log(0)
+    log_probs = np.sum(log_normalize(log_alpha[-1]))
     return log_alpha, log_probs
 
 def backward_algorithm(log_A,log_B):

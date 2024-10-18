@@ -1,14 +1,15 @@
 
 class PerformanceCalculator:
     '''
-    Class of performance calculators.
+        Class of performance calculators.
     '''
     def __init__(self,performance_calculations):
         self.performance_calculations = {}
         self.prices = []
 
-    def calculate_sma(self,prices:list,period:int):
-        ''' Takes prices and period and calculates the moving average periods.
+    def calculate_mas(self,prices:list,period:int):
+        '''
+        Takes prices and period and calculates the moving average periods.
         Inputs:
             prices(list): A list of prices of stocks.
             period(int): An integer of period
@@ -40,6 +41,25 @@ class PerformanceCalculator:
         rs = average_gain/average_losses  # Calculating the average strength
         rsi = 100 - (100/(1 + rs))  # Calculating the RSI
         return rsi
+
+    def calculate_bollinger_bands(self,prices:list, period=20, num_std_dev=2):
+        '''
+        Takes a list of prices and calculates the Bollinger Bands.
+        Inputs:
+            prices(list): A list of stock prices
+            period(int): An integer of the duration of the period. Defaults to 20.
+            num_std_dev(int): An integer of the number of standard deviations. Defaults to 2.
+        Returns:
+            float: A float number of lower bollinger band
+            float: A float number of upper bollinger band
+            float: a float number of simple movement average
+        '''
+        sma = self.calculate_mas(prices,period)[0]  # Calculating simple moving average
+        std_dev = (sum([(price - sma) ** 2 for price in prices[-period:]]) / period) ** 0.5  # Calculating the standard deviation of the period
+        assert isinstance(std_dev, float)  # Adding an assertion to ensure standard deviation is a float number
+        upper_band = sma + (num_std_dev * std_dev)  # Calculating the upper bollinger band
+        lower_band = sma - (num_std_dev * std_dev)  # Calculating the lower bollinger band
+        return upper_band, lower_band, sma
 
 
 
