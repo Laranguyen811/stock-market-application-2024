@@ -52,7 +52,7 @@ def backward_algorithm(log_A,log_B):
     ''' A backward pass of the algorithm.
         Args:
             A(np.array): An np.array of state transition matrix A
-            psi(np.array): An np.array of the probability distribution of state Z_{t} given the observation Z{1:T}
+            log_B(np.array): An np.array of the probability distribution of the observation given a state
             alpha(np.array): An np.array of the normalised vector alpha from 1 to N
 
         Returns:
@@ -60,41 +60,38 @@ def backward_algorithm(log_A,log_B):
 
     '''
     N,K = log_B.shape  # Assigning N,K to the dimensions of log_B with N equals the number of columns and K equal the number of rows
-    beta = np.zeros((N,K))  # beta is the conditional likelihood of the future evidence
+    log_beta = np.zeros((N,K))  # beta is the conditional likelihood of the future evidence
     gamma = np.zeros_like((N,K))
 
     # Initializing beta_N (beta of the Nth element of the sequence)
-    beta[N-1] = 1
+    log_beta[N-1] = np.zeros(K)
 
     # Iterating through the sequence in reverse
     for t in range(N -2, -1, - 1):
-            beta[t], _ = log_normalize(A @ (psi[t+1] * beta[t+1]))  # Assigning beta at time t the normalised product between matrix A and the product between matrix psi at time t + 1 and matrix beta at t +1
-    # Computing gamma
-    for t in range(N):
-        gamma[t], _ = log_normalize(alpha[t] * beta[t])
+        for i in range(K):
+            log_beta[t,i] = log_normalize(log_A @ (log_B[t+1] * log_beta[t+1]))  # Assigning beta at time t the normalised product between matrix A and the product between matrix psi at time t + 1 and matrix beta at t +1
 
-    return gamma
+    return log_beta
 
-def viterbi_algorithm_1(X,A, B, pi):
+def viterbi_algorithm_1(X,log_A, log_B, log_pi):
     ''' A viterbi algorithm to compute the most probable sequence of hidden states, computing the shortest path through the trellis diagram of the Hidden Markov Model.
 
     Args:
         X (np.array): An np.array sequence X of the observations
-        A (np.array): An np.array of the transition matrix A
-        K (np.array): An np.array of matrix K of the transition matrices
-        B (np.array): An np.array of the probability distribution B of the observations X_{t,k} given states Z_{t,j}
-        pi (np.array): An np.array of the initial state distribution pi
-
+        log_A (np.array): An np.array of the logged transition matrix A
+        log_B (np.array): An np.array of the probability distribution B of the observations X_{t,k} given states Z_{t,j}
+        log_pi (np.array): An np.array of the initial state distribution pi
+        n_iter(int): A integer of the number of iterations
     Returns:
         np.array: An np.array of the most probable sequence Z from 1 to N of hidden states
     '''
     N = len(X)
-    K = A.shape[0] # Assigning K to number of columns of matrix A
+    K = log_A.shape[0] # Assigning K to number of columns of matrix A
 
     # Initializing delta and psi
     delta: ndarray[Any, dtype[floating[_64Bit] | float_]] = np.zeros((N,K))  # delta is the probability as the combination of the transition from the previous state i at time t-1 and the most probable path leading to i
     psi = np.zeros((N,K), dtype=int)
-    delta[0] = np.log(pi) + np.log(B[:, X[0]])
+    delta[0] = log_pi + log_B[:, X[0]]
 
     # Iterating through A and B
     for t in range(1,N):
@@ -102,18 +99,18 @@ def viterbi_algorithm_1(X,A, B, pi):
             for j in range(K):
                 max_val = -np.inf  # Common practice for an algorithm finding a maximum value in a set of comparisons
                 max_state = 0
-                val = delta[t-1, i] + np.log(A[i, j])  # Assigning value to the addition between delta at time step t-1 and ith element and log of matrix A of state transition from i to j
+                val = delta[t-1, j] + log_A[i, j]  # Assigning value to the addition between delta at time step t-1 and ith element and log of matrix A of state transition from i to j
                 if val > max_val:
                     max_val = val  # Replacing max value with val every time val is greater than the current max value
                     max_state = i  # Replacing the max state with the ith state of the resulted max value
-                    delta[t,j] = max_val + np.log(B[j,X[t]])  # Assigning delta at time step t and state transition j to the addition between max value and the log of matrix B at state j and observation X at time step t
-                    psi[t,j] = max_state  # Assigning matrix psi at time step t and state transition j to max state
-            temp = delta[t-1] + np.log(A.T)
-            delta[t, j] = np.max(delta[t-1] + np.log(A[:,j] + np.log(B[j,X[t]])))   # Assigning matrix delta at time step t and state j to the maximum value of the addition between matrix delta at time step t-1  and the log of matrix A at state j and the matrix B of observation X at time t
-            psi[t,j] = np.argmax(delta[t-1] + np.log(A[:,j]))
+                    delta[t,j] = max_val + log_B[j,X[t]] # Assigning delta at time step t and state transition j to the addition between max value and the log of matrix B at state j and observation X at time step t
+                    psi[t,j] = max_state  # Assigning matrix psi at time step t and state j to max state
+            temp = delta[t-1] + log_A.T
+            delta[t, j] = np.max(delta[t-1] + log_A[:,j] + log_B[j,X[t]])   # Assigning matrix delta at time step t and state j to the maximum value of the addition between matrix delta at time step t-1  and the log of matrix A at state j and the matrix B of observation X at time t
+            psi[t,j] = np.argmax(delta[t-1] + log_A[:,j])
     # Termination
     path = np.zeros(N, dtype=int)  # Creating an array of path filled with zeros with N dimension
-    path[N-1] = np.argmax(delta[N-1])  # Assigning the N-1 th element of path to the output of the amximum function with input of the N-1 th element of delta
+    path[N-1] = np.argmax(delta[N-1])  # Assigning the N-1 th element of path to the output index of the maximum function with input of the N-1 th element of delta
 
     # Back tracing
     for t in range(N-2, -1, -1):
@@ -122,33 +119,33 @@ def viterbi_algorithm_1(X,A, B, pi):
     return path
 
 
-def viterbi_algorithm_2(X, A, B, pi):
+def viterbi_algorithm_2(X, log_A, log_B, log_pi):
     ''' Viterbi algorithm to most probable sequence of hidden states, computing the shortest path through the trellis diagram of Hidden Markov Model.
 
     Args:
         X (np.ndarray): An np.ndarray sequence X of the observations.
-        A (np.ndarray): An np.ndarray transition matrix A.
-        pi (np.ndarray): An np.ndarray of the initial state distribution pi of the observations.
-        B (np.ndarray): An np.ndarray of the probability distribution B of observation X_{t,k} given observation Z_{t,j}
+        log_A (np.ndarray): An np.ndarray logged transition matrix A.
+        log_pi (np.ndarray): An np.ndarray of the logged initial state distribution pi of the observations.
+        log_B (np.ndarray): An np.ndarray of the logged probability distribution B of observation X_{t,k} given observation Z_{t,j}
     Returns:
         np.ndarray: An np.ndarray of the most probable sequence Z from 1 to N hidden states
     '''
-    N,K = len(X), A.shape[0]  # Assigning N to the length of X and K to the number of matrices A
+    N,K = log_A.shape[0]  # Assigning N to the length of X and K to the number of matrices A
 
     # Initializing delta and psi
-    delta: ndarray[Any, dtype[floating[_64Bit] | float_]] = np.zeros((N,K)) # delta is the probability as the combination of the transition from the previous state i at time t-1 and the most probable path leading to i
+    log_delta: ndarray[Any, dtype[floating[_64Bit] | float_]] = np.zeros((N,K)) # delta is the probability as the combination of the transition from the previous state i at time t-1 and the most probable path leading to i
     psi = np.array((N,K), dtype=int)
-    delta[0] = np.log(pi) + np.log(B[:,X[0]])
+    log_delta[0] = log_pi.reshape(-1) + log_B[0]
 
     for t in range(1,N):
         for j in range(K):
-            temp = delta[t-1] + np.log(A[:,j])
-            delta[t,j] = np.max(temp) + np.log(B[j,X[t]])  # Assigning matrix delta at time step t and state j to the maximum value of the addition between matrix delta at time step t-1  and the log of matrix A at state j and the matrix B of observation X at time t
-            psi[t,j] = np.argmax(temp)  # Assigning matrix psi to the output of the maximum function for the addition between matrix delta at time t-1 and the log of matrix A at state j
+            temp = log_delta[t-1] + log_A[:,j]
+            log_delta[t, j] = np.max(temp) + log_B[j, X[t]]  # Assigning matrix delta at time step t and state j to the maximum value of the addition between matrix delta at time step t-1  and the log of matrix A at state j and the matrix B of observation X at time t
+            psi[t, j] = np.argmax(temp)  # Assigning matrix psi to the output of the maximum function for the addition between matrix delta at time t-1 and the log of matrix A at state j
 
     # Termination
     path = np.zeros(N, dtype=int)  # Filled the matrix path with zeros of N dimension
-    path[N-1] = np.argmax(delta[N-1]) # Assigning the N-1 th element of path to the output of the amximum function with input of the N-1 th element of delta
+    path[N-1] = np.argmax(log_delta[N-1]) # Assigning the N-1 th element of path to the output of the amximum function with input of the N-1 th element of delta
 
     # Back tracing
     for t in range(N-2,-1,-1):
@@ -165,58 +162,40 @@ def log_sum_exp(log_probs):
     '''
     max_log_prob = np.max(log_probs)
     return max_log_prob + np.log(np.sum(np.exp(log_probs - max_log_prob)))
-def baum_welch_algorithm(X, A, B, pi, n_iter=100):
+def baum_welch_algorithm(X, log_A, log_B, log_pi, n_iter=100):
     ''' The Baum-Welch algorithm.
     Args:
         X(np.array): An np.array of sequence X of the observations
-        A (np.array): An np.array of the transition matrix A transitioning from state Z_{i} to state Z_{j}
-        B (np.array): An np.array of the probability distribution B of the observations
-        pi (np.array): An np.array of the initial state distribution
+        log_A (np.array): An np.array of the logged transition matrix A transitioning from state Z_{i} to state Z_{j}
+        log_B (np.array): An np.array of the logged probability distribution B of the observations
+        log_pi (np.array): An np.array of the logged initial state distribution
         n_iter (int): Number of iterations for the algorithm
     Returns:
-        A, B, pi: Updated model parameters
+        log_A, log_B, log_pi: Updated model parameters
     '''
-    N, M, K = len(X), B.shape[1], A.shape[0]  # Assigning M step to the number of rows of matrix B and K to the number of columns of matrix A
+    N = len(X)
+    K, M = log_B.shape  # Assigning M step to the number of rows of matrix B and K to the number of columns of matrix A
 
-    for _ in range(n_iter):
+    for _ in range(n_iter):  # Using _ here since we don't need to assign a variable
         # E-step
-        log_alpha = np.zeros((N, K))  # Filling alpha matrix with zeros with the dimensions of N and K
-        log_beta = np.zeros((N, K))  # Filling beta matrix with zeros with the dimensions of N and K
-        xi = np.zeros((N-1, K, K))  # Filling beta matrix with zeros with the dimensions of N-1,K and K
-        gamma = np.zeros((N, K))  # Filling gamma matrix with zeros with the dimensions of N and K
+        log_alpha, _ = forward_algorithm(log_A, log_B[:, X], log_pi)
+        log_beta = backward_algorithm(log_A, log_B[:,X])
 
-        # Forward pass
-        log_alpha[0] = np.log(pi) * np.log(B[:, X[0]])  # Assigning the first element of alpha to the Hadamard product between pi and matrix B of the first observation of sequence X
-        for t in range(1, N):  # In Baum-Welch algorithm the first step (t=0) is dealt with separately during initialisation. The loop then starts from t =1 and goes up to t=N-1, hence, we use range(1,N) to cover all the necessary steps.
-            log_alpha[t] = log_sum_exp(log_alpha[t-1] + np.log(A)) * np.log(B[:, X[t]])  # Assigning the matrix beta at time step t and state i to the sum of the Hadamard product between matrix A at state i and matrix B of matrix X of time step t + 1 and matrix beta at time step t + 1
+        log_gamma = log_alpha + log_beta
+        log_gamma = log_gamma - np.logaddexp.reduce(log_gamma,axis=1)[:, np.newaxis]  # np.logaddexp.reduce => computing the log of the sum of exponentials of elements of an array by reducing the array along a specified axis (doing this especially when the probabilities are very small
 
-        # Backward pass
-        log_beta[-1] = 0
-        for t in range(N-2, -1, -1):
-            log_beta[t] = log_sum_exp(np.log(A) + np.log(B[:, X[t+1]]) * log_beta[t+1])  # Assigning matrix beta at time step t and state j to the sum of matrix A at state j and matrix B at observation of time step t +1 and matrix beta at time step t + 1
-
-        # Computing xi and gamma
-        for t in range(N-1):
-            log_denominator = log_sum_exp(log_alpha[t] + log_beta[t])
-            if log_denominator == 0:
-                log_denominator = np.finfo(float).eps # use a small non-zero value instead of 0
-            gamma[t] = np.exp(log_alpha[t] + log_beta[t] - log_denominator)
-            xi[t] = np.exp(log_alpha[t] + np.log(A) + np.log(B[:,X[t+1]]) + log_beta[t+1] - log_denominator)  # Assigning matrix xi at time step t to the outer product of matrix alpha at time step t and state i and the Hadamard product between matrix B of observation X at time step t + 1, multiplied with matrix A divided by the denominator
-
-        gamma[-1] = np.exp(log_alpha[-1] - log_sum_exp(log_alpha[-1]))  # Assigning the last elements of matrix gamma to the last elements of matrix alpha divided by the sum of the last elements of matrix alpha
-
+        log_xi = np.zeros((N - 1, K, K))  # Filling beta matrix with zeros with the dimensions of N-1,K and K
+        for t in range(N - 1):
+            for i in range(K):
+                for j in range(K):
+                    log_xi[t,i,j] = log_alpha[t,i] + log_A[i,j] + log_B[j,X[t+1]] + log_beta[t + 1,j]
+            log_xi[t] -= np.logaddexp.reduce(log_gamma[:-1], axis=0)
         # M-step
-       # A = np.sum(xi, axis=0) / np.sum(gamma[:-1], axis=0)[:, None]  # Assigning A to the sum of matrix x along the rows divided by the sum of matrix gamma till the last column along the rows, and turning this into a column vector
-    #    B[:, j] = np.array([np.sum(gamma[:, X == j], axis=0) for j in range(M)]).T  # Assigning B to the transposed array of the column of the sum of matrix gamma where observation X is at state j
-     #   B /= np.sum(gamma, axis=0)[:, None]  # Dividing matrix B by the column vector sum of matrix gamma
-      #  pi = gamma[0]
+        log_A_num = np.logaddexp.reduce(log_xi, axis =0)
+        log_A_denominator = np.logaddexp.reduce(log_gamma[:-1], axis=0)
+        log_A = log_A_num - log_A_denominator[:, np.newaxis]
 
-        A = np.sum(xi, axis=0) / np.sum(gamma[:-1, :, np.newaxis], axis=0)
-        for j in range(M):
-            B[:, j] = np.sum(gamma[X == j], axis=0)
-        B /= np.sum(gamma, axis=0)[:, np.newaxis]
-        pi = gamma[0]
-    return A, B, pi
+    return log_A, log_B, log_pi
 
 def train_and_evaluate_hmm(X: np.ndarray, n_states: int, n_observations: int,n_iter: int = 100, n_folds: int =5) -> Tuple[List[float], List[float]]:
     '''

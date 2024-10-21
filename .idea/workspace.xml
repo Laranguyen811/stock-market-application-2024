@@ -4,10 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4f5895f3-2d93-4355-bcbb-97c6701d0028" name="Changes" comment="- continued performance_calculations.py">
+    <list default="true" id="4f5895f3-2d93-4355-bcbb-97c6701d0028" name="Changes" comment="- fixed forward_algorithm.py">
       <change afterPath="$PROJECT_DIR$/simple_stock_market_prediction.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/misc/Stock App Review.md" beforeDir="false" afterPath="$PROJECT_DIR$/misc/Stock App Review.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/stock_market/hidden_markov_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/stock_market/hidden_markov_model.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -474,15 +475,8 @@
       <workItem from="1728853522266" duration="2442000" />
       <workItem from="1728961278567" duration="3777000" />
       <workItem from="1729047674875" duration="2829000" />
-      <workItem from="1729224077005" duration="4086000" />
-    </task>
-    <task id="LOCAL-00046" summary="- adding functions to extend_tool.py">
-      <option name="closed" value="true" />
-      <created>1722493415360</created>
-      <option name="number" value="00046" />
-      <option name="presentableId" value="LOCAL-00046" />
-      <option name="project" value="LOCAL" />
-      <updated>1722493415360</updated>
+      <workItem from="1729224077005" duration="5206000" />
+      <workItem from="1729480582278" duration="7649000" />
     </task>
     <task id="LOCAL-00047" summary="- adding functions to extend_tool.py">
       <option name="closed" value="true" />
@@ -868,7 +862,15 @@
       <option name="project" value="LOCAL" />
       <updated>1729230276895</updated>
     </task>
-    <option name="localTasksCounter" value="95" />
+    <task id="LOCAL-00095" summary="- fixed forward_algorithm.py">
+      <option name="closed" value="true" />
+      <created>1729231177027</created>
+      <option name="number" value="00095" />
+      <option name="presentableId" value="LOCAL-00095" />
+      <option name="project" value="LOCAL" />
+      <updated>1729231177027</updated>
+    </task>
+    <option name="localTasksCounter" value="96" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -898,7 +900,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="- added hertz_to_mel.py&#10;- added spectrogram_to_mel_matrix.py&#10;- added log_mel_spectrogram.py" />
     <MESSAGE value="- added image_extractor.py&#10;- added load.py&#10;- added class SparseAutoencoder" />
     <MESSAGE value="- added image_extractor.py&#10;- added load.py&#10;- added class SparseAutoencoder and KL divergence as a sparsity" />
     <MESSAGE value="- added hypertuning &#10;- added training" />
@@ -923,7 +924,8 @@
     <MESSAGE value="- added performance_calculation.py" />
     <MESSAGE value="- continued performance_calculation.py" />
     <MESSAGE value="- continued performance_calculations.py" />
-    <option name="LAST_COMMIT_MESSAGE" value="- continued performance_calculations.py" />
+    <MESSAGE value="- fixed forward_algorithm.py" />
+    <option name="LAST_COMMIT_MESSAGE" value="- fixed forward_algorithm.py" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -956,11 +958,6 @@
           <url>file://$PROJECT_DIR$/stock_market/Lib/site-packages/mpl_toolkits/mplot3d/tests/test_stock_data_analysis.py</url>
           <line>9</line>
           <option name="timeStamp" value="11" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/stock_market/hidden_markov_model.py</url>
-          <line>201</line>
-          <option name="timeStamp" value="12" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/simple_stock_market_prediction.py</url>
