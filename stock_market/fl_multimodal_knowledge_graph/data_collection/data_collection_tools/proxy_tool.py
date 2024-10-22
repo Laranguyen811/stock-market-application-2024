@@ -1,5 +1,7 @@
 import random
 import os
+import pandas as pd
+
 
 def get_proxy(proxy_list):
     '''Takes a list of proxies and returns username and password corresponding to each proxy.
