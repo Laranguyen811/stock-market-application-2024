@@ -4,12 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4f5895f3-2d93-4355-bcbb-97c6701d0028" name="Changes" comment="- fixed viterbi_algorithm_1.py&#10;- fixed viterbi_algorithm_2.py">
+    <list default="true" id="4f5895f3-2d93-4355-bcbb-97c6701d0028" name="Changes" comment="- reviewed HMM&#10;- continued proxy_list.py">
       <change afterPath="$PROJECT_DIR$/simple_stock_market_prediction.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/misc/Stock App Review.md" beforeDir="false" afterPath="$PROJECT_DIR$/misc/Stock App Review.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/stock_market/fl_multimodal_knowledge_graph/data_collection/data_collection_tools/proxy_tool.py" beforeDir="false" afterPath="$PROJECT_DIR$/stock_market/fl_multimodal_knowledge_graph/data_collection/data_collection_tools/proxy_tool.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/stock_market/hidden_markov_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/stock_market/hidden_markov_model.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -478,15 +475,7 @@
       <workItem from="1729047674875" duration="2829000" />
       <workItem from="1729224077005" duration="5206000" />
       <workItem from="1729480582278" duration="9921000" />
-      <workItem from="1729570614331" duration="9787000" />
-    </task>
-    <task id="LOCAL-00048" summary="- finishing extend_tool.py">
-      <option name="closed" value="true" />
-      <created>1722581211737</created>
-      <option name="number" value="00048" />
-      <option name="presentableId" value="LOCAL-00048" />
-      <option name="project" value="LOCAL" />
-      <updated>1722581211737</updated>
+      <workItem from="1729570614331" duration="10119000" />
     </task>
     <task id="LOCAL-00049" summary="- finishing extend_tool.py">
       <option name="closed" value="true" />
@@ -872,7 +861,15 @@
       <option name="project" value="LOCAL" />
       <updated>1729488780700</updated>
     </task>
-    <option name="localTasksCounter" value="97" />
+    <task id="LOCAL-00097" summary="- reviewed HMM&#10;- continued proxy_list.py">
+      <option name="closed" value="true" />
+      <created>1729580846277</created>
+      <option name="number" value="00097" />
+      <option name="presentableId" value="LOCAL-00097" />
+      <option name="project" value="LOCAL" />
+      <updated>1729580846278</updated>
+    </task>
+    <option name="localTasksCounter" value="98" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -902,7 +899,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="- added image_extractor.py&#10;- added load.py&#10;- added class SparseAutoencoder and KL divergence as a sparsity" />
     <MESSAGE value="- added hypertuning &#10;- added training" />
     <MESSAGE value="- added class SparseAutoEncoder&#10;- added MLP" />
     <MESSAGE value="- added MLP&#10;- added GSPA" />
@@ -927,7 +923,8 @@
     <MESSAGE value="- continued performance_calculations.py" />
     <MESSAGE value="- fixed forward_algorithm.py" />
     <MESSAGE value="- fixed viterbi_algorithm_1.py&#10;- fixed viterbi_algorithm_2.py" />
-    <option name="LAST_COMMIT_MESSAGE" value="- fixed viterbi_algorithm_1.py&#10;- fixed viterbi_algorithm_2.py" />
+    <MESSAGE value="- reviewed HMM&#10;- continued proxy_list.py" />
+    <option name="LAST_COMMIT_MESSAGE" value="- reviewed HMM&#10;- continued proxy_list.py" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
