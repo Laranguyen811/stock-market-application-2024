@@ -4,7 +4,7 @@ class PerformanceCalculator:
         Class of performance calculators.
     '''
     def __init__(self,performance_calculations):
-        self.performance_calculations = {}
+        self.performance_calculations = {}  # Adding a private attribute performance_calculations
         self.prices = []
 
     def calculate_mas(self,prices:list,period:int):
@@ -61,6 +61,26 @@ class PerformanceCalculator:
         lower_band = sma - (num_std_dev * std_dev)  # Calculating the lower bollinger band
         return upper_band, lower_band, sma
 
+    def calculate_stop_loss(self,entry_price,stop_loss_percentage):
+        '''
+        Takes an entry price and a stop loss percentage and calculates stop loss (A stop loss is a limit set for a trader. If the price is above the limit, the trade will automatically stop).
+        Inputs:
+            entry_price(float): A float number of entry price.
+            stop_loss_percentage(float): A float number of stop loss percentage
+        Returns:
+            float: A float number of stop loss
+        '''
+        return (1- stop_loss_percentage) * entry_price
+
+    def calculate_take_profit(self, entry_price, take_profit_percentage):
+        """ Takes an entry price and a take profit percentage and calculates take profit( A take profit order is used by a trader to close a position when a price of a security reaches a desired profit).
+        Inputs:
+            entry_price(float): A float number of an entry price.
+            take_profit_percentage(float): A float number of a take profit percentage.
+        Returns:
+            float: A float number of take profit:
+        """
+        return (1 + take_profit_percentage) * entry_price
 
 
 

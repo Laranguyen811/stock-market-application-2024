@@ -1,4 +1,4 @@
-from typing import Any, Tuple, List
+from typing import Any, Tuple, List, Optional
 
 import hmmlearn
 import numpy as np
@@ -18,10 +18,10 @@ def log_normalize(log_u):
         np.array: A normalized vector alpha
         int: a normalized constant
     '''
-    max_log_u = np.max(log_u)
-    shifted_log_u = log_u - max_log_u
-    log_sum = np.log(np.sum(np.exp(shifted_log_u)))
-    normalized_log_u = log_u - max_log_u - log_sum
+    max_log_u = np.max(log_u)  # Preventing overflow when exponentiating u
+    shifted_log_u = log_u - max_log_u  # Stabilising computation by shifting log values to prevent overflow and increase precision
+    log_sum = np.log(np.sum(np.exp(shifted_log_u)))  # Computing the logarithm of the sum of the exponents in a numerically stable way
+    normalized_log_u = log_u - max_log_u - log_sum  # Normalizing the log values so their exponentiated sum equals 1
     return normalized_log_u
 
 
@@ -155,7 +155,7 @@ def viterbi_algorithm_2(X, log_A, log_B, log_pi):
         path[N-1] = psi[t+1,path[t+1]]  # Assigning path at time step t to psi at time step t+1 and path at time step t+1
 
     return path
-def log_sum_exp(log_probs):
+def log_sum_exp(log_probs: np.ndarray,axis: Optional[int] = None) -> np.ndarray:
     '''
     Takes log probabilities and returns the log transformation
     Inputs:
@@ -163,9 +163,11 @@ def log_sum_exp(log_probs):
     Returns:
         float: A float number of log transformation
     '''
-    max_log_prob = np.max(log_probs)
+    max_log_prob = np.max(log_probs, axis=axis,keepdims=True)
     return max_log_prob + np.log(np.sum(np.exp(log_probs - max_log_prob)))
-def baum_welch_algorithm(X, log_A, log_B, log_pi, n_iter=100):
+def baum_welch_algorithm (X:np.ndarray, log_A:np.ndarray, log_B:np.ndarray, log_pi: np.ndarray, n_iter: int =100, tol: float = 1e-6) -> \
+tuple[ndarray[Any, dtype[Any]] | ndarray, ndarray, ndarray[Any, dtype[Any]] | ndarray]:
+
     ''' The Baum-Welch algorithm.
     Args:
         X(np.array): An np.array of sequence X of the observations
@@ -176,19 +178,24 @@ def baum_welch_algorithm(X, log_A, log_B, log_pi, n_iter=100):
     Returns:
         log_A, log_B, log_pi: Updated model parameters
     '''
+    validate_hmm_params(log_A, log_B, log_pi)
     N = len(X)
-    K, M = log_B.shape  # Assigning M step to the number of rows of matrix B and K to the number of columns of matrix A
-
-    for _ in range(n_iter):  # Using _ here since we don't need to assign a variable
+    M,K = log_B.shape # Assigning M step to the number of rows of matrix B and K to the number of columns of matrix A
+    prev_likelihood = -np.inf
+    for iteration in range(n_iter):  # Using _ here since we don't need to assign a variable
         B_obs = np.zeros((N,K))
         for t in range(N):
             B_obs[t] = log_B[:, X[t]]
         # E-step
-        log_alpha, log_likelihood = forward_algorithm(log_A, B_obs, log_pi)
+        log_alpha, current_likelihood = forward_algorithm(log_A, B_obs, log_pi)
         log_beta = backward_algorithm(log_A, B_obs)
 
+        #Check for convergence
+        if abs(current_likelihood - prev_likelihood) < tol:
+            print(f"Convergence after {iteration} iterations")
+            break
         log_gamma = log_alpha + log_beta
-        log_gamma = log_gamma - log_sum_exp(log_gamma.T)  # np.logaddexp.reduce => computing the log of the sum of exponentials of elements of an array by reducing the array along a specified axis (doing this especially when the probabilities are very small
+        log_gamma = log_gamma - log_sum_exp(log_gamma, axis=1)[:, np.newaxis]  # np.logaddexp.reduce => computing the log of the sum of exponentials of elements of an array by reducing the array along a specified axis (doing this especially when the probabilities are very small
 
         log_xi = np.zeros((N - 1, K, K))  # Filling beta matrix with zeros with the dimensions of N-1,K and K
         for t in range(N - 1):
@@ -198,14 +205,16 @@ def baum_welch_algorithm(X, log_A, log_B, log_pi, n_iter=100):
             log_xi[t] -= log_sum_exp(log_xi[t].reshape(-1))
         # M-step
         log_A_num = log_sum_exp(log_xi.reshape(N-1,-1).T)
-        log_A_denominator = log_sum_exp(log_gamma[:-1].T)
+        log_A_denominator = log_sum_exp(log_gamma[:-1],axis=0)
         log_A = log_A_num.reshape(K,K) - log_A_denominator[:, np.newaxis]
 
-        for j in range(M):
+        for j in range(K):
             for k in range(M):
                 mask = (X == k)
                 log_B[j,k] = log_sum_exp(log_gamma[mask,j]) - log_sum_exp(log_gamma[:,j])
         log_pi = log_gamma[0]
+    else:
+        print(f"Warning: Maximum iterations({n_iter}) reached without convergence")
 
     return log_A,log_B,log_pi
 
@@ -277,14 +286,16 @@ def train_and_evaluate_hmm(X: np.ndarray, n_states: int, n_observations: int,n_i
             # Computing accuracy using Viterbi algorithm
             predicted_states = viterbi_algorithm_2(X_test, log_A, log_B, log_pi)
             true_states = np.array([np.argmax(log_B[:, obs]) for obs in X_test])  # Assuming the most likely state is the true state
-            accuracy = np.mean(predicted_states == true_states)
-            accuracies.append(accuracy)
+            #accuracy = np.mean(predicted_states == true_states)
+            #accuracies.append(accuracy)
         except Exception as e:
             print(f"Errors in fold {fold}: {str(e)}")
             continue
 
-        print(f" Log-likelihood: {log_likelihood:.4f}")
-        print(f" Accuracy: {accuracy:.4f}")
+        print(f"Log-likelihood: {log_likelihood:.4f}")
+        print(f"Predicted states: {predicted_states}")
+        print(f"True states: {true_states}")
+        #print(f"Accuracy: {accuracy:.4f}")
 
     return log_likelihoods, accuracies
 

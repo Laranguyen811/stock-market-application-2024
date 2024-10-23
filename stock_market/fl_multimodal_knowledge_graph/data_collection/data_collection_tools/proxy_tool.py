@@ -11,7 +11,7 @@ def get_proxy(proxy_list):
     string: username and password corresponding to each proxy
     '''
     #Load proxies and credentials from environment variables
-    proxy_list = os.getenv('PROXY_LIST','').split(',') # Getting the environmental variable called 'PROXY_LIST' and splitting each component at commas
+    proxy_list = os.getenv('HTTP_PROXY','').split(',') # Getting the environmental variable called 'HTTP_PROXY' and splitting each component at commas
     username = os.getenv('USERNAME','') # Getting the environmental variable called 'USERNAME'
     password = os.getenv('PASSWORD','') # Getting the environmental variable called 'PASSWORD'
 
