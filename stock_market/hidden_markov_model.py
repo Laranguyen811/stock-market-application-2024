@@ -5,6 +5,7 @@ import numpy as np
 from numpy import ndarray, dtype, floating, float_
 from numpy._typing import _64Bit
 from sklearn.model_selection import StratifiedGroupKFold, StratifiedKFold, KFold
+import warnings
 # Hidden Markov Model (HMM) is a tool representing the probability of states given observed data. The states are not directly observable, hence, hidden.
 # State Z_{t} at time t depends on the previous state Z_{t-1} at time t-1. We call this first-order HMM.
 
@@ -165,8 +166,7 @@ def log_sum_exp(log_probs: np.ndarray,axis: Optional[int] = None) -> np.ndarray:
     '''
     max_log_prob = np.max(log_probs, axis=axis,keepdims=True)
     return max_log_prob + np.log(np.sum(np.exp(log_probs - max_log_prob)))
-def baum_welch_algorithm (X:np.ndarray, log_A:np.ndarray, log_B:np.ndarray, log_pi: np.ndarray, n_iter: int =100, tol: float = 1e-6) -> \
-tuple[ndarray[Any, dtype[Any]] | ndarray, ndarray, ndarray[Any, dtype[Any]] | ndarray]:
+def baum_welch_algorithm (X:np.ndarray, log_A:np.ndarray, log_B:np.ndarray, log_pi: np.ndarray, n_iter: int =100, tol: float = 1e-6, min_prob: float = 1e-300) -> Tuple[ndarray[Any, dtype[Any]] | ndarray, ndarray, ndarray[Any, dtype[Any]] | ndarray]:
 
     ''' The Baum-Welch algorithm.
     Args:
@@ -182,41 +182,131 @@ tuple[ndarray[Any, dtype[Any]] | ndarray, ndarray, ndarray[Any, dtype[Any]] | nd
     N = len(X)
     M,K = log_B.shape # Assigning M step to the number of rows of matrix B and K to the number of columns of matrix A
     prev_likelihood = -np.inf
+    best_likelihood = -np.inf
+    best_params = (log_A.copy(),log_B.copy(),log_pi.copy())
+
+    #Computing the probability for all observations
+    B_obs = np.zeros((N, K))
     for iteration in range(n_iter):  # Using _ here since we don't need to assign a variable
-        B_obs = np.zeros((N,K))
-        for t in range(N):
-            B_obs[t] = log_B[:, X[t]]
-        # E-step
-        log_alpha, current_likelihood = forward_algorithm(log_A, B_obs, log_pi)
-        log_beta = backward_algorithm(log_A, B_obs)
+        try:
+            B_obs = log_B[:, X].T
+            # E-step with numerical stability check
+            log_alpha, current_likelihood = forward_algorithm(log_A, B_obs, log_pi)
+            if not np.isfinite(current_likelihood):
+                warnings.warn("Non-finite likelihood encountered. Using previous best parameters.")
+                return best_params
+            log_beta = backward_algorithm(log_A,B_obs)
+            #Store best parameters
+            if current_likelihood > best_likelihood:
+                best_likelihood = current_likelihood
+                best_params =(log_A.copy(),log_B.copy(),log_pi.copy())
 
-        #Check for convergence
-        if abs(current_likelihood - prev_likelihood) < tol:
-            print(f"Convergence after {iteration} iterations")
-            break
-        log_gamma = log_alpha + log_beta
-        log_gamma = log_gamma - log_sum_exp(log_gamma, axis=1)[:, np.newaxis]  # np.logaddexp.reduce => computing the log of the sum of exponentials of elements of an array by reducing the array along a specified axis (doing this especially when the probabilities are very small
+            # Check convergence
+            likelihood_improvement = current_likelihood - prev_likelihood
+            if 0 <= likelihood_improvement < tol:
+                print(f"Convergence after {iteration +1} iterations.")
+                return best_params
+            #Compute posterior probabilities
+            log_gamma = compute_log_gamma(log_alpha,log_beta)
+            log_xi = compute_log_xi(log_alpha,log_beta,log_A,B_obs,X)
 
-        log_xi = np.zeros((N - 1, K, K))  # Filling beta matrix with zeros with the dimensions of N-1,K and K
-        for t in range(N - 1):
-            for i in range(K):
-                for j in range(K):
-                    log_xi[t,i,j] = (log_alpha[t,i] + log_A[i,j] + log_B[j,X[t+1]] + log_beta[t + 1,j])
-            log_xi[t] -= log_sum_exp(log_xi[t].reshape(-1))
-        # M-step
-        log_A_num = log_sum_exp(log_xi.reshape(N-1,-1).T)
-        log_A_denominator = log_sum_exp(log_gamma[:-1],axis=0)
-        log_A = log_A_num.reshape(K,K) - log_A_denominator[:, np.newaxis]
+            # M-step with numerical stability safeguards
+            log_A = update_transition_matrix(log_gamma, log_xi, min_prob)
+            log_B = update_emission_matrix(log_gamma,X,M,K,min_prob)
+            log_pi = log_gamma[0]
 
-        for j in range(K):
-            for k in range(M):
-                mask = (X == k)
-                log_B[j,k] = log_sum_exp(log_gamma[mask,j]) - log_sum_exp(log_gamma[:,j])
-        log_pi = log_gamma[0]
-    else:
-        print(f"Warning: Maximum iterations({n_iter}) reached without convergence")
+            # Normalise to prevent underflow/overflow
+            log_A = normalise_log_matrix(log_A)
+            log_B = normalise_log_matrix(log_B)
+            log_pi = normalise_log_vector(log_pi)
 
-    return log_A,log_B,log_pi
+            prev_likelihood = current_likelihood
+
+        except (RuntimeWarning, FloatingPointError) as e:
+            warnings.warn(f"Numerical Instability Encountered:{str(e)}. Using previous best parameters.")
+            return best_params
+
+        warnings.warn(f"Maximum iterations ({n_iter}) reached without convergence.")
+        return best_params
+def compute_log_gamma(log_alpha: np.ndarray, log_beta: np.ndarray) -> np.ndarray:
+    """
+    Compute log gamma values with improved numerical stability.
+    Inputs:
+        log_alpha(np.ndarray): An np.ndarray of logged matrix alpha of state Z from time 1 : N.
+        log_beta(np.ndarray): An np.ndarray of logged matrix beta of observation X at time t given the states from t - 1 backwards.
+    Returns:
+        np.ndarray: An np.ndarray of logged matrix gamma values (smoothed posterior probabilities) of an observation given past and future evidence with improved numerical stability
+    """
+    log_gamma = log_alpha + log_beta
+    return log_gamma - log_sum_exp(log_gamma, axis=1)[:, np.newaxis]
+def compute_log_xi(log_alpha: np.ndarray,log_beta: np.ndarray,log_A:np.ndarray, B_obs: np.ndarray, X: np.ndarray) -> np.ndarray:
+    '''
+    Compute log xi (probabilities of transitioning from state i to state j given the model and the observations) values using vectorised operations if possible.
+    Inputs:
+        log_alpha(np.ndarray): An np.ndarray of logged matrix alpha of a state at time t given the previous observations.
+        log_beta(np.ndarray): An np.ndarray of logged matrix beta of a state at time t given the future evidence.
+        log_A(np.ndarray): An np.ndarray of logged transition matrix A.
+        B_obs(np.ndarray): An np.ndarray of logged matrix of probability of an observation X at time t given a state at time t.
+        X(np.ndarray): An np.ndarray of observations X.
+    Returns:
+        np.ndarray: An np.ndarray of logged xi values (probabilities of transitioning from state i to state j given the model and the observations)
+    '''
+    N = len(X)
+    K = log_A.shape[0]
+    log_xi = np.zeros((N - 1, K, K))  # Filling beta matrix with zeros with the dimensions of N-1,K and K
+    for t in range(N - 1):
+        log_xi[t] = (log_alpha[t,:,np.newaxis] + log_A + B_obs[t+1] + log_beta[t + 1])
+
+        log_xi[t] -= log_sum_exp(log_xi[t].reshape(-1))
+    return log_xi
+
+def update_transition_matrix(log_gamma: np.ndarray, log_xi: np.ndarray, min_prob: float) -> np.ndarray:
+    '''
+    Update transition matrix with numerical stability checks.
+    Inputs:
+        log_gamma(np.ndarray): An np.ndarray of logged matrix alpha of a state at time t given the previous observations.
+        log_xi(np.ndarray): An np.ndarray of logged values (probabilities of transitioning from state i to state j given the model and the observations)
+        min_prob(float): A float number of minimum probability.
+    Returns:
+        np.ndarray: An np.ndarray of of updated logged transition matrix A.
+    '''
+    # M-step
+    log_A_num = log_sum_exp(log_xi.reshape(log_xi.shape[0], -1).T)
+    log_A_denominator = log_sum_exp(log_gamma[:-1],axis=0)
+    log_A = log_A_num.reshape(log_gamma.shape[1],-1) - log_A_denominator[:,np.newaxis]
+    log_A = np.maximum(log_A,np.log(min_prob))
+    return log_A
+
+def update_emission_matrix(log_gamma: np.ndarray, X: np.ndarray, M: int, K: int, min_prob: float) -> np.ndarray:
+    '''
+    Update emission matrix with vectorised operations and stability checks.
+    Inputs:
+        log_gamma(np.ndarray): An np.ndarray of logged gamma matrix of a state given past and future evidence.
+        X(np.ndarray): An np.ndarray of observations X.
+        M(np.ndarray): An np.ndarray of the row dimension of the logged transition matrix A.
+        K(np.ndarray): An np.ndarray of the column dimension of the logged transition matrix A.
+        min_prob(float): A float number of the minimum probability.
+    Returns:
+        np.ndarray: An np.ndarray of the emission matrix log B
+    '''
+    log_B = np.full((K,M), np.log(min_prob))
+    for j in range(K):
+        for k in range(M):
+            mask = (X == k)
+            if np.any(mask):
+                log_B[j,k] = log_sum_exp(log_gamma[mask, j]) - log_sum_exp(log_gamma[:, j])
+
+    return log_B
+
+        #for j in range(K):
+         #   for k in range(M):
+         #       mask = (X == k)
+          #      log_B[j,k] = log_sum_exp(log_gamma[mask,j]) - log_sum_exp(log_gamma[:,j])
+        #log_pi = log_gamma[0]
+    #else:
+     #   print(f"Warning: Maximum iterations({n_iter}) reached without convergence")
+
+   # return log_A,log_B,log_pi
 
 def validate_hmm_params(log_A, log_B,log_pi):
     '''
@@ -239,6 +329,26 @@ def validate_hmm_params(log_A, log_B,log_pi):
 
     if log_pi.shape[0] != log_A.shape[0]:
         raise ValueError("Initial distribution dimension doesn't match number of states")
+
+def normalise_log_matrix(log_matrix: np.ndarray) -> np.ndarray:
+    """
+    Normalize log probabilities in a matrix to prevent numerical instability.
+    Inputs:
+        log_matrix (np.ndarray): An np.ndarray of logged matrix.
+    Returns:
+        np.ndarray: An np.ndarray of normalised logged matrix.
+    """
+    return log_matrix - log_sum_exp(log_matrix, axis=1)[:, np.newaxis]
+
+def normalise_log_vector(log_vector : np.ndarray) -> np.ndarray:
+    '''
+    Normalize log probabilities in a vector to prevent numerical issues
+    Inputs:
+        log_vector (np.ndarray): An np.ndarray of logged vector.
+    Returns:
+         np.ndarray: An np.ndarray of normalised logged vector.
+    '''
+    return log_vector - log_sum_exp(log_vector)
 def train_and_evaluate_hmm(X: np.ndarray, n_states: int, n_observations: int,n_iter: int = 100, n_folds: int = 5) -> Tuple[List[float], List[float]]:
     '''
     Train and evaluate HMM using K-fold cross-validation.
