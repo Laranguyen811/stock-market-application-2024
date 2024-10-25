@@ -82,6 +82,45 @@ class PerformanceCalculator:
         """
         return (1 + take_profit_percentage) * entry_price
 
+    def calculate_position_size(self,account_balance,risk_per_trade,stop_loss_amount):
+        '''
+        Calculates the position size (the number of units a trader/investor invests in a specific security to control risks and maximise returns) of a stock based on account balance, risk per trade and stop loss amount.
+        Inputs:
+            account_balance(float): A float number of account balance
+            risk_per_trade(float): A float number of percentage risk per trade
+            stop_loss_amount(float): A float number of stop loss amount
+        Returns:
+             float: A float number of position size
+        '''
+        return (account_balance * risk_per_trade) / stop_loss_amount
+
+    def moving_average_crossover(self,prices, short_period, long_period):
+        '''
+        Calculates the moving average crossover (a popular technical analysis to identify trends in prices using simple moving average, crossing over between short terms and long terms) of a stock based on short and long periods.
+        Inputs:
+            prices(list): A list of stock prices
+            short_period(int): An integer of a short period
+            long_period(int): An integer of a long period
+        Returns:
+            string: A string of "Buy", "Sell" or "Hold" depending on the short moving average and long moving average
+        '''
+        short_ma = self.calculate_mas(self.prices,short_period)[0]
+        long_ma = self.calculate_mas(self.prices,long_period)[0]
+        if short_ma > long_ma: return "Buy"
+        elif short_ma < long_ma: return "Sell"
+        return "Hold"
+
+    def calculate_allocation_ratios(self,total_capital, allocations):
+        '''
+        Calculates the allocation ratio using total capital and allocations.
+        Inputs:
+            total_capital(float): A float number of total capital.
+            allocations(dict): A dictionary of allocations for asset and ratio
+        Returns:
+            float: A float of the allocation ratio
+        '''
+        return {asset: total_capital * ratio for asset, ratio in allocations.items()}
+
 
 
 

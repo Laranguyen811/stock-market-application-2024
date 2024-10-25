@@ -149,7 +149,7 @@ def viterbi_algorithm_2(X, log_A, log_B, log_pi):
 
     # Termination
     path = np.zeros(N, dtype=int)  # Filled the matrix path with zeros of N dimension
-    path[N-1] = np.argmax(log_delta[N-1]) # Assigning the N-1 th element of path to the output of the amximum function with input of the N-1 th element of delta
+    path[N-1] = np.argmax(log_delta[N-1]) # Assigning the N-1 th element of path to the output of the maximum function with input of the N-1 th element of delta
 
     # Back tracing
     for t in range(N-2,-1,-1):
@@ -208,7 +208,11 @@ def baum_welch_algorithm (X:np.ndarray, log_A:np.ndarray, log_B:np.ndarray, log_
                 return best_params
             #Compute posterior probabilities
             log_gamma = compute_log_gamma(log_alpha,log_beta)
+            print(f"log_gamma shape {log_gamma.shape}")
+
             log_xi = compute_log_xi(log_alpha,log_beta,log_A,B_obs,X)
+            print(f"log xi {log_xi}")
+            print(f"log xi shape: {log_xi.shape}")
 
             # M-step with numerical stability safeguards
             log_A = update_transition_matrix(log_gamma, log_xi, min_prob)
@@ -238,7 +242,10 @@ def compute_log_gamma(log_alpha: np.ndarray, log_beta: np.ndarray) -> np.ndarray
         np.ndarray: An np.ndarray of logged matrix gamma values (smoothed posterior probabilities) of an observation given past and future evidence with improved numerical stability
     """
     log_gamma = log_alpha + log_beta
-    return log_gamma - log_sum_exp(log_gamma, axis=1)[:, np.newaxis]
+
+    new_log_gamma = np.vstack(log_gamma - log_sum_exp(log_gamma, axis=1)[:, np.newaxis])
+    print(f"new log gamma shape:{new_log_gamma.shape}")
+    return new_log_gamma
 def compute_log_xi(log_alpha: np.ndarray,log_beta: np.ndarray,log_A:np.ndarray, B_obs: np.ndarray, X: np.ndarray) -> np.ndarray:
     '''
     Compute log xi (probabilities of transitioning from state i to state j given the model and the observations) values using vectorised operations if possible.
@@ -268,11 +275,17 @@ def update_transition_matrix(log_gamma: np.ndarray, log_xi: np.ndarray, min_prob
         log_xi(np.ndarray): An np.ndarray of logged values (probabilities of transitioning from state i to state j given the model and the observations)
         min_prob(float): A float number of minimum probability.
     Returns:
-        np.ndarray: An np.ndarray of of updated logged transition matrix A.
+        np.ndarray: An np.ndarray of updated logged transition matrix A.
     '''
     # M-step
     log_A_num = log_sum_exp(log_xi.reshape(log_xi.shape[0], -1).T)
+    print(f"log A numerator: {log_A_num}")
+    print(f"log A numerator shape: {log_A_num.shape}")
     log_A_denominator = log_sum_exp(log_gamma[:-1],axis=0)
+    print(f"log A denominator: {log_A_denominator}")
+    print(f"log A denominator shape: {log_A_denominator.shape}")
+    log_A_numerator_reshaped = log_A_num.reshape(log_gamma.shape[1],-1)
+    print(f"log A numerator reshaped shape {log_A_numerator_reshaped.shape}")
     log_A = log_A_num.reshape(log_gamma.shape[1],-1) - log_A_denominator[:,np.newaxis]
     log_A = np.maximum(log_A,np.log(min_prob))
     return log_A
@@ -396,8 +409,8 @@ def train_and_evaluate_hmm(X: np.ndarray, n_states: int, n_observations: int,n_i
             # Computing accuracy using Viterbi algorithm
             predicted_states = viterbi_algorithm_2(X_test, log_A, log_B, log_pi)
             true_states = np.array([np.argmax(log_B[:, obs]) for obs in X_test])  # Assuming the most likely state is the true state
-            #accuracy = np.mean(predicted_states == true_states)
-            #accuracies.append(accuracy)
+            accuracy = np.mean(predicted_states == true_states)
+            accuracies.append(accuracy)
         except Exception as e:
             print(f"Errors in fold {fold}: {str(e)}")
             continue
@@ -405,7 +418,7 @@ def train_and_evaluate_hmm(X: np.ndarray, n_states: int, n_observations: int,n_i
         print(f"Log-likelihood: {log_likelihood:.4f}")
         print(f"Predicted states: {predicted_states}")
         print(f"True states: {true_states}")
-        #print(f"Accuracy: {accuracy:.4f}")
+        print(f"Accuracy: {accuracy:.4f}")
 
     return log_likelihoods, accuracies
 
