@@ -121,6 +121,18 @@ class PerformanceCalculator:
         '''
         return {asset: total_capital * ratio for asset, ratio in allocations.items()}
 
+    def rebalance_portfolio(self,portfolio, target_ratios):
+        '''
+        Takes a portfolio and target ratios and rebalances.
+        Inputs:
+            portfolio(dictionary): A dictionary of portfolio values
+            target_ratios(dictionary): A dictionary of target ratios for each security
+        Returns:
+            dict: A dictionary of asset and the amount to rebalance
+        '''
+        total_value = sum(portfolio.values())
+        return {asset: total_value * ratio for asset, ratio in target_ratios.items()}
+
 
 
 

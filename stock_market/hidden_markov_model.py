@@ -74,7 +74,6 @@ def backward_algorithm(log_A,log_B):
         for i in range(K):
             terms = log_A[i,:] + log_B[t+1,:] + log_beta[t+1,:]
             log_beta[t,i] = log_sum_exp(terms)  # Assigning beta at time t the normalised product between matrix A and the product between matrix psi at time t + 1 and matrix beta at t +1
-
     return log_beta
 
 def viterbi_algorithm_1(X,log_A, log_B, log_pi):
@@ -158,7 +157,9 @@ def viterbi_algorithm_2(X, log_A, log_B, log_pi):
     return path
 def log_sum_exp(log_probs: np.ndarray,axis: Optional[int] = None) -> np.ndarray:
     '''
-    Takes log probabilities and returns the log transformation
+    Takes log probabilities and returns the log transformation. We use this technique to minimise the effect of underflow or overflow when computing the log of a sum of exponentials.
+    The first step is to find the maximum value, subtracting it from the all values (shifting the values to reduce the risk of overflow), find the exponential of all shifted values and add them all up. Then find
+    the log of the summed exponentials and add the maximum value back to achieve the final result.
     Inputs:
         log_probs(float): A float number of log probabilities.
     Returns:
@@ -208,11 +209,8 @@ def baum_welch_algorithm (X:np.ndarray, log_A:np.ndarray, log_B:np.ndarray, log_
                 return best_params
             #Compute posterior probabilities
             log_gamma = compute_log_gamma(log_alpha,log_beta)
-            print(f"log_gamma shape {log_gamma.shape}")
 
             log_xi = compute_log_xi(log_alpha,log_beta,log_A,B_obs,X)
-            print(f"log xi {log_xi}")
-            print(f"log xi shape: {log_xi.shape}")
 
             # M-step with numerical stability safeguards
             log_A = update_transition_matrix(log_gamma, log_xi, min_prob)
@@ -234,7 +232,7 @@ def baum_welch_algorithm (X:np.ndarray, log_A:np.ndarray, log_B:np.ndarray, log_
         return best_params
 def compute_log_gamma(log_alpha: np.ndarray, log_beta: np.ndarray) -> np.ndarray:
     """
-    Compute log gamma values with improved numerical stability.
+    Compute log gamma values.
     Inputs:
         log_alpha(np.ndarray): An np.ndarray of logged matrix alpha of state Z from time 1 : N.
         log_beta(np.ndarray): An np.ndarray of logged matrix beta of observation X at time t given the states from t - 1 backwards.
@@ -242,9 +240,10 @@ def compute_log_gamma(log_alpha: np.ndarray, log_beta: np.ndarray) -> np.ndarray
         np.ndarray: An np.ndarray of logged matrix gamma values (smoothed posterior probabilities) of an observation given past and future evidence with improved numerical stability
     """
     log_gamma = log_alpha + log_beta
-
-    new_log_gamma = np.vstack(log_gamma - log_sum_exp(log_gamma, axis=1)[:, np.newaxis])
-    print(f"new log gamma shape:{new_log_gamma.shape}")
+    if len(log_gamma.shape) == 2:
+        new_log_gamma = log_gamma - log_sum_exp(log_gamma,axis=1)[: np.newaxis]  # Calculating the log sum exponential acros the axis 1, the states, then broadcasting to match the shapes for element-wise operations by adding a new dimension. Then perform the subtraction.
+    elif len(log_gamma.shape) == 3:
+        new_log_gamma = log_gamma - log_sum_exp(log_gamma, axis=2)[:, :, np.newaxis] # Calculating the log sum exponential acros the axis 2, a set of values like probabilities across states or categories, then broadcasting to match the shapes for element-wise operations by adding a new dimension. Then perform the subtraction.
     return new_log_gamma
 def compute_log_xi(log_alpha: np.ndarray,log_beta: np.ndarray,log_A:np.ndarray, B_obs: np.ndarray, X: np.ndarray) -> np.ndarray:
     '''
@@ -256,7 +255,7 @@ def compute_log_xi(log_alpha: np.ndarray,log_beta: np.ndarray,log_A:np.ndarray, 
         B_obs(np.ndarray): An np.ndarray of logged matrix of probability of an observation X at time t given a state at time t.
         X(np.ndarray): An np.ndarray of observations X.
     Returns:
-        np.ndarray: An np.ndarray of logged xi values (probabilities of transitioning from state i to state j given the model and the observations)
+        np.ndarray: An np.ndarray of logged xi values (probabilities of transitioning from state i to state j )
     '''
     N = len(X)
     K = log_A.shape[0]
@@ -278,16 +277,17 @@ def update_transition_matrix(log_gamma: np.ndarray, log_xi: np.ndarray, min_prob
         np.ndarray: An np.ndarray of updated logged transition matrix A.
     '''
     # M-step
-    log_A_num = log_sum_exp(log_xi.reshape(log_xi.shape[0], -1).T)
-    print(f"log A numerator: {log_A_num}")
-    print(f"log A numerator shape: {log_A_num.shape}")
-    log_A_denominator = log_sum_exp(log_gamma[:-1],axis=0)
-    print(f"log A denominator: {log_A_denominator}")
-    print(f"log A denominator shape: {log_A_denominator.shape}")
-    log_A_numerator_reshaped = log_A_num.reshape(log_gamma.shape[1],-1)
-    print(f"log A numerator reshaped shape {log_A_numerator_reshaped.shape}")
-    log_A = log_A_num.reshape(log_gamma.shape[1],-1) - log_A_denominator[:,np.newaxis]
-    log_A = np.maximum(log_A,np.log(min_prob))
+    K = log_gamma.shape[1]
+    log_A_num = np.sum(log_xi, axis=0)
+    if log_A_num.size == K * K:
+        log_A_num_reshaped = log_A_num.reshape(K,K)
+    else:
+        raise ValueError(f" Cannot reshape array of size {log_A_num.size} into shape ({K} ,{K}")
+    log_A_denominator = np.sum(log_gamma[:-1],axis=0)
+    #log_A_numerator_reshaped = log_A_num.reshape(log_gamma.shape[1],-1)
+    #log_A = log_A_num.reshape(log_gamma.shape[1],-1) - log_A_denominator[:,np.newaxis]
+    #log_A = np.maximum(log_A,np.log(min_prob))
+    log_A = np.log(np.maximum(np.exp(log_A_num_reshaped) / np.maximum(np.exp(log_A_denominator)[:, np.newaxis], min_prob), min_prob))
     return log_A
 
 def update_emission_matrix(log_gamma: np.ndarray, X: np.ndarray, M: int, K: int, min_prob: float) -> np.ndarray:
@@ -414,7 +414,6 @@ def train_and_evaluate_hmm(X: np.ndarray, n_states: int, n_observations: int,n_i
         except Exception as e:
             print(f"Errors in fold {fold}: {str(e)}")
             continue
-
         print(f"Log-likelihood: {log_likelihood:.4f}")
         print(f"Predicted states: {predicted_states}")
         print(f"True states: {true_states}")

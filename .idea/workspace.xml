@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4f5895f3-2d93-4355-bcbb-97c6701d0028" name="Changes" comment="- fixed HMM">
+    <list default="true" id="4f5895f3-2d93-4355-bcbb-97c6701d0028" name="Changes" comment="- identified wrong logic of code in HMM&#10;- added calculate_position_size.py, moving_average_crossover and calculate_allocation_ratios">
       <change afterPath="$PROJECT_DIR$/simple_stock_market_prediction.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/misc/Stock App Review.md" beforeDir="false" afterPath="$PROJECT_DIR$/misc/Stock App Review.md" afterDir="false" />
@@ -73,48 +73,48 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Python tests.Python tests for test_download_images.TestDownloadImages.executor": "Run",
-    "Python tests.Python tests for test_download_sounds.TestDownloadSound.executor": "Run",
-    "Python tests.Python tests for test_stock_data_analysis.test_calculate_corr_coeffs.executor": "Run",
-    "Python tests.Python tests in test_HMM.py.executor": "Run",
-    "Python tests.Python tests in test_download_images.py.executor": "Run",
-    "Python tests.Python tests in test_download_sounds.py.executor": "Run",
-    "Python tests.Python tests in test_normal_distribution_detection.py.executor": "Run",
-    "Python tests.Python tests in test_stock_data_analysis.py.executor": "Debug",
-    "Python.Stock_Data_Analysis.executor": "Run",
-    "Python.Stock_Data_Visualisation.executor": "Run",
-    "Python.Stock_Market_Application.executor": "Run",
-    "Python.add_tool.executor": "Run",
-    "Python.add_tools.executor": "Run",
-    "Python.download_sounds.executor": "Run",
-    "Python.example_HMM.executor": "Run",
-    "Python.hidden_markov_model.executor": "Run",
-    "Python.image_extractor.executor": "Run",
-    "Python.mel_spectrogram_features.executor": "Run",
-    "Python.proxy_tool (1).executor": "Run",
-    "Python.proxy_tool.executor": "Run",
-    "Python.simple_stock_market_prediction.executor": "Run",
-    "Python.stock_data_analysis.executor": "Run",
-    "Python.uri_tool.executor": "Run",
-    "Python.uri_tools.executor": "Run",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "ToolWindowPlots.ShowToolbar": "false",
-    "git-widget-placeholder": "master",
-    "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "C:/Users/laran/PycharmProjects/ARENA tutorials _Superposition_&_SAEs",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Python tests.Python tests for test_download_images.TestDownloadImages.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Python tests for test_download_sounds.TestDownloadSound.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Python tests for test_stock_data_analysis.test_calculate_corr_coeffs.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Python tests in test_HMM.py.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Python tests in test_download_images.py.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Python tests in test_download_sounds.py.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Python tests in test_normal_distribution_detection.py.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Python tests in test_stock_data_analysis.py.executor&quot;: &quot;Debug&quot;,
+    &quot;Python.Stock_Data_Analysis.executor&quot;: &quot;Run&quot;,
+    &quot;Python.Stock_Data_Visualisation.executor&quot;: &quot;Run&quot;,
+    &quot;Python.Stock_Market_Application.executor&quot;: &quot;Run&quot;,
+    &quot;Python.add_tool.executor&quot;: &quot;Run&quot;,
+    &quot;Python.add_tools.executor&quot;: &quot;Run&quot;,
+    &quot;Python.download_sounds.executor&quot;: &quot;Run&quot;,
+    &quot;Python.example_HMM.executor&quot;: &quot;Run&quot;,
+    &quot;Python.hidden_markov_model.executor&quot;: &quot;Run&quot;,
+    &quot;Python.image_extractor.executor&quot;: &quot;Run&quot;,
+    &quot;Python.mel_spectrogram_features.executor&quot;: &quot;Run&quot;,
+    &quot;Python.proxy_tool (1).executor&quot;: &quot;Run&quot;,
+    &quot;Python.proxy_tool.executor&quot;: &quot;Run&quot;,
+    &quot;Python.simple_stock_market_prediction.executor&quot;: &quot;Run&quot;,
+    &quot;Python.stock_data_analysis.executor&quot;: &quot;Run&quot;,
+    &quot;Python.uri_tool.executor&quot;: &quot;Run&quot;,
+    &quot;Python.uri_tools.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;ToolWindowPlots.ShowToolbar&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/laran/PycharmProjects/ARENA tutorials _Superposition_&amp;_SAEs&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\laran\PycharmProjects\ASX\stock_market" />
@@ -491,15 +491,8 @@
       <workItem from="1729630919444" duration="657000" />
       <workItem from="1729655216860" duration="9095000" />
       <workItem from="1729741344386" duration="8750000" />
-      <workItem from="1729825433140" duration="7496000" />
-    </task>
-    <task id="LOCAL-00052" summary="- added transport_tool.py">
-      <option name="closed" value="true" />
-      <created>1722927580745</created>
-      <option name="number" value="00052" />
-      <option name="presentableId" value="LOCAL-00052" />
-      <option name="project" value="LOCAL" />
-      <updated>1722927580745</updated>
+      <workItem from="1729825433140" duration="8761000" />
+      <workItem from="1730084829315" duration="9318000" />
     </task>
     <task id="LOCAL-00053" summary="- added transport_tool.py">
       <option name="closed" value="true" />
@@ -885,7 +878,15 @@
       <option name="project" value="LOCAL" />
       <updated>1729749576164</updated>
     </task>
-    <option name="localTasksCounter" value="101" />
+    <task id="LOCAL-00101" summary="- identified wrong logic of code in HMM&#10;- added calculate_position_size.py, moving_average_crossover and calculate_allocation_ratios">
+      <option name="closed" value="true" />
+      <created>1729833053702</created>
+      <option name="number" value="00101" />
+      <option name="presentableId" value="LOCAL-00101" />
+      <option name="project" value="LOCAL" />
+      <updated>1729833053702</updated>
+    </task>
+    <option name="localTasksCounter" value="102" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -915,7 +916,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="- added MLP&#10;- added GSPA" />
     <MESSAGE value="- added comments&#10;- added get_attention and get_attention_map" />
     <MESSAGE value="- finished GPSA" />
     <MESSAGE value="- added MHSA class" />
@@ -940,7 +940,8 @@
     <MESSAGE value="- reviewed HMM&#10;- continued proxy_list.py" />
     <MESSAGE value="- added calculate_stop_loss and calculate_take_profit" />
     <MESSAGE value="- fixed HMM" />
-    <option name="LAST_COMMIT_MESSAGE" value="- fixed HMM" />
+    <MESSAGE value="- identified wrong logic of code in HMM&#10;- added calculate_position_size.py, moving_average_crossover and calculate_allocation_ratios" />
+    <option name="LAST_COMMIT_MESSAGE" value="- identified wrong logic of code in HMM&#10;- added calculate_position_size.py, moving_average_crossover and calculate_allocation_ratios" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -995,11 +996,11 @@
     <SUITE FILE_PATH="coverage/stock_market_application_2024$add_tool.coverage" NAME="add_tool Coverage Results" MODIFIED="1721710476112" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/stock_market/fl_multimodal_knowledge_graph/data_collection/data_collection_tools" />
     <SUITE FILE_PATH="coverage/stock_market_application_2024$uri_tool.coverage" NAME="uri_tool Coverage Results" MODIFIED="1721710488819" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/stock_market/fl_multimodal_knowledge_graph/data_collection/data_collection_tools" />
     <SUITE FILE_PATH="coverage/stock_market_application_2024$mel_spectrogram_features.coverage" NAME="mel_spectrogram_features Coverage Results" MODIFIED="1725862772415" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/stock_market/fl_multimodal_knowledge_graph/feature_extractor/audio_extraction" />
-    <SUITE FILE_PATH="coverage/stock_market_application_2024$hidden_markov_model.coverage" NAME="hidden_markov_model Coverage Results" MODIFIED="1729828771711" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/stock_market" />
+    <SUITE FILE_PATH="coverage/stock_market_application_2024$hidden_markov_model.coverage" NAME="hidden_markov_model Coverage Results" MODIFIED="1730088089833" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/stock_market" />
     <SUITE FILE_PATH="coverage/stock_market_application_2024$add_tools.coverage" NAME="uri_tool Coverage Results" MODIFIED="1721710446763" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/stock_market/fl_multimodal_knowledge_graph/data_collection/data_collection_tools" />
     <SUITE FILE_PATH="coverage/stock_market_application_2024$download_sounds.coverage" NAME="download_sounds Coverage Results" MODIFIED="1725260808373" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/stock_market/fl_multimodal_knowledge_graph/data_collection/data_collection_tools" />
     <SUITE FILE_PATH="coverage/stock_market_application_2024$uri_tools.coverage" NAME="uri_tools Coverage Results" MODIFIED="1721625015401" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/stock_market/fl_multimodal_knowledge_graph/data_collection/data_collection_tools" />
-    <SUITE FILE_PATH="coverage/stock_market_application_2024$simple_stock_market_prediction.coverage" NAME="simple_stock_market_prediction Coverage Results" MODIFIED="1729831033488" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/stock_market_application_2024$simple_stock_market_prediction.coverage" NAME="simple_stock_market_prediction Coverage Results" MODIFIED="1730093135570" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/stock_market_application_2024$proxy_tool__1_.coverage" NAME="proxy_tool (1) Coverage Results" MODIFIED="1725260794181" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/stock_market/fl_multimodal_knowledge_graph/data_collection/data_collection_tools" />
     <SUITE FILE_PATH="coverage/stock_market_application_2024$Stock_Data_Analysis.coverage" NAME="Stock_Data_Analysis Coverage Results" MODIFIED="1714972902864" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/stock_market_application_2024$.coverage" NAME=" Coverage Results" MODIFIED="1729828024126" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/stock_market" />
