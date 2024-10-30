@@ -46,7 +46,7 @@ def forward_algorithm(log_A, log_B, log_pi):
     for t in range(1, N):
         for j in range(K):
             terms = log_alpha[t-1] + log_A[:, j]
-            log_alpha[t,j] = log_sum_exp(terms) + log_B[t,j]  # Assigning alpha and C at time t to the normalized dot product between psi at time t time the transposed matrix A times matrix alpha at time t -1
+            log_alpha[t,j] = log_sum_exp(terms) + log_B[t,j]  # Assigning log_alpha at time step t and state j to the Hadamard dot product between the log sum exponential of terms and log B at time step t and state j
 
     log_likelihood = log_sum_exp(log_alpha[-1])
     return log_alpha, log_likelihood
@@ -66,14 +66,14 @@ def backward_algorithm(log_A,log_B):
     K = log_A.shape[0]
     log_beta = np.zeros((N,K))  # beta is the conditional likelihood of the future evidence
 
-    # Initializing beta_N (beta of the Nth element of the sequence)
+    # Initializing log beta of the Nth element of the sequence
     log_beta[-1] = np.zeros(K)
 
     # Iterating through the sequence in reverse
     for t in range(N -2, -1, - 1):
         for i in range(K):
             terms = log_A[i,:] + log_B[t+1,:] + log_beta[t+1,:]
-            log_beta[t,i] = log_sum_exp(terms)  # Assigning beta at time t the normalised product between matrix A and the product between matrix psi at time t + 1 and matrix beta at t +1
+            log_beta[t,i] = log_sum_exp(terms)  # Assigning  log beta at time t and state i to the log sum exponential of the terms
     return log_beta
 
 def viterbi_algorithm_1(X,log_A, log_B, log_pi):
@@ -109,7 +109,7 @@ def viterbi_algorithm_1(X,log_A, log_B, log_pi):
                     delta[t,j] = max_val + log_B[j,X[t]] # Assigning delta at time step t and state transition j to the addition between max value and the log of matrix B at state j and observation X at time step t
                     psi[t,j] = max_state  # Assigning matrix psi at time step t and state j to max state
             delta[t, j] = np.max(delta[t-1] + log_A[:,j] + log_B[j,X[t]])   # Assigning matrix delta at time step t and state j to the maximum value of the addition between matrix delta at time step t-1  and the log of matrix A at state j and the matrix B of observation X at time t
-            psi[t,j] = np.argmax(delta[t-1] + log_A[:,j])
+            psi[t,j] = np.argmax(delta[t-1] + log_A[:,j])  # Assigning the matrix psi at time t and state j to the indices of the matrix of the Hadamard dot product between matrix delta at time step t-1 and matrix log A at state j
     # Termination
     path = np.zeros(N, dtype=int)  # Creating an array of path filled with zeros with N dimension
     path[N-1] = np.argmax(delta[N-1])  # Assigning the N-1 th element of path to the output index of the maximum function with input of the N-1 th element of delta
@@ -139,7 +139,7 @@ def viterbi_algorithm_2(X, log_A, log_B, log_pi):
     log_delta: ndarray[Any, dtype[floating[_64Bit] | float_]] = np.zeros((N,K)) # delta is the probability as the combination of the transition from the previous state i at time t-1 and the most probable path leading to i
     psi = np.zeros((N,K), dtype=int)
     log_delta[0] = log_pi + log_B[:, X[0]]
-
+    print(f"log delta shape: {log_delta.shape}, psi shape: {psi.shape}, log delta initialised shape: {log_delta[0]}")
     for t in range(1,N):
         for j in range(K):
             temp = log_delta[t-1] + log_A[:,j]
@@ -209,6 +209,7 @@ def baum_welch_algorithm (X:np.ndarray, log_A:np.ndarray, log_B:np.ndarray, log_
                 return best_params
             #Compute posterior probabilities
             log_gamma = compute_log_gamma(log_alpha,log_beta)
+            # print(f"log gamma shape: {log_gamma.shape}")
 
             log_xi = compute_log_xi(log_alpha,log_beta,log_A,B_obs,X)
 
@@ -221,6 +222,7 @@ def baum_welch_algorithm (X:np.ndarray, log_A:np.ndarray, log_B:np.ndarray, log_
             log_A = normalise_log_matrix(log_A)
             log_B = normalise_log_matrix(log_B)
             log_pi = normalise_log_vector(log_pi)
+            #print(f"log A shape: {log_A.shape},log B shape: {log_B.shape}, log pi shape: {log_pi.shape}")
 
             prev_likelihood = current_likelihood
 
@@ -261,9 +263,9 @@ def compute_log_xi(log_alpha: np.ndarray,log_beta: np.ndarray,log_A:np.ndarray, 
     K = log_A.shape[0]
     log_xi = np.zeros((N - 1, K, K))  # Filling beta matrix with zeros with the dimensions of N-1,K and K
     for t in range(N - 1):
-        log_xi[t] = (log_alpha[t,:,np.newaxis] + log_A + B_obs[t+1] + log_beta[t + 1])
+        log_xi[t] = (log_alpha[t,:,np.newaxis] + log_A + B_obs[t+1] + log_beta[t + 1])  # Creating a new axis to broadcast matrices with different shapes, allowing for correct element-wise operations.
 
-        log_xi[t] -= log_sum_exp(log_xi[t].reshape(-1))
+        log_xi[t] -= log_sum_exp(log_xi[t].reshape(-1))  # Reshaping log_xi at t to 1-D array
     return log_xi
 
 def update_transition_matrix(log_gamma: np.ndarray, log_xi: np.ndarray, min_prob: float) -> np.ndarray:
@@ -284,9 +286,6 @@ def update_transition_matrix(log_gamma: np.ndarray, log_xi: np.ndarray, min_prob
     else:
         raise ValueError(f" Cannot reshape array of size {log_A_num.size} into shape ({K} ,{K}")
     log_A_denominator = np.sum(log_gamma[:-1],axis=0)
-    #log_A_numerator_reshaped = log_A_num.reshape(log_gamma.shape[1],-1)
-    #log_A = log_A_num.reshape(log_gamma.shape[1],-1) - log_A_denominator[:,np.newaxis]
-    #log_A = np.maximum(log_A,np.log(min_prob))
     log_A = np.log(np.maximum(np.exp(log_A_num_reshaped) / np.maximum(np.exp(log_A_denominator)[:, np.newaxis], min_prob), min_prob))
     return log_A
 
@@ -362,70 +361,3 @@ def normalise_log_vector(log_vector : np.ndarray) -> np.ndarray:
          np.ndarray: An np.ndarray of normalised logged vector.
     '''
     return log_vector - log_sum_exp(log_vector)
-def train_and_evaluate_hmm(X: np.ndarray, n_states: int, n_observations: int,n_iter: int = 100, n_folds: int = 5) -> Tuple[List[float], List[float]]:
-    '''
-    Train and evaluate HMM using K-fold cross-validation.
-
-    Args:
-        X (np.ndarray): The full dataset of observations
-        n_states (int): The integer of the number of hidden states.
-        n_observations (int): The integer of the number of observations.
-        n_iter (int): The integer of the number of iterations for Baum-Welch algorithm.
-
-    Returns:
-        Tuple[List[float], List[float]]: List of log-likelihoods and accuracies for each fold.
-
-    '''
-    kf = KFold(n_splits= n_folds, shuffle=True, random_state=42)
-    log_likelihoods = []
-    accuracies = []
-
-    for fold, (train_index, test_index) in enumerate(kf.split(X),1):
-        X_train, X_test = X[train_index], X[test_index]
-
-        # Initializing model parameters
-        A = np.random.rand(n_states, n_states)
-        A /= A.sum(axis=1, keepdims=True)
-        log_A = np.log(A)
-
-        B = np.random.rand(n_states, n_observations)
-        B /= B.sum(axis=1, keepdims=True)
-        log_B = np.log(B)
-
-        pi = np.random.rand(n_states)
-        pi /= pi.sum()
-        log_pi = np.log(pi)
-
-        # Validating parameters
-        validate_hmm_params(log_A,log_B, log_pi)
-        # Training the model
-        try:
-            log_A,log_B,log_pi = baum_welch_algorithm(X_train, log_A, log_B, log_pi, n_iter)
-
-            # Evaluating on test set
-            alpha, log_likelihood = forward_algorithm(log_A, log_B[:,X_test], log_pi)
-            log_likelihoods.append(log_likelihood)
-
-            # Computing accuracy using Viterbi algorithm
-            predicted_states = viterbi_algorithm_2(X_test, log_A, log_B, log_pi)
-            true_states = np.array([np.argmax(log_B[:, obs]) for obs in X_test])  # Assuming the most likely state is the true state
-            accuracy = np.mean(predicted_states == true_states)
-            accuracies.append(accuracy)
-        except Exception as e:
-            print(f"Errors in fold {fold}: {str(e)}")
-            continue
-        print(f"Log-likelihood: {log_likelihood:.4f}")
-        print(f"Predicted states: {predicted_states}")
-        print(f"True states: {true_states}")
-        print(f"Accuracy: {accuracy:.4f}")
-
-    return log_likelihoods, accuracies
-
-
-
-
-
-
-
-
-
