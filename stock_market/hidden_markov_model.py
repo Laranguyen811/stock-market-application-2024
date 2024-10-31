@@ -136,10 +136,11 @@ def viterbi_algorithm_2(X, log_A, log_B, log_pi):
     K = log_A.shape[0]
 
     # Initializing delta and psi
-    log_delta: ndarray[Any, dtype[floating[_64Bit] | float_]] = np.zeros((N,K)) # delta is the probability as the combination of the transition from the previous state i at time t-1 and the most probable path leading to i
+    log_delta: ndarray[Any, dtype[floating[_64Bit] | float_]] = np.zeros((N,K,log_B.shape[1]))# delta is the probability as the combination of the transition from the previous state i at time t-1 and the most probable path leading to i
+    print(f"log delta shape: {log_delta.shape}")
     psi = np.zeros((N,K), dtype=int)
     log_delta[0] = log_pi + log_B[:, X[0]]
-    print(f"log delta shape: {log_delta.shape}, psi shape: {psi.shape}, log delta initialised shape: {log_delta[0]}")
+    print(f"log delta shape: {log_delta.shape}, log shape: {log_pi.shape}, log delta initialised shape: {log_delta[0]}")
     for t in range(1,N):
         for j in range(K):
             temp = log_delta[t-1] + log_A[:,j]

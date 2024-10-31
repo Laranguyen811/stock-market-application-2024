@@ -4,11 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4f5895f3-2d93-4355-bcbb-97c6701d0028" name="Changes" comment="- completely fixed HMM &#10;- added rebalance_portfolio to performance_calculation.py">
+    <list default="true" id="4f5895f3-2d93-4355-bcbb-97c6701d0028" name="Changes" comment="- looking at fixing train_and_evaluate_HMM">
       <change afterPath="$PROJECT_DIR$/simple_stock_market_prediction.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/misc/Stock App Review.md" beforeDir="false" afterPath="$PROJECT_DIR$/misc/Stock App Review.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/stock_market/hidden_markov_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/stock_market/hidden_markov_model.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/stock_market/performance_calculation.py" beforeDir="false" afterPath="$PROJECT_DIR$/stock_market/performance_calculation.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -123,7 +124,7 @@
       <recent name="C:\Users\laran\PycharmProjects\ASX\stock_market\fl_multimodal_knowledge_graph\data_collection" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Python.add_tool">
     <configuration name="add_tool" type="PythonConfigurationType" factoryName="Python">
       <module name="ASX" />
       <option name="ENV_FILES" value="" />
@@ -492,15 +493,8 @@
       <workItem from="1729741344386" duration="8750000" />
       <workItem from="1729825433140" duration="8761000" />
       <workItem from="1730084829315" duration="10615000" />
-      <workItem from="1730257253784" duration="8397000" />
-    </task>
-    <task id="LOCAL-00055" summary="- added clear_tool.py">
-      <option name="closed" value="true" />
-      <created>1723186247985</created>
-      <option name="number" value="00055" />
-      <option name="presentableId" value="LOCAL-00055" />
-      <option name="project" value="LOCAL" />
-      <updated>1723186247985</updated>
+      <workItem from="1730257253784" duration="8737000" />
+      <workItem from="1730345604229" duration="9905000" />
     </task>
     <task id="LOCAL-00056" summary="- added history.py">
       <option name="closed" value="true" />
@@ -886,7 +880,15 @@
       <option name="project" value="LOCAL" />
       <updated>1730095595519</updated>
     </task>
-    <option name="localTasksCounter" value="104" />
+    <task id="LOCAL-00104" summary="- looking at fixing train_and_evaluate_HMM">
+      <option name="closed" value="true" />
+      <created>1730267776962</created>
+      <option name="number" value="00104" />
+      <option name="presentableId" value="LOCAL-00104" />
+      <option name="project" value="LOCAL" />
+      <updated>1730267776962</updated>
+    </task>
+    <option name="localTasksCounter" value="105" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -916,7 +918,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="- finished GPSA" />
     <MESSAGE value="- added MHSA class" />
     <MESSAGE value="- finished MHSA class" />
     <MESSAGE value="- finished HybridEmbed class" />
@@ -941,7 +942,8 @@
     <MESSAGE value="- fixed HMM" />
     <MESSAGE value="- identified wrong logic of code in HMM&#10;- added calculate_position_size.py, moving_average_crossover and calculate_allocation_ratios" />
     <MESSAGE value="- completely fixed HMM &#10;- added rebalance_portfolio to performance_calculation.py" />
-    <option name="LAST_COMMIT_MESSAGE" value="- completely fixed HMM &#10;- added rebalance_portfolio to performance_calculation.py" />
+    <MESSAGE value="- looking at fixing train_and_evaluate_HMM" />
+    <option name="LAST_COMMIT_MESSAGE" value="- looking at fixing train_and_evaluate_HMM" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1001,11 +1003,11 @@
     <SUITE FILE_PATH="coverage/stock_market_application_2024$add_tool.coverage" NAME="add_tool Coverage Results" MODIFIED="1721710476112" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/stock_market/fl_multimodal_knowledge_graph/data_collection/data_collection_tools" />
     <SUITE FILE_PATH="coverage/stock_market_application_2024$uri_tool.coverage" NAME="uri_tool Coverage Results" MODIFIED="1721710488819" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/stock_market/fl_multimodal_knowledge_graph/data_collection/data_collection_tools" />
     <SUITE FILE_PATH="coverage/stock_market_application_2024$mel_spectrogram_features.coverage" NAME="mel_spectrogram_features Coverage Results" MODIFIED="1725862772415" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/stock_market/fl_multimodal_knowledge_graph/feature_extractor/audio_extraction" />
-    <SUITE FILE_PATH="coverage/stock_market_application_2024$hidden_markov_model.coverage" NAME="hidden_markov_model Coverage Results" MODIFIED="1730263708866" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/stock_market" />
+    <SUITE FILE_PATH="coverage/stock_market_application_2024$hidden_markov_model.coverage" NAME="hidden_markov_model Coverage Results" MODIFIED="1730347134161" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/stock_market" />
     <SUITE FILE_PATH="coverage/stock_market_application_2024$add_tools.coverage" NAME="uri_tool Coverage Results" MODIFIED="1721710446763" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/stock_market/fl_multimodal_knowledge_graph/data_collection/data_collection_tools" />
     <SUITE FILE_PATH="coverage/stock_market_application_2024$download_sounds.coverage" NAME="download_sounds Coverage Results" MODIFIED="1725260808373" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/stock_market/fl_multimodal_knowledge_graph/data_collection/data_collection_tools" />
     <SUITE FILE_PATH="coverage/stock_market_application_2024$uri_tools.coverage" NAME="uri_tools Coverage Results" MODIFIED="1721625015401" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/stock_market/fl_multimodal_knowledge_graph/data_collection/data_collection_tools" />
-    <SUITE FILE_PATH="coverage/stock_market_application_2024$simple_stock_market_prediction.coverage" NAME="simple_stock_market_prediction Coverage Results" MODIFIED="1730264461309" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/stock_market_application_2024$simple_stock_market_prediction.coverage" NAME="simple_stock_market_prediction Coverage Results" MODIFIED="1730351094521" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/stock_market_application_2024$proxy_tool__1_.coverage" NAME="proxy_tool (1) Coverage Results" MODIFIED="1725260794181" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/stock_market/fl_multimodal_knowledge_graph/data_collection/data_collection_tools" />
     <SUITE FILE_PATH="coverage/stock_market_application_2024$Stock_Data_Analysis.coverage" NAME="Stock_Data_Analysis Coverage Results" MODIFIED="1714972902864" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/stock_market_application_2024$.coverage" NAME=" Coverage Results" MODIFIED="1729828024126" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/stock_market" />

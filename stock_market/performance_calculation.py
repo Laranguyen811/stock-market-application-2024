@@ -133,8 +133,56 @@ class PerformanceCalculator:
         total_value = sum(portfolio.values())
         return {asset: total_value * ratio for asset, ratio in target_ratios.items()}
 
+    def calculate_max_drawdown(self,portfolio_values):
+        '''
+        Takes portfolio values and calculates the maximum drawdown (the biggest asset price drop from a peak to a trough, key indicator of downside risk over a period).
+        Inputs:
+            portfolio_values(list): A list of portfolio values.
+        Returns:
+             float: A float number of maximum drawdown
+        '''
+        peak = portfolio_values[0]
+        max_drawdown = 0
+        for value in portfolio_values:
+            if value > peak:
+                peak = value
+            drawdown = (peak - value) / peak
+            if drawdown > max_drawdown:
+                max_drawdown = drawdown
+        return max_drawdown
 
+    def calculate_risk_reward_ratio(self,potential_profit,potential_loss):
+        '''
+        Takes potential profit and loss and returns the risk reward ratio (the ratio between potential profit and potential loss).
+        Inputs:
+            potential_profit(float): A float number representing the potential profit.
+            potential_loss(float): A float number representing the potential loss.
+        Returns:
+            float: A float number representing the risk reward ratio.
+        '''
+        return potential_loss/potential_profit
 
+    def calculate_volatility(self,prices, period):
+        '''
+        Takes prices and period and calculates the volatility threshold (if reaches or exceeds will trigger action or decision) of the stock.
+        Inputs:
+            prices(list): A list of prices of a stock.
+            period(int): An integer of a period
+        Returns:
+             float: A float number containing the volatility of the stock.
+        '''
+        returns = [prices[i]/ prices[i-1] - 1 for i in range(1,len(prices))]
+        return (sum([(r - sum(returns) / len(returns)) ** 2 for r in returns]))
+    def calculate_lookback_period(self,prices, period):
+        '''
+        Takes prices and period and calculates the lookback period (the period for which data is analysed for calculations or decisions).
+        Inputs:
+            prices(list): A list of prices.
+            period(int): An integer of a period.
+        Returns:
+             integer: A integer representing the lookback period.
+        '''
+        return prices[-period:]
 
 
 
