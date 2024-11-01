@@ -3,7 +3,7 @@ from typing import Any, Tuple, List, Optional
 import hmmlearn
 import numpy as np
 from numpy import ndarray, dtype, floating, float_
-from numpy._typing import _64Bit
+from numpy._typing import _64Bit, NDArray
 from sklearn.model_selection import StratifiedGroupKFold, StratifiedKFold, KFold
 import warnings
 # Hidden Markov Model (HMM) is a tool representing the probability of states given observed data. The states are not directly observable, hence, hidden.
@@ -121,7 +121,7 @@ def viterbi_algorithm_1(X,log_A, log_B, log_pi):
     return path
 
 
-def viterbi_algorithm_2(X, log_A, log_B, log_pi):
+def viterbi_algorithm_2(X:NDArray, log_A: NDArray, log_B: NDArray, log_pi: NDArray) -> NDArray:
     ''' Viterbi algorithm to most probable sequence of hidden states, computing the shortest path through the trellis diagram of Hidden Markov Model.
 
     Args:
@@ -136,10 +136,11 @@ def viterbi_algorithm_2(X, log_A, log_B, log_pi):
     K = log_A.shape[0]
 
     # Initializing delta and psi
-    log_delta: ndarray[Any, dtype[floating[_64Bit] | float_]] = np.zeros((N,K,log_B.shape[1]))# delta is the probability as the combination of the transition from the previous state i at time t-1 and the most probable path leading to i
+    log_delta = np.zeros((N,K))# delta is the probability as the combination of the transition from the previous state i at time t-1 and the most probable path leading to i
     print(f"log delta shape: {log_delta.shape}")
     psi = np.zeros((N,K), dtype=int)
     log_delta[0] = log_pi + log_B[:, X[0]]
+    log_delta[0] = np.sum(log_delta[0],axis=1)
     print(f"log delta shape: {log_delta.shape}, log shape: {log_pi.shape}, log delta initialised shape: {log_delta[0]}")
     for t in range(1,N):
         for j in range(K):
@@ -153,7 +154,7 @@ def viterbi_algorithm_2(X, log_A, log_B, log_pi):
 
     # Back tracing
     for t in range(N-2,-1,-1):
-        path[N-1] = psi[t+1,path[t+1]]  # Assigning path at time step t to psi at time step t+1 and path at time step t+1
+        path[t] = psi[t+1,path[t+1]]  # Assigning path at time step t to psi at time step t+1 and path at time step t+1
 
     return path
 def log_sum_exp(log_probs: np.ndarray,axis: Optional[int] = None) -> np.ndarray:

@@ -184,5 +184,16 @@ class PerformanceCalculator:
         '''
         return prices[-period:]
 
+    def calculate_carbon_footprint(self,activity_data,emission_factor):
+        '''
+            Calculates the carbon footprint by measuring green house gas emissions produced directly and indirectly by a company.
+            Inputs:
+                activity_data(dictionary): A dictionary of activity data
+                emission_factor(float): A float number of emission factor
+            Returns:
+                float: A float number of green house gas emissions
+        '''
+        ghg_emissions = activity_data * emission_factor
+        return ghg_emissions
 
 
