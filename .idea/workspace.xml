@@ -4,11 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4f5895f3-2d93-4355-bcbb-97c6701d0028" name="Changes" comment="- looking at fixing train_and_evaluate_HMM">
+    <list default="true" id="4f5895f3-2d93-4355-bcbb-97c6701d0028" name="Changes" comment="- added discretise_data function to simple_stock_market_prediction.py&#10;- added calculate_carbon_footprint to performance_calculation.py">
       <change afterPath="$PROJECT_DIR$/simple_stock_market_prediction.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/misc/Stock App Review.md" beforeDir="false" afterPath="$PROJECT_DIR$/misc/Stock App Review.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/stock_market/hidden_markov_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/stock_market/hidden_markov_model.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/stock_market/performance_calculation.py" beforeDir="false" afterPath="$PROJECT_DIR$/stock_market/performance_calculation.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -124,7 +123,7 @@
       <recent name="C:\Users\laran\PycharmProjects\ASX\stock_market\fl_multimodal_knowledge_graph\data_collection" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.add_tool">
+  <component name="RunManager">
     <configuration name="add_tool" type="PythonConfigurationType" factoryName="Python">
       <module name="ASX" />
       <option name="ENV_FILES" value="" />
@@ -495,22 +494,10 @@
       <workItem from="1730084829315" duration="10615000" />
       <workItem from="1730257253784" duration="8737000" />
       <workItem from="1730345604229" duration="9905000" />
-    </task>
-    <task id="LOCAL-00056" summary="- added history.py">
-      <option name="closed" value="true" />
-      <created>1723539599639</created>
-      <option name="number" value="00056" />
-      <option name="presentableId" value="LOCAL-00056" />
-      <option name="project" value="LOCAL" />
-      <updated>1723539599640</updated>
-    </task>
-    <task id="LOCAL-00057" summary="- added history.py">
-      <option name="closed" value="true" />
-      <created>1723544580320</created>
-      <option name="number" value="00057" />
-      <option name="presentableId" value="LOCAL-00057" />
-      <option name="project" value="LOCAL" />
-      <updated>1723544580320</updated>
+      <workItem from="1730369234684" duration="60000" />
+      <workItem from="1730430317253" duration="9975000" />
+      <workItem from="1730953180999" duration="4513000" />
+      <workItem from="1731294395082" duration="6597000" />
     </task>
     <task id="LOCAL-00058" summary="- added test_download_images.py&#10;- added test_download_sounds.py&#10;- added mel_spectrogram_features.py">
       <option name="closed" value="true" />
@@ -888,7 +875,23 @@
       <option name="project" value="LOCAL" />
       <updated>1730267776962</updated>
     </task>
-    <option name="localTasksCounter" value="105" />
+    <task id="LOCAL-00105" summary="- added performance_calculation.py">
+      <option name="closed" value="true" />
+      <created>1730369284569</created>
+      <option name="number" value="00105" />
+      <option name="presentableId" value="LOCAL-00105" />
+      <option name="project" value="LOCAL" />
+      <updated>1730369284570</updated>
+    </task>
+    <task id="LOCAL-00106" summary="- added discretise_data function to simple_stock_market_prediction.py&#10;- added calculate_carbon_footprint to performance_calculation.py">
+      <option name="closed" value="true" />
+      <created>1730440748454</created>
+      <option name="number" value="00106" />
+      <option name="presentableId" value="LOCAL-00106" />
+      <option name="project" value="LOCAL" />
+      <updated>1730440748456</updated>
+    </task>
+    <option name="localTasksCounter" value="107" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -918,7 +921,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="- added MHSA class" />
     <MESSAGE value="- finished MHSA class" />
     <MESSAGE value="- finished HybridEmbed class" />
     <MESSAGE value="- finished Conviformers&#10;- added SHAP" />
@@ -932,7 +934,6 @@
     <MESSAGE value="- improved viterbi and baum-welch algorithm&#10;- added evaluation with K-fold" />
     <MESSAGE value="- fixed baum-welch algo comment" />
     <MESSAGE value="- added evolutionary_algorithm.py" />
-    <MESSAGE value="- added performance_calculation.py" />
     <MESSAGE value="- continued performance_calculation.py" />
     <MESSAGE value="- continued performance_calculations.py" />
     <MESSAGE value="- fixed forward_algorithm.py" />
@@ -943,7 +944,9 @@
     <MESSAGE value="- identified wrong logic of code in HMM&#10;- added calculate_position_size.py, moving_average_crossover and calculate_allocation_ratios" />
     <MESSAGE value="- completely fixed HMM &#10;- added rebalance_portfolio to performance_calculation.py" />
     <MESSAGE value="- looking at fixing train_and_evaluate_HMM" />
-    <option name="LAST_COMMIT_MESSAGE" value="- looking at fixing train_and_evaluate_HMM" />
+    <MESSAGE value="- added performance_calculation.py" />
+    <MESSAGE value="- added discretise_data function to simple_stock_market_prediction.py&#10;- added calculate_carbon_footprint to performance_calculation.py" />
+    <option name="LAST_COMMIT_MESSAGE" value="- added discretise_data function to simple_stock_market_prediction.py&#10;- added calculate_carbon_footprint to performance_calculation.py" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -979,18 +982,13 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/simple_stock_market_prediction.py</url>
-          <line>172</line>
+          <line>307</line>
           <option name="timeStamp" value="13" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/misc/proxy_list.py</url>
           <line>9</line>
           <option name="timeStamp" value="14" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/simple_stock_market_prediction.py</url>
-          <line>182</line>
-          <option name="timeStamp" value="15" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
@@ -1007,7 +1005,7 @@
     <SUITE FILE_PATH="coverage/stock_market_application_2024$add_tools.coverage" NAME="uri_tool Coverage Results" MODIFIED="1721710446763" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/stock_market/fl_multimodal_knowledge_graph/data_collection/data_collection_tools" />
     <SUITE FILE_PATH="coverage/stock_market_application_2024$download_sounds.coverage" NAME="download_sounds Coverage Results" MODIFIED="1725260808373" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/stock_market/fl_multimodal_knowledge_graph/data_collection/data_collection_tools" />
     <SUITE FILE_PATH="coverage/stock_market_application_2024$uri_tools.coverage" NAME="uri_tools Coverage Results" MODIFIED="1721625015401" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/stock_market/fl_multimodal_knowledge_graph/data_collection/data_collection_tools" />
-    <SUITE FILE_PATH="coverage/stock_market_application_2024$simple_stock_market_prediction.coverage" NAME="simple_stock_market_prediction Coverage Results" MODIFIED="1730351094521" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/stock_market_application_2024$simple_stock_market_prediction.coverage" NAME="simple_stock_market_prediction Coverage Results" MODIFIED="1731302147635" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/stock_market_application_2024$proxy_tool__1_.coverage" NAME="proxy_tool (1) Coverage Results" MODIFIED="1725260794181" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/stock_market/fl_multimodal_knowledge_graph/data_collection/data_collection_tools" />
     <SUITE FILE_PATH="coverage/stock_market_application_2024$Stock_Data_Analysis.coverage" NAME="Stock_Data_Analysis Coverage Results" MODIFIED="1714972902864" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/stock_market_application_2024$.coverage" NAME=" Coverage Results" MODIFIED="1729828024126" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/stock_market" />

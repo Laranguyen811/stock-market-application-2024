@@ -1,3 +1,5 @@
+import pandas as pd
+
 
 class PerformanceCalculator:
     '''
@@ -195,5 +197,44 @@ class PerformanceCalculator:
         '''
         ghg_emissions = activity_data * emission_factor
         return ghg_emissions
+    def calculate_energy_consumption(self,energy_data: dict ) -> pd.DataFrame:
+        ''' Takes the energy consumption data and returns the total energy consumption for an organisation.
+        Inputs:
+            energy_data(dict): A dictionary of energy consumption data
+        Returns:
+            pd.DataFrame: A DataFrame containing the total energy consumption of an organisation
+        '''
 
+        # Create a DataFrame for the total energy consumption data
+        df = pd.DataFrame(energy_data)
+        df['Total Energy Consumption (kWh'] = df.sum(axis=1)
 
+        # Calculating annual total energy consumption
+        annual_total_consumption = df['Total Energy Consumption (kWh)'].sum()
+
+        # Adding annual total to the DataFrame
+        df.loc['Annual Total'] = df.sum()
+        df.at['Annual Total', 'Total Energy Consumption (kWh)'] = annual_total_consumption  # Locating the annual total consumption
+
+        return df
+
+    def calculate_water_usage(self,water_usage_data: dict) -> pd.DataFrame:
+        '''
+        Takes the water usage data and returns the total water usage for an organisation.
+        Inputs:
+            water_usage_data(dict): A dictionary containing water sources and values as lists of monthly usage
+        Returns:
+            pd.DataFrame: A DataFrame containing the total water usage for each month
+        '''
+        water_usage_df = pd.DataFrame(water_usage_data)
+        # Calculating total water usage for each month
+        water_usage_df['Total Water Usage (cubic meters)'] = df.sum(axis=1)
+
+        # Calculating annual total water usage
+        annual_total_water_usage = water_usage_df['Total Water Usage (cubic meters)'].sum()
+
+        # Adding annual total for the DataFrame
+        water_usage_df.loc['Annual Total'] = water_usage_df.sum()
+        water_usage_df.at['Annual Total', 'Total Water Usage (cubic meters)'] = annual_total_water_usage
+
+        return water_usage_df
