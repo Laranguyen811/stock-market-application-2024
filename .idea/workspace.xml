@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4f5895f3-2d93-4355-bcbb-97c6701d0028" name="Changes" comment="- fixing simple_stock_market_prediction.py&#10;- adding functions to performance_calculation.py">
+    <list default="true" id="4f5895f3-2d93-4355-bcbb-97c6701d0028" name="Changes" comment="- fixing simple_stock_market_prediction.py">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/misc/Stock App Review.md" beforeDir="false" afterPath="$PROJECT_DIR$/misc/Stock App Review.md" afterDir="false" />
     </list>
@@ -121,7 +121,7 @@
       <recent name="C:\Users\laran\PycharmProjects\ASX\stock_market\fl_multimodal_knowledge_graph\data_collection" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Python.add_tool">
     <configuration name="add_tool" type="PythonConfigurationType" factoryName="Python">
       <module name="ASX" />
       <option name="ENV_FILES" value="" />
@@ -307,8 +307,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-PY-242.23726.102" />
-        <option value="bundled-python-sdk-5e1850174b45-399fe30bd8c1-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-242.23726.102" />
+        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-PY-242.24807.21" />
+        <option value="bundled-python-sdk-00717045f1d3-399fe30bd8c1-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-242.24807.21" />
       </set>
     </attachedChunks>
   </component>
@@ -499,15 +499,10 @@
       <workItem from="1732503932258" duration="6416000" />
       <workItem from="1732590227370" duration="4760000" />
       <workItem from="1732683694987" duration="3402000" />
-      <workItem from="1732763200979" duration="4166000" />
-    </task>
-    <task id="LOCAL-00059" summary="- added test_download_images.py&#10;- added test_download_sounds.py&#10;- added mel_spectrogram_features.py">
-      <option name="closed" value="true" />
-      <created>1725346940015</created>
-      <option name="number" value="00059" />
-      <option name="presentableId" value="LOCAL-00059" />
-      <option name="project" value="LOCAL" />
-      <updated>1725346940015</updated>
+      <workItem from="1732763200979" duration="4563000" />
+      <workItem from="1735082140528" duration="37000" />
+      <workItem from="1735792713617" duration="1389000" />
+      <workItem from="1735879946976" duration="3438000" />
     </task>
     <task id="LOCAL-00060" summary="- added framing.py&#10;- added symmetric_hann_window.py&#10;- added stft_magnitude.py">
       <option name="closed" value="true" />
@@ -893,7 +888,15 @@
       <option name="project" value="LOCAL" />
       <updated>1731304589278</updated>
     </task>
-    <option name="localTasksCounter" value="108" />
+    <task id="LOCAL-00108" summary="- fixing simple_stock_market_prediction.py">
+      <option name="closed" value="true" />
+      <created>1732774186146</created>
+      <option name="number" value="00108" />
+      <option name="presentableId" value="LOCAL-00108" />
+      <option name="project" value="LOCAL" />
+      <updated>1732774186146</updated>
+    </task>
+    <option name="localTasksCounter" value="109" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -923,7 +926,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="- finished HybridEmbed class" />
     <MESSAGE value="- finished Conviformers&#10;- added SHAP" />
     <MESSAGE value="- added hmm&#10;- added download_texts.py" />
     <MESSAGE value="- added twitter api" />
@@ -948,7 +950,8 @@
     <MESSAGE value="- added performance_calculation.py" />
     <MESSAGE value="- added discretise_data function to simple_stock_market_prediction.py&#10;- added calculate_carbon_footprint to performance_calculation.py" />
     <MESSAGE value="- fixing simple_stock_market_prediction.py&#10;- adding functions to performance_calculation.py" />
-    <option name="LAST_COMMIT_MESSAGE" value="- fixing simple_stock_market_prediction.py&#10;- adding functions to performance_calculation.py" />
+    <MESSAGE value="- fixing simple_stock_market_prediction.py" />
+    <option name="LAST_COMMIT_MESSAGE" value="- fixing simple_stock_market_prediction.py" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -983,19 +986,9 @@
           <option name="timeStamp" value="11" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/simple_stock_market_prediction.py</url>
-          <line>332</line>
-          <option name="timeStamp" value="13" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/misc/proxy_list.py</url>
           <line>9</line>
           <option name="timeStamp" value="14" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/simple_stock_market_prediction.py</url>
-          <line>240</line>
-          <option name="timeStamp" value="16" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
