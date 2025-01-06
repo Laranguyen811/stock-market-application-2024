@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4f5895f3-2d93-4355-bcbb-97c6701d0028" name="Changes" comment="- fixing simple_stock_market_prediction.py">
+    <list default="true" id="4f5895f3-2d93-4355-bcbb-97c6701d0028" name="Changes" comment="- adding waste management and labor score functions">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/misc/Stock App Review.md" beforeDir="false" afterPath="$PROJECT_DIR$/misc/Stock App Review.md" afterDir="false" />
     </list>
@@ -502,15 +502,9 @@
       <workItem from="1732763200979" duration="4563000" />
       <workItem from="1735082140528" duration="37000" />
       <workItem from="1735792713617" duration="1389000" />
-      <workItem from="1735879946976" duration="3438000" />
-    </task>
-    <task id="LOCAL-00060" summary="- added framing.py&#10;- added symmetric_hann_window.py&#10;- added stft_magnitude.py">
-      <option name="closed" value="true" />
-      <created>1725436326873</created>
-      <option name="number" value="00060" />
-      <option name="presentableId" value="LOCAL-00060" />
-      <option name="project" value="LOCAL" />
-      <updated>1725436326874</updated>
+      <workItem from="1735879946976" duration="3540000" />
+      <workItem from="1735980345865" duration="855000" />
+      <workItem from="1736139687112" duration="2913000" />
     </task>
     <task id="LOCAL-00061" summary="- added hertz_to_mel.py&#10;- added spectrogram_to_mel_matrix.py&#10;- added log_mel_spectrogram.py">
       <option name="closed" value="true" />
@@ -896,7 +890,15 @@
       <option name="project" value="LOCAL" />
       <updated>1732774186146</updated>
     </task>
-    <option name="localTasksCounter" value="109" />
+    <task id="LOCAL-00109" summary="- adding waste management and labor score functions">
+      <option name="closed" value="true" />
+      <created>1735883919259</created>
+      <option name="number" value="00109" />
+      <option name="presentableId" value="LOCAL-00109" />
+      <option name="project" value="LOCAL" />
+      <updated>1735883919259</updated>
+    </task>
+    <option name="localTasksCounter" value="110" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -926,7 +928,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="- finished Conviformers&#10;- added SHAP" />
     <MESSAGE value="- added hmm&#10;- added download_texts.py" />
     <MESSAGE value="- added twitter api" />
     <MESSAGE value="- added add_multimodel_node_text" />
@@ -951,7 +952,8 @@
     <MESSAGE value="- added discretise_data function to simple_stock_market_prediction.py&#10;- added calculate_carbon_footprint to performance_calculation.py" />
     <MESSAGE value="- fixing simple_stock_market_prediction.py&#10;- adding functions to performance_calculation.py" />
     <MESSAGE value="- fixing simple_stock_market_prediction.py" />
-    <option name="LAST_COMMIT_MESSAGE" value="- fixing simple_stock_market_prediction.py" />
+    <MESSAGE value="- adding waste management and labor score functions" />
+    <option name="LAST_COMMIT_MESSAGE" value="- adding waste management and labor score functions" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -989,6 +991,10 @@
           <url>file://$PROJECT_DIR$/misc/proxy_list.py</url>
           <line>9</line>
           <option name="timeStamp" value="14" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/stock_market/fl_multimodal_knowledge_graph/data_collection/data_collection_tools/start_transport_tool.py</url>
+          <option name="timeStamp" value="15" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
