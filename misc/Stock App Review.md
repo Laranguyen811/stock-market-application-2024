@@ -2392,3 +2392,17 @@ major progress: representation learning + complex reasoning (replacing rule-base
 - implement KG if have time
 - initiate 3rd pass DL paper
 - read Gecko paper 
+
+***7/1/2025***
+***Things I learned today:***
+- Gecko: crucial to standardise the evaluation of models regarding the annotation template and benchmark; fine-grained prompts and templates more consistent with each other than coarse-grained and vice versa, reliable prompts and templates with inner-annotator agreement can lead to more consistent 
+model ordering, when auto-eval metrics => reliable templates => better
+***Things I did well today:***
+- continuing performance calculations
+- 3rd pass DL paper
+***Things I did not do well today:***
+- did not finish perf cals
+- did not start representation learning + complex reasoning
+***Things I will do better next time:***
+- finish perf cals
+- start representation learning + complex reasoning
