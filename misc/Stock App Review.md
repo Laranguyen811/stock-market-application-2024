@@ -1856,7 +1856,7 @@ In the update state, the observed data is absorbed using Bayes rule. In the forw
 - read KG paper if have time
 - solving coding regarding Twitter API
 
-1/10/2024
+2/10/2024
 ***Things I learned today***
 - building a model from scratch to have a good grasp of data structures and algorithms
 - HMM
@@ -1868,3 +1868,527 @@ In the update state, the observed data is absorbed using Bayes rule. In the forw
 ***Things I will do better next time:***
 - Understand the paper to the T
 - keep on building
+
+3/10/2024
+***Things I learned today:***
+- 3 problems to solve for HMM: given the observations and the model, how can we maximise the probability distribution of observations given the states, how do we find the best sequence of hidden states to explain the observations, how to find the best parameters for the model
+- smoothed marginal: a probability distribution of hidden states given observations up to the certain point.
+- filtered marginal: a probability distribution of hidden states given observations from all points in time.
+- belief state: a probability distribution of hidden states that a model has
+- smoothed posterior: a probability distribution of hidden states given observations of upto and including the current time step and future observations.
+***Things I did well today:***
+- 3rd pass HMM
+- viterbi algorithm
+- found a way to install squid
+***Things I did not do well today:***
+- not finished viterbi algo
+- not created a list of proxies yet
+***Things I will do better next time:***
+- reading KG when have time
+- implement baum-welch algo and continue viterbi algo
+- create a proxy list
+- continue 3rd pass HMM, understand everything 
+
+4/10/2024
+***Things I learned today:***
+- Mathematical expectation: measuring the central tendency of a variable, the average value of the variable over a number of trials. 
+E = sum(x_i * P(x_i))
+- Lagrange multiplier: a method to solve the optimization problems for a function with constraints by adding a Lagrange multiplier, a variable, to a constraint. 
+f(x,y,z) = lambda * g(a,b,c)
+- Using proxy list can protect your privacy and security
+
+***Things I did well today:***
+- finished baum-welch algorithm
+- found a way to create a proxy list
+- understood some core mathematical concepts
+
+***Things I did not do well today:***
+- Did not fully understand the baum-welch algo
+- Not created a proxy list yet
+- Did not read KG paper
+
+***Things I will do better next time:***
+- Understand Baum-Welch algo better
+- Create a proxy list 
+- Read KG paper when have time 
+- Evaluate the model  
+
+
+7/10/2024
+***Things I learned today:***
+- np.outter: computing outter product of matrices
+
+***Things I did well today:***
+- added k-fold
+- fixed baum-welch algo
+- read KG paper
+
+***Things I did not do well today:***
+- did not check whether my k-fold was correct or not
+- did not finish reading KG paper
+- did not create a proxy list
+
+***Things I will do better next time:***
+- continue reading KG paper
+- check my code
+- publish my code to github 
+- create a proxy list
+
+8/10/2024
+
+***Things I learned today:***
+- [:, None]: turning an array into a vector column
+- np.max: finding the maximum
+- np.argmax: finding output from the maximum function
+
+***Things I did well today:***
+- fixing viterbi and baum-welch algos
+- adding K-fold for cross-validation
+- read KG paper
+- understanding more about HMM
+
+***Things I did not do well today:***
+- Did not fully grasp HMM yet
+- encountered errors with code
+- did not create a proxy list yet
+
+***Things I will do better next time:***
+- understand more about HMM by reading more HMM papers
+- checking errors
+- continue reading KG papers
+- create a proxy list
+
+9/10/2024
+***Things I learned today***
+- overflow: when the data type is too large for a computer to handle 
+- underflow: when the output is too small for a computer to handle 
+- markov property: the probability of given state only depends on the previous state
+- output independence: given observations and states, a probability of observation only depends on the current state 
+
+***Things I did well today:***
+- fixing the denominator = 0 problem
+- reading the another lecture on HHM
+- looking at how to solve the overflow problem
+
+***Things I did not do well today:***
+- not reading the KG paper
+- did not code to solve the overflow problem
+- did not create a proxy list
+
+***Things I will do better next time:***
+- reading the KG paper
+- continue learning about HMM
+- code to solve the overflow problem
+- create a proxy list 
+
+10/10/2024
+***Things I learned today***
+- log transformation: using log to transform to normalise data, reduce skewness, handle outliers and stabilise variance. In case of hmm, it helps to fix the overflow problem. Considerations: non-positive values => need to handle them separately in log transformation, interpretation: interpreting log-transformed data is different from the original one
+
+***Things I did do well today:***
+- fix the overflow problem by using log transformation
+- understand more about log transformation
+- continue reading about Hidden Markov Model
+- coding
+
+***Things I did not do well today:***
+- not fully understand the code yet
+- did not finish reading another HMM paper
+- did not read KG paper
+- did not fix the broadcasting problem (Python allowing arrays with 2 different shapes to perform arithmetic operations)
+
+***Things I will do better next time:***
+- understand the code more
+- continue reading about HMM
+- read KG if have time
+- look at fixing the broadcasting problem
+- create a proxy list
+
+11/10/2024
+***Things I learned today:***
+- quality assessment for a knowledge graph: for what purpose we can use a KG regarding the domain or data model.
+- accuracy: how well relations and entities represent real-world phenomena. 3 categories: syntactical accuracy, semantic accuracy and timeliness
+
+***Things I did well today:***
+- coding a bit
+- reading and watching videos about HMM
+- reading KG papers
+
+***Things I did not do well today:***
+- Feeling sleepy due to lacking sleep
+- Not coding a lot
+- Not fixing the broadcasting problem
+
+***Things I will not do well today:***
+- code more
+- fixing broadcasting problem
+- napping more 
+- understanding more about HMM 
+- reading KG paper 
+
+
+14/10/2024
+***Things I learned today:***
+- evolutionary algorithm: define the problem, initialise population, selection, crossover, mutation, create a new generation,
+run the evolutionary algo
+***Things I did well today:***
+- Understanding more deeply about HMM
+- starting to build evolutionary algo
+
+***Things I did not do well today:***
+- need more understanding of HMM
+- not reading KG paper
+- not fixing the HMM issue with broadcasting yet
+
+***Things I will do better next time:***
+- continue the lecture series of HMM
+- reading KG paper if have time
+- continue building evolutionary algo
+- continue looking into the HMM issue with broadcasting 
+
+15/10/2024
+***Things I learned today:***
+- to calculate the probability of an observation given a model requires a large amount of calculations (10^72) => we need to use the forward-backward algorithm
+- need to calculate performance (parameters) to evaluate fitness for the evolutionary algorithm 
+***Things I did well today:***
+- coded evolutionary algo and performance calculation
+- watched up to 11th video of HMM in the lecture series
+***Things I did not do well today:***
+- have not finished the HMM series yet
+- did not solve the broadcasting issue yet
+***Things I will do better next time:***
+- continue the HMM series
+- looking at solving the broadcasting issue
+- continue coding performance calculation
+- reading KG when can 
+
+16/10/2024
+***Things I learned today:***
+- baum-welch algorithm helps us answer the question, given the observations, what are the best parameters (model probabilities)
+- exponential moving average: (price - ema of today) * multiplier +  ema of today
+- Relative Strength Index Threshold: movement oscillator, measuring the rate and speed of change in price movements.
+
+***Things I did well today:***
+- finished HMM series
+- continued to code performance calculation: rsi threshold
+- understood more about HMM
+***Things I did not do well today:***
+- did not fix the hmm problem
+- did not read KG paper
+
+***Things I will do better next time:***
+- fixing the problem with HMM
+- continue code performance calculation
+- read KG paper 
+- create a proxy list
+
+18/10/2024
+***Things I learned today:***
+- Baum-Welch algo: using expectation maximization and re-estimation to find the best parameters (model probabilities) given observations 
+- bollinger bands: calculate the simple moving average, the standard deviation of the period (usually 20), the upper bollinger band = sma + (number of std dev * std dev), lower bollinger band = sma - ( number of std dev * std dev)
+
+***Things I did well today:***
+- found the first error in the forward algorithm => log_a[t] instead of log_a[t], log_b[t] assigned to log_B[t] * (log_A.T @ log_a[t-1])
+- continued to calculate performance => bollinger bands 
+- understood HMM more intuitively
+
+***Things I did not do well today:***
+- Not finished fixing HMM yet
+- not read KG paper today
+- not finished performance calculation yet
+
+***Things I will do better next time:***
+- continue fixing HMM
+- reading KG paper
+- continue performance calculation
+
+21/10/2024
+***Things I learned today:***
+- log_delta = max_val + log_B[j,t] since we are adding 2 log values together to avoid underflow 
+- KG => coverage => completeness(schema, property,representation,linkability), coherence(validity, consistency)
+***Things I did well today:***
+- fixed viterbi algo
+- added proxy list
+- read KG paper
+- review HMM
+
+***Things I did not do well today:***
+- not fully completed performance_calculation yet
+- not completed proxy list yet
+
+***Things I will do better next time:***
+- continue performance calculation
+- continue proxy list
+- continue reading KG paper
+- continue fixing HMM
+
+22/10/2024
+***Things I did well today:***
+- Added error handling to the code
+- added more code to proxy_list
+- understood HMM better
+
+***Things I did not do well today:***
+- Did not fully fix HMM
+- Did not read KG paper
+- Did not write code for performance calculation
+
+***Things I will do better next time:***
+- Go through HMM code line by line, understand every single line
+- Continue fixing HMM
+- Read KG paper when have time
+- Write code for performance calculation when have time 
+
+23/10/2024
+***Things I learned today:***
+- entry price: a price a trader set. stop loss order: a limit set to prevent further loss. take profit order: set by a trader to close a position when a price of a security reaches a desired profit
+- KG: succinctness. KG completion and correction
+
+***Things I did well today:***
+- Knew which algo was incorrect (baum-welch algo)
+- continue proxy_list
+- added new functions to performance_calculation
+- understand lines of code
+
+***Things I did not do well today:***
+- not fixed HMM yet
+***Things I will do better next time:***
+- continue fixing HMM
+- continue performance_calculation
+- continue reading KG
+
+24/10/2024
+***Things I learned today:***
+- error due to too small of a dataset to test on
+***Things I did well today:***
+- fixing HMM
+***Things I did not do well today:***
+- not fully fixed HMM
+
+***Things I will do better next time:***
+- fixing HMM
+- read KG paper
+- write code for performance calculation when I have time
+
+25/10/2024
+***Things I learned today:***
+- The code might cause issues in my baum-welch algo is log_A_num.reshape(log_gamma[1],-1) since it performs an operation to
+shape log_A_num to reshape into log_gamma's number of columns by automatically finding it
+- moving average crossover: a technical analysis to see the trends of a price using simple moving average, crossing over short terms and long terms. 
+- position size: the number of units of a security a trader/investor wants to invest it to reduce risks and maximise returns
+- KG: FAIR principles and Linked Data Principles. Access protocols: dumps, nodes, edge patterns, complex graph patterns, other protocols for more complex queries 
+
+***Things I did well today:***
+- pinpointing where I went wrong with the baum-welch algo
+- coding performance calculation
+- reading KG paper
+
+***Things I did not do well today:***
+- not fixed HMM yet
+- not finished KG paper yet
+
+***Things I will do better next time:***
+- fixing HMM
+- reading KG papers
+- looking at SRI metrics to add to performance calculation
+- continue coding
+
+28/10/2024
+***Things I learned today:***
+- log sum exponential: a technique to minimise underflow and overflow. Steps: find the maximum value of all elements, subtract it from all elements, find the exponentials of the shifted values and sum them up. Then
+find the log of the summed exponentials and add the maximum value back to the log. 
+- the shapes must match to perform operations 
+- to rebalance portfolio: find current allocation (value of sec/total values), find target ratios => find the amount need to rebalance by multiplying the total value with target ratios for each security
+
+***Things I did well today:***
+- fixed HMM completely 
+- continued with performance calculation
+- undertood more mathematical concepts
+
+***Things I did not do well today:***
+- not improved HMM's prediction accuracy yet
+- not read KG paper
+- not looked into SRI metrics yet
+
+***Things I will do better next time:***
+- improve the prediction accuracy of HMM
+- read KG paper
+- look into SRI metrics 
+- continue my intuitive understanding of maths, including why log sum exponential works
+
+30/10/2024
+***Things I learned today:***
+- sequence length is crucial for context capture, model complexity, data efficiency, performance
+- reshape(): reshaping into n-D array. reshape(-1): => to 1-D array
+***Things I did well today:***
+- looked at fixing train_and_evaluate_hmm
+- finished KG paper 2nd pass
+***Things I did not do well today:***
+- not finished fixing train_and_evaluate_hmm
+- not coding performance_calculation
+***Things I will do better next time:***
+- continue fixing train_and_evaluate_hmm
+- coding performance_calculation
+- 3rd pass KG paper
+- looking into SRI metrics
+
+31/10/2024
+***Things I learned today:***
+- np.newaxis can be used to broadcast matrices of different shapes
+- KGs: usage protocols, open KGs, Enterprise KGs, future directions
+***Things I did well today:***
+- calculating performance 
+- looking at fixing HMM train and evaluate
+***Things I did not do well today:***
+- did not fully fix HMM train and evaluate
+- did not look into SRI metrics
+***Things I will do better next time:***
+- 3rd pass KG => implementation
+- continue coding performance calculation
+- continue fixing HMM train and evaluate: need to look at HMM parameter initializer and delta
+
+1/11/2024
+***Things I learned today:***
+- I learned that the error in simple_stock_market_prediction might be because I did not discretise data 
+- calculate carbon footprint: ghg emissions = activity data * emission factor 
+***Things I did well today:***
+- continue looking into fixing simple_stock_market_prediction
+- added carbon footprint calculation
+***Things I did not do well today:***
+- not fully fixed hmm yet
+- did not implement KG paper yet
+***Things I will do better next time:***
+- looking into fixing hmm
+- continue adding sri metrics 
+- implement KG paper
+
+7/11/2024
+***Things I learned today:***
+- we need to focus on things that matter
+***Things I did well today:***
+- continue with coding
+***Things I did not do well today:***
+- not finished fixing HMM yet
+***Things I will do better next time:***
+- fixing HMM
+
+11/11/2024
+***Things I learned today:***
+- need to declare global variables 
+- calculate consumption requires data collection, data frame creation, total usage calculation, annual total usage, adding annual usage
+
+***Things I did well today:***
+- fixing stock prediction
+- adding new SRI calculations to performance calculation
+
+***Things I did not do well today:***
+- not fully fixed stock prediction yet
+- not implemented KG paper
+
+***Things I will do better next time:***
+- fixing stock pred
+- implement KG paper
+
+***25/11/2024***
+***Things I learned today:***
+- different prompting techniques: zero-shot prompting, one-shot prompting, few-shot prompting, Chain of Thoughts, Taking a step back, automated prompting, formatting output, temperature, top K, top P, Tree of Thoughts, code prompting, ReAct
+- .reshape(number,number): 1st is dimension added in row, 2nd is for columns
+***Things I did well today:***
+- tried to fix hmm
+- learned about prompting
+***Things I did not do well today:***
+- not fully fixed hmm
+- not experimented with knowledge graphs
+
+***Things I will do better next time:***
+- fixing hmm 
+- continuing with learning about GenAI
+- experimenting with KG if have time
+- continuing with performance calculation 
+
+26/11/2024
+***Things I learned today:***
+- vector embeddings: low-dimension vector space where geometrical distances represent how far apart (similar) vector spaces are
+- vector database: database specialised in managing and querying vectors
+- vector search: search methods for vectors
+- methods for broadcasting different matrices of different shapes: np.broadcast_to, .reshape(),.flatten()
+- things to consider for vector embeddings: embedding model, vector databases, embedding + ANN
+***Things I did well today:***
+- fixing HMM 
+- learning vector embeddings and databases
+***Things I did not do well today:***
+- not fully fixed HMM
+- not implement KG
+***Things I will do better next time:***
+- fully fix HMM
+- implement KG if have time
+- applying my knowledge regarding prompting, vector embeddings, vector databases
+- looking at coding for performance calculation
+
+***27/11/2024***
+***Things I learned today:***
+- In the viterbi algorithm: use log-sum-exp as a trick to maintain numerical stability and computational efficiency
+***Things I did well today:***
+- continue fixing HMM
+***Things I did not do well today:***
+- not fully fixed HMM
+***Things I will do better next time:***
+- fixing HMM
+- Gen AI learning
+- performance calculation
+- implement KG if have time 
+
+**28/11/2024***
+***Things I learned today:***
+- nested loop: vectorizations over nested loops wherever possible to reduce computational complexity and increase execution time
+- agents: tools (extensions, functions, data stores), at the heart is orchestration layer, iterative approach, agent chaining
+***Things I did well today:***
+- fixing HMM
+- learning about gen AI
+***Things I did not do well today:***
+- not fully fixed HMM
+- not implemented KG
+***Things I will do better next time:***
+- continue fixing HMM
+- GenAI learning
+- performance calculation
+- implement KG if have time
+
+***3/1/2025***
+***Things I learned today:***
+- deep learning: learning intricate data structures using backpropagation algo to adjust internal params. Architecture: multilayer stack of modules (all subject to learning, many produce non-linear input-output mappings)
+- _: a placeholder for variables
+
+***Things I did well today:***
+- reading DL paper
+- reading MLOps practice[agent_trace.log](..%2Fagent_trace.log)s for genAI 
+- programming total waste management, total labor practices score and total diversity and inclusion score
+
+***Things I did not do well today:***
+- did not implement KG
+- did not fix HMM
+
+***Things I will do better next time:***
+- implement KG if have time
+- take a break from fixing HMM to learn more about computer science and mathematics
+- continue coding 
+
+***6/1/2025***
+***Things I learned today:***
+- to calculate scores for sri metrics, need to calculate the weighted score first for each category of each metric then calculate the total score
+- deep learning: learning visuals at pixel level, RNNs (explicit memory, memory module). Future of DL: unsupervised learning like human and animals, computer vision (RNNs + ConvNets + RL), natural language understanding (RNNs => which to attend to),
+major progress: representation learning + complex reasoning (replacing rule-based with operations on big vectors)
+
+***Things I did well today:***
+- continue SRI metrics calculations
+- finished 2nd pass DL paper
+
+***Things I did not do well today:***
+- did not implement KG
+- did not read Gecko paper
+
+***Things I will do better next time:***
+- finish SRI metrics calculations
+- implement KG if have time
+- initiate 3rd pass DL paper
+- read Gecko paper 

@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4f5895f3-2d93-4355-bcbb-97c6701d0028" name="Changes" comment="- adding waste management and labor score functions">
+    <list default="true" id="4f5895f3-2d93-4355-bcbb-97c6701d0028" name="Changes" comment="- added calculations for di score, ce score, bd score, ep score and ap score">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/misc/Stock App Review.md" beforeDir="false" afterPath="$PROJECT_DIR$/misc/Stock App Review.md" afterDir="false" />
     </list>
@@ -504,15 +504,9 @@
       <workItem from="1735792713617" duration="1389000" />
       <workItem from="1735879946976" duration="3540000" />
       <workItem from="1735980345865" duration="855000" />
-      <workItem from="1736139687112" duration="2913000" />
-    </task>
-    <task id="LOCAL-00061" summary="- added hertz_to_mel.py&#10;- added spectrogram_to_mel_matrix.py&#10;- added log_mel_spectrogram.py">
-      <option name="closed" value="true" />
-      <created>1725865114820</created>
-      <option name="number" value="00061" />
-      <option name="presentableId" value="LOCAL-00061" />
-      <option name="project" value="LOCAL" />
-      <updated>1725865114820</updated>
+      <workItem from="1736139687112" duration="3403000" />
+      <workItem from="1736206396720" duration="1272000" />
+      <workItem from="1736225665969" duration="2597000" />
     </task>
     <task id="LOCAL-00062" summary="- added image_extractor.py&#10;- added load.py&#10;- added class SparseAutoencoder">
       <option name="closed" value="true" />
@@ -898,7 +892,15 @@
       <option name="project" value="LOCAL" />
       <updated>1735883919259</updated>
     </task>
-    <option name="localTasksCounter" value="110" />
+    <task id="LOCAL-00110" summary="- added calculations for di score, ce score, bd score, ep score and ap score">
+      <option name="closed" value="true" />
+      <created>1736142701716</created>
+      <option name="number" value="00110" />
+      <option name="presentableId" value="LOCAL-00110" />
+      <option name="project" value="LOCAL" />
+      <updated>1736142701716</updated>
+    </task>
+    <option name="localTasksCounter" value="111" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -928,7 +930,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="- added hmm&#10;- added download_texts.py" />
     <MESSAGE value="- added twitter api" />
     <MESSAGE value="- added add_multimodel_node_text" />
     <MESSAGE value="- finished traversing stock market exchange websites" />
@@ -953,7 +954,8 @@
     <MESSAGE value="- fixing simple_stock_market_prediction.py&#10;- adding functions to performance_calculation.py" />
     <MESSAGE value="- fixing simple_stock_market_prediction.py" />
     <MESSAGE value="- adding waste management and labor score functions" />
-    <option name="LAST_COMMIT_MESSAGE" value="- adding waste management and labor score functions" />
+    <MESSAGE value="- added calculations for di score, ce score, bd score, ep score and ap score" />
+    <option name="LAST_COMMIT_MESSAGE" value="- added calculations for di score, ce score, bd score, ep score and ap score" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
