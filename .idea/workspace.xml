@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4f5895f3-2d93-4355-bcbb-97c6701d0028" name="Changes" comment="- added calculations for carbon footprint score, renewable energy score, environmental score and social score">
+    <list default="true" id="4f5895f3-2d93-4355-bcbb-97c6701d0028" name="Changes" comment="- added calculation for governance score">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/misc/Stock App Review.md" beforeDir="false" afterPath="$PROJECT_DIR$/misc/Stock App Review.md" afterDir="false" />
     </list>
@@ -506,15 +506,9 @@
       <workItem from="1735980345865" duration="855000" />
       <workItem from="1736139687112" duration="3403000" />
       <workItem from="1736206396720" duration="1272000" />
-      <workItem from="1736225665969" duration="3345000" />
-    </task>
-    <task id="LOCAL-00063" summary="- added image_extractor.py&#10;- added load.py&#10;- added class SparseAutoencoder and KL divergence as a sparsity">
-      <option name="closed" value="true" />
-      <created>1726040682899</created>
-      <option name="number" value="00063" />
-      <option name="presentableId" value="LOCAL-00063" />
-      <option name="project" value="LOCAL" />
-      <updated>1726040682899</updated>
+      <workItem from="1736225665969" duration="3648000" />
+      <workItem from="1736237899012" duration="2190000" />
+      <workItem from="1736312604989" duration="3354000" />
     </task>
     <task id="LOCAL-00064" summary="- added hypertuning &#10;- added training">
       <option name="closed" value="true" />
@@ -900,7 +894,15 @@
       <option name="project" value="LOCAL" />
       <updated>1736228842367</updated>
     </task>
-    <option name="localTasksCounter" value="112" />
+    <task id="LOCAL-00112" summary="- added calculation for governance score">
+      <option name="closed" value="true" />
+      <created>1736229433491</created>
+      <option name="number" value="00112" />
+      <option name="presentableId" value="LOCAL-00112" />
+      <option name="project" value="LOCAL" />
+      <updated>1736229433491</updated>
+    </task>
+    <option name="localTasksCounter" value="113" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -930,7 +932,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="- added add_multimodel_node_text" />
     <MESSAGE value="- finished traversing stock market exchange websites" />
     <MESSAGE value="- added forward-backward algorithm for HMM" />
     <MESSAGE value="- added viterbi algo" />
@@ -955,7 +956,8 @@
     <MESSAGE value="- adding waste management and labor score functions" />
     <MESSAGE value="- added calculations for di score, ce score, bd score, ep score and ap score" />
     <MESSAGE value="- added calculations for carbon footprint score, renewable energy score, environmental score and social score" />
-    <option name="LAST_COMMIT_MESSAGE" value="- added calculations for carbon footprint score, renewable energy score, environmental score and social score" />
+    <MESSAGE value="- added calculation for governance score" />
+    <option name="LAST_COMMIT_MESSAGE" value="- added calculation for governance score" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
