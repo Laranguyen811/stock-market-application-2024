@@ -2397,6 +2397,7 @@ major progress: representation learning + complex reasoning (replacing rule-base
 ***Things I learned today:***
 - Gecko: crucial to standardise the evaluation of models regarding the annotation template and benchmark; fine-grained prompts and templates more consistent with each other than coarse-grained and vice versa, reliable prompts and templates with inner-annotator agreement can lead to more consistent 
 model ordering, when auto-eval metrics => reliable templates => better
+- NLI(Natural Language Inference): decides the relationship between 2 sentences (a premise and a hypothesis)
 ***Things I did well today:***
 - continuing performance calculations
 - 3rd pass DL paper
@@ -2406,3 +2407,23 @@ model ordering, when auto-eval metrics => reliable templates => better
 ***Things I will do better next time:***
 - finish perf cals
 - start representation learning + complex reasoning
+- implement MMKG when have time
+
+***8/1/2025***
+***Things I learned today:***
+- ReLU(Retified Linear Unit): one of the most crucial activation functions for DL, output: 0 for negative, 1 for positive, properties: non-linearity, simplicity, effectiveness, efficiency, sparse activation, mitigating vanishing gradient problem, gradient-descent friendly. Issue: if weights = 0 => not activated
+- hyperbolic tangent (tanh): a common activation function for DL. output: between -1 and 1. Properties: symmetry, S-shape curve, derivative. Used for activation in hidden layers and RNNs. Issue: prone to vanishing gradient
+- evolution algorithm: initialise the population => evaluate fitness => selection=> crossover => mutation => create a new generation
+- derivative rules: constant,power, constant multiple, sum, difference, product, quotient, chain, exponent functions, log functions, trigonometric functions, inverse trigonometric functions
+***Things I did well today:***
+- continued evolution algorithm
+- started representation learning + complex reasoning: natural language inference using Bert and symbolic reasoning
+- improved knowledge on ReLU and hyperbolic tangent
+- learned more about derivatives
+***Things I did not do well today:***
+- did not finish evolution algorithm yet
+***Things I will do better next time:***
+- finish evo algo
+- continue DL paper implementaiton
+- start MMKG if have time
+- learn more about derivatives
