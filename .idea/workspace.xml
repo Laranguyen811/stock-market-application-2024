@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4f5895f3-2d93-4355-bcbb-97c6701d0028" name="Changes" comment="- got Bert_logical_reasoning to work&#10;- completed evolution_algorithm">
+    <list default="true" id="4f5895f3-2d93-4355-bcbb-97c6701d0028" name="Changes" comment="- looking at langgraph to build agents">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/misc/Stock App Review.md" beforeDir="false" afterPath="$PROJECT_DIR$/misc/Stock App Review.md" afterDir="false" />
     </list>
@@ -70,51 +70,51 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Python tests.Python tests for test_download_images.TestDownloadImages.executor&quot;: &quot;Run&quot;,
-    &quot;Python tests.Python tests for test_download_sounds.TestDownloadSound.executor&quot;: &quot;Run&quot;,
-    &quot;Python tests.Python tests for test_stock_data_analysis.test_calculate_corr_coeffs.executor&quot;: &quot;Run&quot;,
-    &quot;Python tests.Python tests in test_HMM.py.executor&quot;: &quot;Run&quot;,
-    &quot;Python tests.Python tests in test_download_images.py.executor&quot;: &quot;Run&quot;,
-    &quot;Python tests.Python tests in test_download_sounds.py.executor&quot;: &quot;Run&quot;,
-    &quot;Python tests.Python tests in test_normal_distribution_detection.py.executor&quot;: &quot;Run&quot;,
-    &quot;Python tests.Python tests in test_stock_data_analysis.py.executor&quot;: &quot;Debug&quot;,
-    &quot;Python.BERT_logical_reasoning.executor&quot;: &quot;Run&quot;,
-    &quot;Python.Stock_Data_Analysis.executor&quot;: &quot;Run&quot;,
-    &quot;Python.Stock_Data_Visualisation.executor&quot;: &quot;Run&quot;,
-    &quot;Python.Stock_Market_Application.executor&quot;: &quot;Run&quot;,
-    &quot;Python.add_tool.executor&quot;: &quot;Run&quot;,
-    &quot;Python.add_tools.executor&quot;: &quot;Run&quot;,
-    &quot;Python.download_sounds.executor&quot;: &quot;Run&quot;,
-    &quot;Python.example_HMM.executor&quot;: &quot;Run&quot;,
-    &quot;Python.find_uvloop.executor&quot;: &quot;Run&quot;,
-    &quot;Python.hidden_markov_model.executor&quot;: &quot;Run&quot;,
-    &quot;Python.image_extractor.executor&quot;: &quot;Run&quot;,
-    &quot;Python.mel_spectrogram_features.executor&quot;: &quot;Run&quot;,
-    &quot;Python.proxy_tool (1).executor&quot;: &quot;Run&quot;,
-    &quot;Python.proxy_tool.executor&quot;: &quot;Run&quot;,
-    &quot;Python.reflection_agent.executor&quot;: &quot;Run&quot;,
-    &quot;Python.simple_stock_market_prediction.executor&quot;: &quot;Run&quot;,
-    &quot;Python.stock_data_analysis.executor&quot;: &quot;Run&quot;,
-    &quot;Python.uri_tool.executor&quot;: &quot;Run&quot;,
-    &quot;Python.uri_tools.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;ToolWindowPlots.ShowToolbar&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/Users/laran/PycharmProjects/ASX&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Python tests.Python tests for test_download_images.TestDownloadImages.executor": "Run",
+    "Python tests.Python tests for test_download_sounds.TestDownloadSound.executor": "Run",
+    "Python tests.Python tests for test_stock_data_analysis.test_calculate_corr_coeffs.executor": "Run",
+    "Python tests.Python tests in test_HMM.py.executor": "Run",
+    "Python tests.Python tests in test_download_images.py.executor": "Run",
+    "Python tests.Python tests in test_download_sounds.py.executor": "Run",
+    "Python tests.Python tests in test_normal_distribution_detection.py.executor": "Run",
+    "Python tests.Python tests in test_stock_data_analysis.py.executor": "Debug",
+    "Python.BERT_logical_reasoning.executor": "Run",
+    "Python.Stock_Data_Analysis.executor": "Run",
+    "Python.Stock_Data_Visualisation.executor": "Run",
+    "Python.Stock_Market_Application.executor": "Run",
+    "Python.add_tool.executor": "Run",
+    "Python.add_tools.executor": "Run",
+    "Python.download_sounds.executor": "Run",
+    "Python.example_HMM.executor": "Run",
+    "Python.find_uvloop.executor": "Run",
+    "Python.hidden_markov_model.executor": "Run",
+    "Python.image_extractor.executor": "Run",
+    "Python.mel_spectrogram_features.executor": "Run",
+    "Python.proxy_tool (1).executor": "Run",
+    "Python.proxy_tool.executor": "Run",
+    "Python.reflection_agent.executor": "Run",
+    "Python.simple_stock_market_prediction.executor": "Run",
+    "Python.stock_data_analysis.executor": "Run",
+    "Python.uri_tool.executor": "Run",
+    "Python.uri_tools.executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "ToolWindowPlots.ShowToolbar": "false",
+    "git-widget-placeholder": "master",
+    "ignore.virus.scanning.warn.message": "true",
+    "last_opened_file_path": "D:/Users/laran/PycharmProjects/ASX",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "com.intellij.pycharm.community.ide.impl.configuration.PythonContentEntriesConfigurable",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\laran\PycharmProjects\ASX\stock_market" />
@@ -124,7 +124,7 @@
       <recent name="C:\Users\laran\PycharmProjects\ASX\stock_market\fl_multimodal_knowledge_graph\data_collection" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Python.add_tool">
     <configuration name="add_tool" type="PythonConfigurationType" factoryName="Python">
       <module name="ASX" />
       <option name="ENV_FILES" value="" />
@@ -528,15 +528,8 @@
       <workItem from="1736832655710" duration="783000" />
       <workItem from="1736833465528" duration="2352000" />
       <workItem from="1736916679081" duration="4116000" />
-      <workItem from="1736984209128" duration="3414000" />
-    </task>
-    <task id="LOCAL-00067" summary="- added comments&#10;- added get_attention and get_attention_map">
-      <option name="closed" value="true" />
-      <created>1726559641602</created>
-      <option name="number" value="00067" />
-      <option name="presentableId" value="LOCAL-00067" />
-      <option name="project" value="LOCAL" />
-      <updated>1726559641602</updated>
+      <workItem from="1736984209128" duration="3678000" />
+      <workItem from="1737006815685" duration="30000" />
     </task>
     <task id="LOCAL-00068" summary="- finished GPSA">
       <option name="closed" value="true" />
@@ -922,7 +915,15 @@
       <option name="project" value="LOCAL" />
       <updated>1736403867006</updated>
     </task>
-    <option name="localTasksCounter" value="116" />
+    <task id="LOCAL-00116" summary="- looking at langgraph to build agents">
+      <option name="closed" value="true" />
+      <created>1737006649360</created>
+      <option name="number" value="00116" />
+      <option name="presentableId" value="LOCAL-00116" />
+      <option name="project" value="LOCAL" />
+      <updated>1737006649360</updated>
+    </task>
+    <option name="localTasksCounter" value="117" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -952,7 +953,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="- added viterbi algo" />
     <MESSAGE value="- added Baum-Welch algo" />
     <MESSAGE value="- improved viterbi and baum-welch algorithm&#10;- added evaluation with K-fold" />
     <MESSAGE value="- fixed baum-welch algo comment" />
@@ -977,7 +977,8 @@
     <MESSAGE value="- added calculation for governance score" />
     <MESSAGE value="- added Bert_logical_reasoning and continued evolution_algorithm" />
     <MESSAGE value="- got Bert_logical_reasoning to work&#10;- completed evolution_algorithm" />
-    <option name="LAST_COMMIT_MESSAGE" value="- got Bert_logical_reasoning to work&#10;- completed evolution_algorithm" />
+    <MESSAGE value="- looking at langgraph to build agents" />
+    <option name="LAST_COMMIT_MESSAGE" value="- looking at langgraph to build agents" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
