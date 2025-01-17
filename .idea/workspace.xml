@@ -4,10 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4f5895f3-2d93-4355-bcbb-97c6701d0028" name="Changes" comment="- looking at langgraph to build agents">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/misc/Stock App Review.md" beforeDir="false" afterPath="$PROJECT_DIR$/misc/Stock App Review.md" afterDir="false" />
-    </list>
+    <list default="true" id="4f5895f3-2d93-4355-bcbb-97c6701d0028" name="Changes" comment="- looking at langgraph to build agents" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -40,6 +37,7 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="ROOT_SYNC" value="DONT_SYNC" />
+    <option name="UPDATE_TYPE" value="REBASE" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
   &quot;lastFilter&quot;: {
@@ -124,7 +122,7 @@
       <recent name="C:\Users\laran\PycharmProjects\ASX\stock_market\fl_multimodal_knowledge_graph\data_collection" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Python.add_tool">
     <configuration name="add_tool" type="PythonConfigurationType" factoryName="Python">
       <module name="ASX" />
       <option name="ENV_FILES" value="" />
@@ -533,14 +531,6 @@
       <workItem from="1737064363558" duration="624000" />
       <workItem from="1737089974762" duration="3133000" />
     </task>
-    <task id="LOCAL-00069" summary="- added MHSA class">
-      <option name="closed" value="true" />
-      <created>1726739909688</created>
-      <option name="number" value="00069" />
-      <option name="presentableId" value="LOCAL-00069" />
-      <option name="project" value="LOCAL" />
-      <updated>1726739909689</updated>
-    </task>
     <task id="LOCAL-00070" summary="- finished MHSA class">
       <option name="closed" value="true" />
       <created>1726819057887</created>
@@ -925,7 +915,15 @@
       <option name="project" value="LOCAL" />
       <updated>1737006877203</updated>
     </task>
-    <option name="localTasksCounter" value="118" />
+    <task id="LOCAL-00118" summary="- adding creating_db">
+      <option name="closed" value="true" />
+      <created>1737094228735</created>
+      <option name="number" value="00118" />
+      <option name="presentableId" value="LOCAL-00118" />
+      <option name="project" value="LOCAL" />
+      <updated>1737094228735</updated>
+    </task>
+    <option name="localTasksCounter" value="119" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -955,7 +953,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="- added Baum-Welch algo" />
     <MESSAGE value="- improved viterbi and baum-welch algorithm&#10;- added evaluation with K-fold" />
     <MESSAGE value="- fixed baum-welch algo comment" />
     <MESSAGE value="- added evolutionary_algorithm.py" />
@@ -980,7 +977,8 @@
     <MESSAGE value="- added Bert_logical_reasoning and continued evolution_algorithm" />
     <MESSAGE value="- got Bert_logical_reasoning to work&#10;- completed evolution_algorithm" />
     <MESSAGE value="- looking at langgraph to build agents" />
-    <option name="LAST_COMMIT_MESSAGE" value="- looking at langgraph to build agents" />
+    <MESSAGE value="- adding creating_db" />
+    <option name="LAST_COMMIT_MESSAGE" value="- adding creating_db" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
