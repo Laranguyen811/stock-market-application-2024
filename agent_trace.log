@@ -782,3 +782,36 @@ DEBUG:chromadb.auth.registry:Registering provider: token_config
 DEBUG:chromadb.auth.registry:Registering provider: user_token_config
 DEBUG:chromadb.auth.registry:Registering provider: token
 DEBUG:chromadb.auth.registry:Registering provider: token
+DEBUG:yfinance:Entering history()
+DEBUG:peewee:('CREATE TABLE IF NOT EXISTS "_kv" ("key" VARCHAR(255) NOT NULL PRIMARY KEY, "value" VARCHAR(255)) WITHOUT ROWID', [])
+DEBUG:peewee:('SELECT "t1"."key", "t1"."value" FROM "_kv" AS "t1" WHERE ("t1"."key" = ?) LIMIT ? OFFSET ?', ['AAPL', 1, 0])
+DEBUG:yfinance:AAPL: Yahoo GET parameters: {'range': '1d', 'interval': '1d', 'includePrePost': False, 'events': 'div,splits,capitalGains'}
+DEBUG:yfinance: Entering get()
+DEBUG:yfinance:url=https://query2.finance.yahoo.com/v8/finance/chart/AAPL
+DEBUG:yfinance:params={'range': '1d', 'interval': '1d', 'includePrePost': False, 'events': 'div,splits,capitalGains'}
+DEBUG:yfinance:  Entering _get_cookie_and_crumb()
+DEBUG:yfinance:cookie_mode = 'basic'
+DEBUG:yfinance:   Entering _get_cookie_and_crumb_basic()
+DEBUG:peewee:('CREATE TABLE IF NOT EXISTS "_cookieschema" ("strategy" VARCHAR(255) NOT NULL PRIMARY KEY, "fetch_date" DATETIME NOT NULL, "cookie_bytes" BLOB NOT NULL) WITHOUT ROWID', [])
+DEBUG:peewee:('SELECT "t1"."strategy", "t1"."fetch_date", "t1"."cookie_bytes" FROM "_cookieschema" AS "t1" WHERE ("t1"."strategy" = ?) LIMIT ? OFFSET ?', ['basic', 1, 0])
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): fc.yahoo.com:443
+DEBUG:urllib3.connectionpool:https://fc.yahoo.com:443 "GET / HTTP/1.1" 404 4742
+DEBUG:peewee:('DELETE FROM "_cookieschema" WHERE ("_cookieschema"."strategy" = ?)', ['basic'])
+DEBUG:peewee:('BEGIN', None)
+DEBUG:peewee:('INSERT INTO "_cookieschema" ("strategy", "fetch_date", "cookie_bytes") VALUES (?, ?, ?)', ['basic', datetime.datetime(2025, 1, 17, 16, 6, 24, 313981), <memory at 0x000002611F225300>])
+DEBUG:yfinance:fetched basic cookie = <Cookie A3=d=AQABBFDliWcCEFj1xRpsF3ztcW257Z3hP0EFEgEBAQE2i2eTZw0BxyMA_eMAAA&S=AQAAAhC_wF5UfMguwA0D7XFz7Xc for .yahoo.com/>
+DEBUG:yfinance:reusing cookie
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): query1.finance.yahoo.com:443
+DEBUG:urllib3.connectionpool:https://query1.finance.yahoo.com:443 "GET /v1/test/getcrumb HTTP/1.1" 200 11
+DEBUG:yfinance:crumb = 'b0X6.UUchtx'
+DEBUG:yfinance:   Exiting _get_cookie_and_crumb_basic()
+DEBUG:yfinance:  Exiting _get_cookie_and_crumb()
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): query2.finance.yahoo.com:443
+DEBUG:urllib3.connectionpool:https://query2.finance.yahoo.com:443 "GET /v8/finance/chart/AAPL?range=1d&interval=1d&includePrePost=False&events=div%2Csplits%2CcapitalGains&crumb=b0X6.UUchtx HTTP/1.1" 200 1193
+DEBUG:yfinance:response code=200
+DEBUG:yfinance: Exiting get()
+DEBUG:yfinance:AAPL: yfinance received OHLC data: 2025-01-16 14:30:00 -> 2025-01-16 14:30:00
+DEBUG:yfinance:AAPL: OHLC after cleaning: 2025-01-16 09:30:00-05:00 -> 2025-01-16 09:30:00-05:00
+DEBUG:yfinance:AAPL: OHLC after combining events: 2025-01-16 00:00:00-05:00 -> 2025-01-16 00:00:00-05:00
+DEBUG:yfinance:AAPL: yfinance returning OHLC: 2025-01-16 00:00:00-05:00 -> 2025-01-16 00:00:00-05:00
+DEBUG:yfinance:Exiting history()

@@ -1,4 +1,7 @@
 import pandas as pd
+from unicodedata import category
+
+from matplotlib.galleries.examples.text_labels_and_annotations.fonts_demo import weight
 
 
 class PerformanceCalculator:
@@ -175,6 +178,7 @@ class PerformanceCalculator:
         '''
         returns = [prices[i]/ prices[i-1] - 1 for i in range(1,len(prices))]
         return (sum([(r - sum(returns) / len(returns)) ** 2 for r in returns]))
+
     def calculate_lookback_period(self,prices, period):
         '''
         Takes prices and period and calculates the lookback period (the period for which data is analysed for calculations or decisions).
@@ -185,6 +189,30 @@ class PerformanceCalculator:
              integer: A integer representing the lookback period.
         '''
         return prices[-period:]
+
+    def calculate_weighted_carbon_footprint_score(self, score, weight):
+        '''
+         Takes the score of each carbon footprint category and the weight corresponding to each category and returns the carbon footprint weighted score.
+         Inputs:
+            score(float): A float number of the score for each carbon footprint category
+            weight(float): A float number of the weight of each carbon footprint category
+         Returns:
+               float: A float number representing the weighted carbon footprint score
+        '''
+        weighted_carbon_footprint_score = score * weight
+        return weighted_carbon_footprint_score
+
+    def calculate_carbon_footprint_score(self, carbon_footprint_data: dict, weights:dict):
+        '''
+        Takes a carbon footprint data dictionary and a dictionary of weights corresponding to each carbon footprint category and returns the total carbon footprint score.
+        Inputs:
+            carbon_footprint_data(dict): A dictionary of carbon footprint data
+            weights(dict): A dictionary of weights for each category
+        Returns:
+            float: A float number of the total carbon footprint score
+        '''
+        total_carbon_footprint_score = sum(self.calculate_weighted_carbon_footprint_score(carbon_footprint_data[category], weights[category]) for category in carbon_footprint_data)
+        return total_carbon_footprint_score
 
     def calculate_carbon_footprint(self,activity_data,emission_factor):
         '''
@@ -197,6 +225,29 @@ class PerformanceCalculator:
         '''
         ghg_emissions = activity_data * emission_factor
         return ghg_emissions
+    def calculate_weighted_renewable_energy_score(self,score,weight):
+        '''
+        Takes a score of each renewable energy category and a weight corresponding to each renewable energy category and returns the weighted score.
+        Inputs:
+            score(float): A float number of the score for each renewable energy category
+            weight(float): A float number of the weight of each renewable energy category
+        Returns:
+             float: A float number representing the weighted renewable energy score
+        '''
+        weighted_renewable_energy_score = score * weight
+        return weighted_renewable_energy_score
+    def calculate_renewable_energy_score(self,renewable_energy_data: dict, weights:dict):
+        '''
+        Takes the renewable energy data dictionary and the dictionary of weights corresponding to the renewable energy dictionary and returns the total renewable energy score.
+        Inputs:
+            renewable_energy_data(dict): A dictionary of renewable energy data
+            weights(dict): A dictionary of weights for each category
+        Returns:
+             float: A float number representing the total renewable energy score
+        '''
+        total_reneweable_energy_score = sum(self.calculate_weighted_renewable_energy_score(renewable_energy_data[category],weights[category]) for category in renewable_energy_data)
+        return total_reneweable_energy_score
+
     def calculate_energy_consumption(self,energy_data: dict ) -> pd.DataFrame:
         ''' Takes the energy consumption data and returns the total energy consumption for an organisation.
         Inputs:
@@ -228,7 +279,7 @@ class PerformanceCalculator:
         '''
         water_usage_df = pd.DataFrame(water_usage_data)
         # Calculating total water usage for each month
-        water_usage_df['Total Water Usage (cubic meters)'] = df.sum(axis=1)
+        water_usage_df['Total Water Usage (cubic meters)'] = water_usage_df.sum(axis=1)
 
         # Calculating annual total water usage
         annual_total_water_usage = water_usage_df['Total Water Usage (cubic meters)'].sum()
@@ -238,3 +289,225 @@ class PerformanceCalculator:
         water_usage_df.at['Annual Total', 'Total Water Usage (cubic meters)'] = annual_total_water_usage
 
         return water_usage_df
+
+
+
+    def calculate_weighted_waste_score(self,quantity,score):
+        '''
+        Takes the quantity and score and calculates the weighted score for each waste category.
+        Inputs:
+            quantity(float): A float number representing the quantity of waste category
+            score(float): A float number representing the weighted score
+        Returns:
+            float: A float number representing the weighted score
+        '''
+        weighted_score = quantity * score
+        return weighted_score
+
+    def calculate_waste_management(self,waste_data: dict) -> pd.DataFrame:
+        '''
+        Takes the waste data and returns the total waste management score for an organisation.
+        Inputs:
+            waste_data(dict): A dictionary containing waste data
+        Returns:
+            pd.DataFrame: A DataFrame containing the total waste management for an organisation
+        '''
+        total_quantity = sum(quantity for quantity, _ in waste_data.values())  # ignoring the scores
+        total_weighted_score = sum(self.calculate_weighted_waste_score(quantity, score) for quantity, score in waste_data.values())
+        waste_management_score = total_weighted_score / total_quantity if total_quantity else 0
+        return waste_management_score
+
+    def weighted_labor_score(self,score,weight):
+        '''
+        Takes the score of each category and the corresponding weight to calculate the weighted labor score.
+        Inputs:
+            score(float): A float number representing the score for each labor pratice
+            weight(float): A float number representing the weight of each labor pratice
+        Returns:
+            float: A float number representing the weighted labor score
+        '''
+        labor_weighted_score = score * weight
+        return labor_weighted_score
+
+
+    def calculate_labor_practices_score(self,labor_data: dict, weights: dict):
+        '''
+        Takes the labor data, score and weight and returns the total labor practices score for an organisation.
+        Inputs:
+            labor_data(dict): A dictionary containing labor practice data
+            weights(dict): A dictionary containing weights corresponding to categories of labor practices
+        Returns:
+            float: A float number of total labor practices score
+        '''
+        total_labor_practices_score = sum(self.calculated_weighted_labor_score(labor_data[category], weights[category]) for category in labor_data)
+        return total_labor_practices_score
+
+    def calculate_di_weighted_score(self,score, weight):
+        '''
+        Takes the score of each category and the corresponding weight to calculate the total diversity and inclusion score.
+        Inputs:
+            score(float): A float number representing the score for each D&I category
+            weight(float): A float number representing the weight of each D&I category
+        Returns:
+            float: A float number representing the total diversity and inclusion score
+        '''
+        d_and_i_score = score * weight
+        return d_and_i_score
+
+    def calculate_di_score(self,di_data: dict,weights: dict):
+        '''
+        Takes the diversity and inclusion score for each category and the corresponding weight for each category to calculate the total diversity and inclusion score.
+        Inputs:
+            di_data(dict): A dictionary containing a diversity and inclusion score for each category
+            weights(dict): A dictionary containing a weight for each category
+        Returns:
+            float: A float number representing the total diversity and inclusion score
+        '''
+        total_di_score = sum(self.calculate_diversity_and_inclusion_weighted_score(di_data[category],weights[category]) for category in di_data)
+        return total_di_score
+
+    def calculate_weighted_ce_score(self,score,weight):
+        '''
+        Takes the score of each community engagement category and the weight for each and returns the weighted score.
+        Inputs:
+            score(float): A float number representing the score for each community engagement category
+            weight(float): A float number representing the weight of each community engagement category
+        Returns:
+            float: A float number representing the weighted score
+        '''
+        weighted_ce_score = score * weight
+        return weighted_ce_score
+
+    def calculate_ce_score(self,ce_data: dict,weights: dict):
+        '''
+        Takes a dictionary of community engagement data and the weights corresponding to community engagement categories and returns the total community engagement score.
+        Inputs:
+            ce_data(dict): A dictionary containing community engagement data
+            weights(dict): A dictionary containing a weight for each community engagement category
+        Returns:
+            float: A float number representing the total community engagement score
+        '''
+        ce_score = sum(self.calculate_weighted_ce_score(ce_data[category],weights[category]) for category in ce_data)
+        return ce_score
+
+    def calculate_weighted_bd_score(self,score,weight):
+        '''
+        Takes the board diversity score for each category and the weight for each and returns the weighted board diversity score.
+        Inputs:
+            score(float): A float number representing the score for each board diversity category
+            weight(float): A float number representing the weight of each board diversity category
+        Returns:
+            float: A float number representing the weighted board diversity score
+        '''
+        weighted_bd_score = score * weight
+        return weighted_bd_score
+
+    def calculate_bd_score(self,bd_data: dict,weights: dict):
+        '''
+        Takes a dictionary of board diversity data and the weights corresponding to board diversity categories and returns the total board diversity score.
+        Inputs:
+            bd_data(dict): A dictionary containing board diversity data
+            weights(dict): A dictionary containing a weight for each board diversity category
+        Returns:
+            float: A float number representing the total board diversity score
+        '''
+        total_db_score = sum(self.calculate_weighted_bd_score(bd_data[category],weights[category]) for category in bd_data)
+        return total_db_score
+
+    def calculate_weighted_ep_score(self,score,weight):
+        '''
+        Takes the score of each executive pay category and the weight for each and returns the weighted score.
+        Inputs:
+            score(float): A float number representing the score for each executive pay category
+            weight(float): A float number representing the weight of each executive pay category
+        Returns:
+            float: A float number representing the weighted score
+        '''
+        weighted_ep_score = score * weight
+        return weighted_ep_score
+
+    def calculate_ep_score(self,ep_data: dict,weights: dict):
+        '''
+        Takes a dictionary containing the executive pay score for each category and the dictionary of weights corresponding to the categories and returns the total score.
+        Inputs:
+            ep_data(dict): A dictionary of executive pay data.
+            weights(dict): A dictionary containing a weight for each executive pay category
+        Returns:
+            float: A float number representing the weighted score
+        '''
+        total_ep_score = sum(self.calculate_weighted_ep_score(ep_data[category],weights[category]) for category in ep_data)
+        return total_ep_score
+
+    def calculate_weighted_ap_score(self,score,weight):
+        '''
+        Takes the score of anti-corruption policy score for each category and the weight for each and returns the weighted score.
+        Inputs:
+            score(float): A float number of the score for each anti-corruption policies category
+            weight(float): A float number of the weight for each anti-corruption policies category
+        Returns:
+            float: A float number representing the weighted anti-corruption policies score
+        '''
+        weighted_ap_score = score * weight
+        return weighted_ap_score
+
+    def calculate_ap_score(self,ap_data: dict,weights: dict):
+        '''
+        Takes a dictionary of anti-corruption data and the dictionary of weights for anti-corruption categories and returns the total score.
+        Inputs:
+            ap_data(dict): A dictionary of anti-corruption policies data
+            weights(dict): A dictionary of weights corresponding to anti-corruption policies categories
+        Returns:
+            float: A float number representing the total anti-corruption policies score
+        '''
+        total_ap_score = sum(self.calculate_weighted_ap_score(ap_data[category],weights[category]) for category in ap_data)
+        return total_ap_score
+
+    def calculate_weighted_environmental_score(self,score,weight):
+        '''
+        Takes the score of each environmental category and the weight for each and returns the weighted environmental score.
+        Inputs:
+            score(float): A float number representing the score for each environmental category
+            weight(float): A float number representing the weight of each environmental category
+        Returns:
+            float: A float number representing the weighted environmental score
+        '''
+        weighted_environmental_score = score * weight
+        return weighted_environmental_score
+
+    def calculate_environmental_score(self,environmental_data: dict,weights: dict):
+        '''
+        Takes the environmental data dictionary and the dictionary of weights corresponding to environmental categories and returns the total environmental score.
+        Inputs:
+            environmental_data(dict): A dictionary containing environmental data
+            weights(dict): A dictionary containing a weight for each environmental category
+        Returns:
+             float: A float number representing the total environmental score
+        '''
+        total_environmental_score = sum([self.calculate_carbon_footprint_score.total_carbon_footprint_score + self.calculate_renewable_energy_score.total_renewable_energy_score + self.calculate_waste_management.total_waste_management_score])
+        return total_environmental_score
+
+    def calculate_social_score(self,environmental_data: dict,weights: dict):
+        '''
+        Takes the environmental data dictionary and the dictionary of weights corresponding to environmental categories and returns the total social score.
+        Inputs:
+            environmental_data(dict): A dictionary containing environmental data
+            weights(dict): A dictionary containing a weight for each environmental category
+        Returns:
+            float: A float number representing the total social score
+        '''
+        total_social_score = sum([self.calculate_labor_practices_score.total_labor_practices_score + self.calculate_di_score.total_di_score + self.calculate_ce_score.total_ce_score])
+        return total_social_score
+
+    def calculate_governance_score(self,governance_data: dict,weights: dict):
+        '''
+        Takes the governance data dictionary and the dictionary of weights corresponding to governance categories and returns the total governance score.
+        Inputs:
+            governance_data(dict): A dictionary containing governance data
+            weights(dict): A dictionary containing weights for each governance category
+        Returns:
+            float: A float number representing the total governance score
+        '''
+        total_governance_score = sum([self.calculate_ap_score.total_ap_score + self.calculate_bd_score.total_bd_score + self.calculate_ep_score.total_ep_score])
+        return total_governance_score
+
+

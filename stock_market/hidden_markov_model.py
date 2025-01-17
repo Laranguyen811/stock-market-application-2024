@@ -41,7 +41,6 @@ def forward_algorithm(log_A, log_B, log_pi):
     log_alpha = np.zeros((N,K))
     # Initializing log_alpha
     log_alpha[0] = log_B[0] + log_pi
-
     # Iterating through the sequence
     for t in range(1, N):
         for j in range(K):
@@ -137,11 +136,8 @@ def viterbi_algorithm_2(X:NDArray, log_A: NDArray, log_B: NDArray, log_pi: NDArr
 
     # Initializing delta and psi
     log_delta = np.zeros((N,K))# delta is the probability as the combination of the transition from the previous state i at time t-1 and the most probable path leading to i
-    print(f"log delta shape: {log_delta.shape}")
     psi = np.zeros((N,K), dtype=int)
-    log_delta[0] = log_pi + log_B[:, X[0]]
-    log_delta[0] = np.sum(log_delta[0],axis=1)
-    print(f"log delta shape: {log_delta.shape}, log shape: {log_pi.shape}, log delta initialised shape: {log_delta[0]}")
+    log_delta[0] = log_pi + log_B[:, X[0]].max(axis=1)
     for t in range(1,N):
         for j in range(K):
             temp = log_delta[t-1] + log_A[:,j]
@@ -155,8 +151,8 @@ def viterbi_algorithm_2(X:NDArray, log_A: NDArray, log_B: NDArray, log_pi: NDArr
     # Back tracing
     for t in range(N-2,-1,-1):
         path[t] = psi[t+1,path[t+1]]  # Assigning path at time step t to psi at time step t+1 and path at time step t+1
+    return path[0] # Returning the most likely sequence
 
-    return path
 def log_sum_exp(log_probs: np.ndarray,axis: Optional[int] = None) -> np.ndarray:
     '''
     Takes log probabilities and returns the log transformation. We use this technique to minimise the effect of underflow or overflow when computing the log of a sum of exponentials.
