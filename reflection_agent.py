@@ -261,4 +261,18 @@ def main():
         ('LinkedIn', 'Social Media'),
         ('IBM', 'Technology'),
     ]
+    # Create a database
+    conn = create_table(db_name)
+
+    # Create a table
+    create_table(conn)
+
+    # Insert companies into the table
+    insert_companies(conn, companies)
+
+    # Close the connection
+    conn.close()
+
+if __name__ == '__main__':
+    main()
 
