@@ -2,6 +2,8 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/LaKo" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/SNAG" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/matplotlib" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/stock_market/matplotlib" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/veda-config" vcs="Git" />

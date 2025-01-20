@@ -135,3 +135,144 @@ response = chat.send_message("Classify the types of investment risks based on hi
 
 #agents = get_agents_with_stock_data('AAPL')
 
+def create_database(db_name):
+    """
+    Create a database for stock market data
+    """
+    conn = sqlite3.connect(db_name)
+    return conn
+def fetch_real_time_data(symbol):
+    '''
+    Fetches real-time stock data for a given stock symbol.
+    Inputs:
+        symbol(str): A string of stock symbol
+     Returns:
+        DataFrame: A pandas DataFrame of stock data
+    '''
+    stock = yf.Ticker(symbol)
+    stock_data = stock.history(period='1d')
+    return stock_data
+
+def create_table(conn):
+    """
+    Create a table for stock market data
+    """
+    cursor = conn.cursor()
+    cursor.execute('''
+    CREATE TABLE IF NOT EXISTS companies (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT NOT NULL,
+        industry TEXT NOT NULL,
+        )
+    ''')
+    conn.commit()
+    return cursor
+
+def insert_companies(conn, companies):
+    """
+    Insert companies into the tables
+
+    """
+    cursor = conn.cursor()
+    cursor.executemany('''
+    INSERT INTO companies (name, industry) VALUES (?,?)
+    ''', companies)
+    conn.commit()
+def main():
+    db_name = 'companies.db'
+    companies = [
+        ('Apple', 'Technology'),
+        ('Tesla', 'Automotive'),
+        ('Microsoft', 'Technology'),
+        ('Amazon', 'Retail'),
+        ('Google', 'Technology'),
+        ('Facebook', 'Technology'),
+        ('Netflix', 'Entertainment'),
+        ('Twitter', 'Social Media'),
+        ('Shopify', 'Retail'),
+        ('Zoom', 'Technology'),
+        ('Slack', 'Technology'),
+        ('Spotify', 'Entertainment'),
+        ('Uber', 'Transportation'),
+        ('Lyft', 'Transportation'),
+        ('Pinterest', 'Social Media'),
+        ('Snapchat', 'Social Media'),
+        ('TikTok', 'Social Media'),
+        ('Instagram', 'Social Media'),
+        ('WhatsApp', 'Social Media'),
+        ('LinkedIn', 'Social Media'),
+        ('Reddit', 'Social Media'),
+        ('Twitch', 'Entertainment'),
+        ('Tinder', 'Social Media'),
+        ('Bumble', 'Social Media'),
+        ('Grindr', 'Social Media'),
+        ('Hinge', 'Social Media'),
+        ('Match', 'Social Media'),
+        ('OkCupid', 'Social Media'),
+        ('Plenty of Fish', 'Social Media'),
+        ('eHarmony', 'Social Media'),
+        ('Zoosk', 'Social Media'),
+        ('Christian Mingle', 'Social Media'),
+        ('JDate', 'Social Media'),
+        ('Farmers Only', 'Social Media'),
+        ('Alibaba', 'Retail'),
+        ('JD.com', 'Retail'),
+        ('Tencent', 'Technology'),
+        ('Baidu', 'Technology'),
+        ('Weibo', 'Social Media'),
+        ('WeChat', 'Social Media'),
+        ('QQ', 'Social Media'),
+        ('Douyin', 'Social Media'),
+        ('Kuaishou', 'Social Media'),
+        ('Sina Weibo', 'Social Media'),
+        ('YY', 'Social Media'),
+        ('VK', 'Social Media'),
+        ('Odnoklassniki', 'Social Media'),
+        ('MySpace', 'Social Media'),
+        ('Friendster', 'Social Media'),
+        ('Orkut', 'Social Media'),
+        ('Hi5', 'Social Media'),
+        ('Bebo', 'Social Media'),
+        ('Tagged', 'Social Media'),
+        ('Xanga', 'Social Media'),
+        ('LiveJournal', 'Social Media'),
+        ('Renren', 'Social Media'),
+        ('Kaixin', 'Social Media'),
+        ('Qzone', 'Social Media'),
+        ('Mixi', 'Social Media'),
+        ('Cyworld', 'Social Media'),
+        ('Naver', 'Social Media'),
+        ('Daum', 'Social Media'),
+        ('Cyworld', 'Social Media'),
+        ('Nate', 'Social Media'),
+        ('Me2day', 'Social Media'),
+        ('KakaoTalk', 'Social Media'),
+        ('Line', 'Social Media'),
+        ('Kik', 'Social Media'),
+        ('Viber', 'Social Media'),
+        ('Telegram', 'Social Media'),
+        ('Signal', 'Social Media'),
+        ('Threema', 'Social Media'),
+        ('Wickr', 'Social Media'),
+        ('Snapchat', 'Social Media'),
+        ('TikTok', 'Social Media'),
+        ('Instagram', 'Social Media'),
+        ('WhatsApp', 'Social Media'),
+        ('LinkedIn', 'Social Media'),
+        ('IBM', 'Technology'),
+    ]
+    # Create a database
+    conn = create_table(db_name)
+
+    # Create a table
+    create_table(conn)
+
+    # Insert companies into the table
+    insert_companies(conn, companies)
+
+    # Close the connection
+    conn.close()
+
+if __name__ == '__main__':
+    main()
+
