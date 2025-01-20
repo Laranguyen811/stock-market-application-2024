@@ -2427,3 +2427,16 @@ model ordering, when auto-eval metrics => reliable templates => better
 - continue DL paper implementaiton
 - start MMKG if have time
 - learn more about derivatives
+
+***20/1/2025***
+***Things I learned today:***
+- to list the table names, we can use cursor.execute("SELECT name FROM sqlite_master WHERE type='table';") and fetchall()
+- backpropagation: learning procedure has a drawback of global minimum. However, it did not show in many tasks.
+***Things I did well today:***
+- finished 2nd pass backpropagation
+- creating tables in sqlite
+***Things I did not do well today:***
+- did not seem to create a table correctly
+***Things I will do better next time:***
+- check the table creation code
+- continue backpropagation 3rd pass 
