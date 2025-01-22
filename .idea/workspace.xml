@@ -4,12 +4,21 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
+<<<<<<< HEAD
     <list default="true" id="4f5895f3-2d93-4355-bcbb-97c6701d0028" name="Changes" comment="- contiue function_calling_with_Gemini.py">
       <change afterPath="$PROJECT_DIR$/real_time_data.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/function_calling_with_Gemini.py" beforeDir="false" afterPath="$PROJECT_DIR$/function_calling_with_Gemini.py" afterDir="false" />
+=======
+    <list default="true" id="4f5895f3-2d93-4355-bcbb-97c6701d0028" name="Changes" comment="- adding creating_db">
+      <change afterPath="$PROJECT_DIR$/create_tables.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/function_calling_with_Gemini.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/companies.db" beforeDir="false" afterPath="$PROJECT_DIR$/companies.db" afterDir="false" />
+>>>>>>> parent of 4d8c246 (- adding create_tables.py and function_calling_with_Gemini.py)
       <change beforePath="$PROJECT_DIR$/misc/Stock App Review.md" beforeDir="false" afterPath="$PROJECT_DIR$/misc/Stock App Review.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/reflection_agent.py" beforeDir="false" afterPath="$PROJECT_DIR$/reflection_agent.py" afterDir="false" />
     </list>
@@ -45,7 +54,6 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="ROOT_SYNC" value="DONT_SYNC" />
-    <option name="UPDATE_TYPE" value="REBASE" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
   &quot;lastFilter&quot;: {
@@ -76,6 +84,7 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
+<<<<<<< HEAD
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
     &quot;Python tests.Python tests for test_download_images.TestDownloadImages.executor&quot;: &quot;Run&quot;,
@@ -120,8 +129,55 @@
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;project.propVCSSupport.DirectoryMappings&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+=======
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Python tests.Python tests for test_download_images.TestDownloadImages.executor": "Run",
+    "Python tests.Python tests for test_download_sounds.TestDownloadSound.executor": "Run",
+    "Python tests.Python tests for test_stock_data_analysis.test_calculate_corr_coeffs.executor": "Run",
+    "Python tests.Python tests in test_HMM.py.executor": "Run",
+    "Python tests.Python tests in test_download_images.py.executor": "Run",
+    "Python tests.Python tests in test_download_sounds.py.executor": "Run",
+    "Python tests.Python tests in test_normal_distribution_detection.py.executor": "Run",
+    "Python tests.Python tests in test_stock_data_analysis.py.executor": "Debug",
+    "Python.BERT_logical_reasoning.executor": "Run",
+    "Python.Stock_Data_Analysis.executor": "Run",
+    "Python.Stock_Data_Visualisation.executor": "Run",
+    "Python.Stock_Market_Application.executor": "Run",
+    "Python.add_tool.executor": "Run",
+    "Python.add_tools.executor": "Run",
+    "Python.create_tables.executor": "Run",
+    "Python.download_sounds.executor": "Run",
+    "Python.example_HMM.executor": "Run",
+    "Python.find_uvloop.executor": "Run",
+    "Python.function_calling_with_Gemini.executor": "Run",
+    "Python.hidden_markov_model.executor": "Run",
+    "Python.image_extractor.executor": "Run",
+    "Python.mel_spectrogram_features.executor": "Run",
+    "Python.proxy_tool (1).executor": "Run",
+    "Python.proxy_tool.executor": "Run",
+    "Python.reflection_agent.executor": "Run",
+    "Python.simple_stock_market_prediction.executor": "Run",
+    "Python.stock_data_analysis.executor": "Run",
+    "Python.uri_tool.executor": "Run",
+    "Python.uri_tools.executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "ToolWindowPlots.ShowToolbar": "false",
+    "git-widget-placeholder": "master",
+    "ignore.virus.scanning.warn.message": "true",
+    "last_opened_file_path": "D:/Users/laran/PycharmProjects/ASX",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "project.propVCSSupport.DirectoryMappings",
+    "vue.rearranger.settings.migration": "true"
+>>>>>>> parent of 4d8c246 (- adding create_tables.py and function_calling_with_Gemini.py)
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\laran\PycharmProjects\ASX\stock_market" />
@@ -131,7 +187,11 @@
       <recent name="C:\Users\laran\PycharmProjects\ASX\stock_market\fl_multimodal_knowledge_graph\data_collection" />
     </key>
   </component>
+<<<<<<< HEAD
   <component name="RunManager" selected="Python.function_calling_with_Gemini">
+=======
+  <component name="RunManager">
+>>>>>>> parent of 4d8c246 (- adding create_tables.py and function_calling_with_Gemini.py)
     <configuration name="add_tool" type="PythonConfigurationType" factoryName="Python">
       <module name="ASX" />
       <option name="ENV_FILES" value="" />
@@ -536,8 +596,20 @@
       <workItem from="1737006815685" duration="508000" />
       <workItem from="1737064363558" duration="624000" />
       <workItem from="1737089974762" duration="3133000" />
+<<<<<<< HEAD
       <workItem from="1737434921565" duration="2471000" />
       <workItem from="1737522023947" duration="2835000" />
+=======
+      <workItem from="1737338068888" duration="4028000" />
+    </task>
+    <task id="LOCAL-00071" summary="- finished HybridEmbed class">
+      <option name="closed" value="true" />
+      <created>1727077714413</created>
+      <option name="number" value="00071" />
+      <option name="presentableId" value="LOCAL-00071" />
+      <option name="project" value="LOCAL" />
+      <updated>1727077714413</updated>
+>>>>>>> parent of 4d8c246 (- adding create_tables.py and function_calling_with_Gemini.py)
     </task>
     <task id="LOCAL-00072" summary="- finished HybridEmbed class">
       <option name="closed" value="true" />
@@ -915,6 +987,7 @@
       <option name="project" value="LOCAL" />
       <updated>1737094228735</updated>
     </task>
+<<<<<<< HEAD
     <task id="LOCAL-00119" summary="- adding create_tables.py and function_calling_with_Gemini.py">
       <option name="closed" value="true" />
       <created>1737353002489</created>
@@ -932,6 +1005,17 @@
       <updated>1737437229181</updated>
     </task>
     <option name="localTasksCounter" value="121" />
+=======
+    <task id="LOCAL-00119" summary="- adding creating_db">
+      <option name="closed" value="true" />
+      <created>1737094412668</created>
+      <option name="number" value="00119" />
+      <option name="presentableId" value="LOCAL-00119" />
+      <option name="project" value="LOCAL" />
+      <updated>1737094412668</updated>
+    </task>
+    <option name="localTasksCounter" value="120" />
+>>>>>>> parent of 4d8c246 (- adding create_tables.py and function_calling_with_Gemini.py)
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -1003,10 +1087,6 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/stock_data_analysis.py</url>
-          <option name="timeStamp" value="3" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/stock_data_analysis.py</url>
           <line>364</line>
           <option name="timeStamp" value="7" />
         </line-breakpoint>
@@ -1026,6 +1106,7 @@
           <option name="timeStamp" value="14" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+<<<<<<< HEAD
           <url>file://$PROJECT_DIR$/function_calling_with_Gemini.py</url>
           <line>36</line>
           <option name="timeStamp" value="15" />
@@ -1035,6 +1116,11 @@
           <line>28</line>
           <option name="timeStamp" value="16" />
         </line-breakpoint>
+=======
+          <url>file://$PROJECT_DIR$/stock_data_analysis.py</url>
+          <option name="timeStamp" value="15" />
+        </line-breakpoint>
+>>>>>>> parent of 4d8c246 (- adding create_tables.py and function_calling_with_Gemini.py)
       </breakpoints>
     </breakpoint-manager>
   </component>
@@ -1042,7 +1128,11 @@
     <SUITE FILE_PATH="coverage/stock_market_application_2024$add_tools.coverage" NAME="uri_tool Coverage Results" MODIFIED="1721710446763" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/stock_market/fl_multimodal_knowledge_graph/data_collection/data_collection_tools" />
     <SUITE FILE_PATH="coverage/stock_market_application_2024$mel_spectrogram_features.coverage" NAME="mel_spectrogram_features Coverage Results" MODIFIED="1725862772415" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/stock_market/fl_multimodal_knowledge_graph/feature_extractor/audio_extraction" />
     <SUITE FILE_PATH="coverage/stock_market_application_2024$find_uvloop.coverage" NAME="find_uvloop Coverage Results" MODIFIED="1736487533454" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/stock_market" />
+<<<<<<< HEAD
     <SUITE FILE_PATH="coverage/stock_market_application_2024$function_calling_with_Gemini.coverage" NAME="function_calling_with_Gemini Coverage Results" MODIFIED="1737435840226" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+=======
+    <SUITE FILE_PATH="coverage/stock_market_application_2024$function_calling_with_Gemini.coverage" NAME="function_calling_with_Gemini Coverage Results" MODIFIED="1737352273380" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+>>>>>>> parent of 4d8c246 (- adding create_tables.py and function_calling_with_Gemini.py)
     <SUITE FILE_PATH="coverage/stock_market_application_2024$reflection_agent.coverage" NAME="reflection_agent Coverage Results" MODIFIED="1737090330916" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/stock_market_application_2024$simple_stock_market_prediction.coverage" NAME="simple_stock_market_prediction Coverage Results" MODIFIED="1732766446281" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/stock_market_application_2024$stock_data_analysis.coverage" NAME="stock_data_analysis Coverage Results" MODIFIED="1719469535367" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />

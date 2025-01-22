@@ -77,7 +77,11 @@ def insert_companies(conn, stock_companies):
     """
     cursor = conn.cursor()
     cursor.executemany('''
+<<<<<<< HEAD
     INSERT INTO companies (name, industry) VALUES (?,?)
+=======
+    INSERT INTO stock_companies (name, industry) VALUES (?,?)
+>>>>>>> parent of 4d8c246 (- adding create_tables.py and function_calling_with_Gemini.py)
     ''', stock_companies)
     conn.commit()
 def main():
@@ -177,3 +181,7 @@ def main():
 
 if __name__ == '__main__':
     main()
+<<<<<<< HEAD
+=======
+
+>>>>>>> parent of 4d8c246 (- adding create_tables.py and function_calling_with_Gemini.py)
