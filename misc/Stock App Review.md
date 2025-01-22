@@ -2427,7 +2427,6 @@ model ordering, when auto-eval metrics => reliable templates => better
 - continue DL paper implementaiton
 - start MMKG if have time
 - learn more about derivatives
-
 ***20/1/2025***
 ***Things I learned today:***
 - to list the table names, we can use cursor.execute("SELECT name FROM sqlite_master WHERE type='table';") and fetchall()
@@ -2440,3 +2439,19 @@ model ordering, when auto-eval metrics => reliable templates => better
 ***Things I will do better next time:***
 - check the table creation code
 - continue backpropagation 3rd pass 
+***21/1/2025***
+***Things I learned today:***
+- function calling with Gemini
+- trigonometry
+- derivatives
+***Things I did well today:***
+- function calling with Gemini
+- brushed up on trigonometry and derivatives
+***Things I did not do well today:***
+- not implementing MMKG
+- no 3rd pass backpropagation
+***Things I will do better next time:***
+- 3rd pass backpropagation
+- MMKG if have time
+- continue with function calling with Gemini
+- developing AI agent

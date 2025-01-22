@@ -8,5 +8,12 @@
       <jdbc-url>jdbc:sqlite:C:\Users\laran\PycharmProjects\ASX\companies.db</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
+    <data-source source="LOCAL" name="stock_companies" uuid="955ce08b-29fa-4160-b36b-20bf8c33636c">
+      <driver-ref>sqlite.xerial</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
+      <jdbc-url>jdbc:sqlite:D:\Users\laran\PycharmProjects\ASX\stock_companies.db</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
   </component>
 </project>

@@ -4,11 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4f5895f3-2d93-4355-bcbb-97c6701d0028" name="Changes" comment="- adding create_tables.py and function_calling_with_Gemini.py">
-      <change afterPath="$PROJECT_DIR$/create_tables.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/function_calling_with_Gemini.py" afterDir="false" />
+    <list default="true" id="4f5895f3-2d93-4355-bcbb-97c6701d0028" name="Changes" comment="- contiue function_calling_with_Gemini.py">
+      <change afterPath="$PROJECT_DIR$/real_time_data.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/function_calling_with_Gemini.py" beforeDir="false" afterPath="$PROJECT_DIR$/function_calling_with_Gemini.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/misc/Stock App Review.md" beforeDir="false" afterPath="$PROJECT_DIR$/misc/Stock App Review.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/reflection_agent.py" beforeDir="false" afterPath="$PROJECT_DIR$/reflection_agent.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -73,52 +76,52 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Python tests.Python tests for test_download_images.TestDownloadImages.executor": "Run",
-    "Python tests.Python tests for test_download_sounds.TestDownloadSound.executor": "Run",
-    "Python tests.Python tests for test_stock_data_analysis.test_calculate_corr_coeffs.executor": "Run",
-    "Python tests.Python tests in test_HMM.py.executor": "Run",
-    "Python tests.Python tests in test_download_images.py.executor": "Run",
-    "Python tests.Python tests in test_download_sounds.py.executor": "Run",
-    "Python tests.Python tests in test_normal_distribution_detection.py.executor": "Run",
-    "Python tests.Python tests in test_stock_data_analysis.py.executor": "Debug",
-    "Python.BERT_logical_reasoning.executor": "Run",
-    "Python.Stock_Data_Analysis.executor": "Run",
-    "Python.Stock_Data_Visualisation.executor": "Run",
-    "Python.Stock_Market_Application.executor": "Run",
-    "Python.add_tool.executor": "Run",
-    "Python.add_tools.executor": "Run",
-    "Python.download_sounds.executor": "Run",
-    "Python.example_HMM.executor": "Run",
-    "Python.find_uvloop.executor": "Run",
-    "Python.function_calling_with_Gemini.executor": "Run",
-    "Python.hidden_markov_model.executor": "Run",
-    "Python.image_extractor.executor": "Run",
-    "Python.mel_spectrogram_features.executor": "Run",
-    "Python.proxy_tool (1).executor": "Run",
-    "Python.proxy_tool.executor": "Run",
-    "Python.reflection_agent.executor": "Run",
-    "Python.simple_stock_market_prediction.executor": "Run",
-    "Python.stock_data_analysis.executor": "Run",
-    "Python.uri_tool.executor": "Run",
-    "Python.uri_tools.executor": "Run",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "ToolWindowPlots.ShowToolbar": "false",
-    "git-widget-placeholder": "master",
-    "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "D:/Users/laran/PycharmProjects/ASX",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "project.propVCSSupport.DirectoryMappings",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Python tests.Python tests for test_download_images.TestDownloadImages.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Python tests for test_download_sounds.TestDownloadSound.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Python tests for test_stock_data_analysis.test_calculate_corr_coeffs.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Python tests in test_HMM.py.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Python tests in test_download_images.py.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Python tests in test_download_sounds.py.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Python tests in test_normal_distribution_detection.py.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Python tests in test_stock_data_analysis.py.executor&quot;: &quot;Debug&quot;,
+    &quot;Python.BERT_logical_reasoning.executor&quot;: &quot;Run&quot;,
+    &quot;Python.Stock_Data_Analysis.executor&quot;: &quot;Run&quot;,
+    &quot;Python.Stock_Data_Visualisation.executor&quot;: &quot;Run&quot;,
+    &quot;Python.Stock_Market_Application.executor&quot;: &quot;Run&quot;,
+    &quot;Python.add_tool.executor&quot;: &quot;Run&quot;,
+    &quot;Python.add_tools.executor&quot;: &quot;Run&quot;,
+    &quot;Python.download_sounds.executor&quot;: &quot;Run&quot;,
+    &quot;Python.example_HMM.executor&quot;: &quot;Run&quot;,
+    &quot;Python.find_uvloop.executor&quot;: &quot;Run&quot;,
+    &quot;Python.function_calling_with_Gemini.executor&quot;: &quot;Run&quot;,
+    &quot;Python.hidden_markov_model.executor&quot;: &quot;Run&quot;,
+    &quot;Python.image_extractor.executor&quot;: &quot;Run&quot;,
+    &quot;Python.mel_spectrogram_features.executor&quot;: &quot;Run&quot;,
+    &quot;Python.proxy_tool (1).executor&quot;: &quot;Run&quot;,
+    &quot;Python.proxy_tool.executor&quot;: &quot;Run&quot;,
+    &quot;Python.reflection_agent.executor&quot;: &quot;Run&quot;,
+    &quot;Python.simple_stock_market_prediction.executor&quot;: &quot;Run&quot;,
+    &quot;Python.stock_data_analysis.executor&quot;: &quot;Run&quot;,
+    &quot;Python.uri_tool.executor&quot;: &quot;Run&quot;,
+    &quot;Python.uri_tools.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;ToolWindowPlots.ShowToolbar&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/Users/laran/PycharmProjects/ASX&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;project.propVCSSupport.DirectoryMappings&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\laran\PycharmProjects\ASX\stock_market" />
@@ -128,7 +131,7 @@
       <recent name="C:\Users\laran\PycharmProjects\ASX\stock_market\fl_multimodal_knowledge_graph\data_collection" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Python.function_calling_with_Gemini">
     <configuration name="add_tool" type="PythonConfigurationType" factoryName="Python">
       <module name="ASX" />
       <option name="ENV_FILES" value="" />
@@ -175,6 +178,26 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="function_calling_with_Gemini" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="ASX" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/function_calling_with_Gemini.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="hidden_markov_model" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="ASX" />
       <option name="ENV_FILES" value="" />
@@ -190,29 +213,6 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/stock_market/hidden_markov_model.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="proxy_tool (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="ASX" />
-      <option name="ENV_FILES" value="" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/stock_market/fl_multimodal_knowledge_graph/data_collection/data_collection_tools" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/stock_market/fl_multimodal_knowledge_graph/data_collection/data_collection_tools/proxy_tool.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -302,19 +302,19 @@
     <list>
       <item itemvalue="Python.add_tool" />
       <item itemvalue="Python.proxy_tool" />
+      <item itemvalue="Python.function_calling_with_Gemini" />
       <item itemvalue="Python.reflection_agent" />
       <item itemvalue="Python.hidden_markov_model" />
-      <item itemvalue="Python.proxy_tool (1)" />
       <item itemvalue="Python tests.Python tests for test_download_images.TestDownloadImages" />
       <item itemvalue="Python tests.Python tests for test_download_sounds.TestDownloadSound" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.function_calling_with_Gemini" />
         <item itemvalue="Python.reflection_agent" />
         <item itemvalue="Python.hidden_markov_model" />
         <item itemvalue="Python tests.Python tests for test_download_images.TestDownloadImages" />
         <item itemvalue="Python tests.Python tests for test_download_sounds.TestDownloadSound" />
-        <item itemvalue="Python.proxy_tool (1)" />
       </list>
     </recent_temporary>
   </component>
@@ -536,15 +536,8 @@
       <workItem from="1737006815685" duration="508000" />
       <workItem from="1737064363558" duration="624000" />
       <workItem from="1737089974762" duration="3133000" />
-      <workItem from="1737434921565" duration="2273000" />
-    </task>
-    <task id="LOCAL-00071" summary="- finished HybridEmbed class">
-      <option name="closed" value="true" />
-      <created>1727077714413</created>
-      <option name="number" value="00071" />
-      <option name="presentableId" value="LOCAL-00071" />
-      <option name="project" value="LOCAL" />
-      <updated>1727077714413</updated>
+      <workItem from="1737434921565" duration="2471000" />
+      <workItem from="1737522023947" duration="2835000" />
     </task>
     <task id="LOCAL-00072" summary="- finished HybridEmbed class">
       <option name="closed" value="true" />
@@ -930,7 +923,15 @@
       <option name="project" value="LOCAL" />
       <updated>1737353002489</updated>
     </task>
-    <option name="localTasksCounter" value="120" />
+    <task id="LOCAL-00120" summary="- contiue function_calling_with_Gemini.py">
+      <option name="closed" value="true" />
+      <created>1737437229180</created>
+      <option name="number" value="00120" />
+      <option name="presentableId" value="LOCAL-00120" />
+      <option name="project" value="LOCAL" />
+      <updated>1737437229181</updated>
+    </task>
+    <option name="localTasksCounter" value="121" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -960,7 +961,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="- fixed baum-welch algo comment" />
     <MESSAGE value="- added evolutionary_algorithm.py" />
     <MESSAGE value="- continued performance_calculation.py" />
     <MESSAGE value="- continued performance_calculations.py" />
@@ -985,7 +985,8 @@
     <MESSAGE value="- looking at langgraph to build agents" />
     <MESSAGE value="- adding creating_db" />
     <MESSAGE value="- adding create_tables.py and function_calling_with_Gemini.py" />
-    <option name="LAST_COMMIT_MESSAGE" value="- adding create_tables.py and function_calling_with_Gemini.py" />
+    <MESSAGE value="- contiue function_calling_with_Gemini.py" />
+    <option name="LAST_COMMIT_MESSAGE" value="- contiue function_calling_with_Gemini.py" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1026,12 +1027,12 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/function_calling_with_Gemini.py</url>
-          <line>34</line>
+          <line>36</line>
           <option name="timeStamp" value="15" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/function_calling_with_Gemini.py</url>
-          <line>26</line>
+          <line>28</line>
           <option name="timeStamp" value="16" />
         </line-breakpoint>
       </breakpoints>
