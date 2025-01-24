@@ -181,7 +181,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-<<<<<<< HEAD
-=======
-
->>>>>>> parent of 4d8c246 (- adding create_tables.py and function_calling_with_Gemini.py)

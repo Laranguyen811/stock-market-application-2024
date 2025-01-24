@@ -1,19 +1,17 @@
 import google.generativeai as genai
 import os
 import sqlite3
-<<<<<<< HEAD
 import textwrap
+from real_time_data import fetch_real_time_data
 
 GOOGLE_API_KEY = os.getenv('GOOGLE_API_KEY')
 genai.configure(api_key=GOOGLE_API_KEY)
 
 db_file = 'stock_companies.db'
-=======
 GOOGLE_API_KEY = os.getenv('GOOGLE_API_KEY')
 genai.configure(api_key=GOOGLE_API_KEY)
 
-db_file = 'companies.db'
->>>>>>> parent of 4d8c246 (- adding create_tables.py and function_calling_with_Gemini.py)
+db_file = 'stock_companies.db'
 db_conn = sqlite3.connect(db_file)
 
 def list_tables() -> list[str]:
@@ -30,7 +28,7 @@ def list_tables() -> list[str]:
     table = cursor.fetchall()
     cursor.close()
     return[t[0] for t in table]
-<<<<<<< HEAD
+
 table_names = list_tables() # When calling list_tables() function, ensure that its returned value is printed or used.
 print(table_names)
 
@@ -109,22 +107,3 @@ def print_chat_history(chat):
 
 print_chat_history(chat)
 
-
-=======
-list_tables()
-import os
-
-def database_exists(db_name):
-    """
-    Check if the database file exists.
-    """
-    return os.path.isfile(db_name)
-
-db_name = 'companies.db'
-if database_exists(db_name):
-    print(f"The database '{db_name}' exists.")
-else:
-    print(f"The database '{db_name}' does not exist.")
-
-import sqlite3
->>>>>>> parent of 4d8c246 (- adding create_tables.py and function_calling_with_Gemini.py)
