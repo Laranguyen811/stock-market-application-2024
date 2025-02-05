@@ -1,3 +1,5 @@
+import logging
+
 import yfinance as yf
 import requests
 import os
@@ -6,6 +8,102 @@ FMP_API_KEY = os.getenv('FMP_API_KEY')
 stock_symbols = ['AAPL', 'TSLA','MSFT','NVDA','UL','GOOGL','PFE','JNJ','PG','DANOY','ADH','ALC','AD8','AHC',
                  'ACL', 'AEF','COH','CSL','RMD','SEK','WEB','XRO']
 
+def create_database(db_name):
+    '''
+    Create a database to store stock data.
+    '''
+    conn = sqlite3.connect(db_name)
+    cursor = conn.cursor()
+    try:
+        cursor.execute('''
+        CREATE TABLE sri_companies( 
+        name TEXT,
+        price REAL,
+        symbol TEXT PRIMARY KEY,
+        sector TEXT,
+        industry TEXT,
+        marketCap REAL,
+        peRatio REAL,
+        dividendYield REAL,
+        volume REAL,
+        avgVolume REAL,
+        exchange TEXT,
+        incomeStatement TEXT,
+        balanceSheet TEXT,
+        cashFlow TEXT,
+        profile TEXT,
+        executive_compensation TEXT,
+        executive_compensation_benchmark TEXT,
+        employee_count INTEGER,
+        stock_screener TEXT,
+        grade TEXT,
+        company_core_information TEXT,
+        market_capitalization REAL,
+        analyst_estimates TEXT,
+        analyst_stock_recommendations TEXT,
+        company_outlook TEXT,
+        shares_float REAL,
+        quote TEXT,
+        real_time_price REAL,
+        stock_price_change REAL,
+        pre_post_market_trade TEXT,
+        pre_post_market TEXT,
+        income_statement TEXT,
+        balance_sheet_statement TEXT,
+        cash_flow_statement TEXT,
+        financial_ratios TEXT,
+        enterprise_value REAL,
+        key_metrics TEXT,
+        financial_growth TEXT,
+        financial_ratios_ttm TEXT,
+        financial_statement_growth TEXT,
+        dcf REAL,
+        stock_splits TEXT,
+        earnings_calendar TEXT,
+        ipo_calendar TEXT,
+        sec_filings TEXT,
+        press_releases TEXT,
+        dividends REAL,
+        dividend_calendar TEXT,
+        dividend_stock_screener TEXT,
+        key_metrics_growth TEXT,
+        ratios TEXT,
+        cash_flow_statement_growth TEXT,
+        income_statement_growth TEXT,
+        balance_sheet_statement_growth TEXT,
+        financial_ratios_growth TEXT,
+        enterprise_value_growth REAL,
+        score TEXT,
+        enterprise_values TEXT,
+        discounted_cash_flow REAL,
+        advanced_levered_discounted_cash_flow REAL,
+        rating TEXT,
+        price_target_consensus TEXT,
+        price_target_rss_feed TEXT,
+        upgrades_downgrades_rss_feed TEXT,
+        stock_news_sentiments_rss_feed TEXT,
+        rss_feed_all TEXT,
+        mergers_acquisitions_rss_feed TEXT,
+        senate_trading_rss_feed TEXT,
+        senate_disclosure_rss_feed TEXT,
+        insider_trading_rss_feed TEXT,
+        crowdfunding_offerings_rss_feed TEXT,
+        fundraising_rss_feed TEXT,
+        economic TEXT,
+        UNIQUE(name, symbol)
+        )
+        ''')
+        # Commit the change
+        conn.commit()
+        print("Database successfully created.")
+    except sqlite3.OperationalError as e:
+        print(f"Error creating table: {e}")
+    finally:
+        cursor.close()
+        conn.close()
+
+# Configure logging
+logging.basicConfig(level=logging.ERROR, format='%(asctime)s - %(levelname)s - %(message)s')
 def fetch_real_time_data(stock_symbols):
     '''
     Fetches real-time stock data for a given stock symbol.
@@ -15,86 +113,158 @@ def fetch_real_time_data(stock_symbols):
         DataFrame: A pandas DataFrame of stock data
     '''
     stock_data = []
+    endpoints = [
+        'profile','standard-industry-information?', 'executive_compensation', 'executive-compensation-benchmark', 'employee_count', 'stock-screener',
+        'grade', 'company-core-information', 'market-capitalization', 'analyst-estimates',
+        'analyst-stock-recommendations', 'company-outlook', 'shares_float', 'quote', 'real-time-price',
+        'stock-price-change', 'pre-post-market-trade', 'pre-post-market',
+        'income-statement', 'balance-sheet-statement', 'cash-flow-statement', 'financial-ratios', 'enterprise-value',
+        'key-metrics', 'financial-growth', 'financial-ratios-ttm', 'financial-statement-growth', 'dcf', 'stock-splits',
+        'earnings-calendar', 'ipo-calendar', 'sec-filings', 'press-releases', 'dividends', 'dividend-calendar',
+        'dividend-stock-screener',
+        'key-metrics', 'ratios', 'cash-flow-statement-growth', 'income-statement-growth',
+        'balance-sheet-statement-growth', 'financial-ratios-growth', 'enterprise-value-growth', 'key-metrics-growth',
+        'financial-growth', 'financial-ratios-growth', 'financial-statement-growth',
+        'score', 'enterprise-values', 'discounted_cash_flow', 'advanced_levered_discounted_cash_flow', 'rating',
+        'price-target-consensus', 'price-target-rss-feed', 'upgrades-downgrades-rss-feed',
+        'stock-news-sentiments-rss-feed', 'rss_feed_all', 'mergers-acquisitions-rss-feed', 'senate-trading-rss-feed',
+        'senate-disclosure-rss-feed', 'insider-trading-rss-feed',
+        'crowdfunding-offerings-rss-feed', 'fundraising-rss-feed', 'economic'
+    ]
     for stock_symbol in stock_symbols:
-        try:
-            url = f'https://financialmodelingprep.com/api/v3/quote/{stock_symbol}?apikey={FMP_API_KEY}'
-            print(url)
-            response = requests.get(url)
-            if response.status_code == 200:
-                data = response.json()
-                # Validate if 'data' is not empty and has the expected key-value structure
-                if data and isinstance(data,list) and 'price' in data[0]:
-                    current_price=data[0]['price']
-                    stock_data.append({'symbol':stock_symbol,'price':current_price})
-                    print(f"Current price of {stock_symbol} is ${current_price}")
+        stock_info = {'symbol':stock_symbol}
+        for endpoint in endpoints:
+            url = f'https://financialmodelingprep.com/api/v3/{endpoint}/{stock_symbol}?apikey={FMP_API_KEY}'
+            try:
+                response = requests.get(url)
+                if response.status_code == 200:
+                    data = response.json()
+                    # Validate if 'data' is not empty and has the expected key-value structure
+                    if data and isinstance(data, list) and 'price' in data[0]:
+                        stock_info.update({
+                        'name': data[0].get('companyName', 'N/A'),
+                        'price': data[0].get('price', 0),
+                        'symbol': stock_symbol,
+                        'industry': data[0].get('industry', 'N/A'),
+                        'marketCap': data[0].get('mktCap', 0),
+                        'peRatio': data[0].get('pe', 0),
+                        'dividendYield': data[0].get('lastDiv', 0),
+                        'volume': data[0].get('volAvg', 0),
+                        'avgVolume': data[0].get('volAvg', 0),
+                        'exchange': data[0].get('exchange', 'N/A'),
+                        'incomeStatement': data[0].get('incomeStatement', 'N/A'),
+                        'balanceSheet': data[0].get('balanceSheet', 'N/A'),
+                        'cashFlow': data[0].get('cashFlow', 'N/A'),
+                        'profile': data[0].get('profile', 'N/A'),
+                        'executive_compensation': data[0].get('executive_compensation', 'N/A'),
+                        'executive_compensation_benchmark': data[0].get('executive_compensation_benchmark', 'N/A'),
+                        'employee_count': data[0].get('employee_count', 0),
+                        'stock_screener': data[0].get('stock_screener', 'N/A'),
+                        'grade': data[0].get('grade', 'N/A'),
+                        'company_core_information': data[0].get('company_core_information', 'N/A'),
+                        'market_capitalization': data[0].get('market_capitalization', 0),
+                        'analyst_estimates': data[0].get('analyst_estimates', 'N/A'),
+                        'analyst_stock_recommendations': data[0].get('analyst_stock_recommendations', 'N/A'),
+                        'company_outlook': data[0].get('company_outlook', 'N/A'),
+                        'shares_float': data[0].get('shares_float', 0),
+                        'quote': data[0].get('quote', 'N/A'),
+                        'real_time_price': data[0].get('real_time_price', 0),
+                        'stock_price_change': data[0].get('stock_price_change', 0),
+                        'pre_post_market_trade': data[0].get('pre_post_market_trade', 'N/A'),
+                        'pre_post_market': data[0].get('pre_post_market', 'N/A'),
+                        'income_statement': data[0].get('income_statement', 'N/A'),
+                        'balance_sheet_statement': data[0].get('balance_sheet_statement', 'N/A'),
+                        'cash_flow_statement': data[0].get('cash_flow_statement', 'N/A'),
+                        'financial_ratios': data[0].get('financial_ratios', 'N/A'),
+                        'enterprise_value': data[0].get('enterprise_value', 0),
+                        'key_metrics': data[0].get('key_metrics', 'N/A'),
+                        'financial_growth': data[0].get('financial_growth', 'N/A'),
+                        'financial_ratios_ttm': data[0].get('financial_ratios_ttm', 'N/A'),
+                        'financial_statement_growth': data[0].get('financial_statement_growth', 'N/A'),
+                        'dcf': data[0].get('dcf', 0),
+                        'stock_splits': data[0].get('stock_splits', 'N/A'),
+                        'earnings_calendar': data[0].get('earnings_calendar', 'N/A'),
+                        'ipo_calendar': data[0].get('ipo_calendar', 'N/A'),
+                        'sec_filings': data[0].get('sec_filings', 'N/A'),
+                        'press_releases': data[0].get('press_releases', 'N/A'),
+                        'dividends': data[0].get('dividends', 0),
+                        'dividend_calendar': data[0].get('dividend_calendar', 'N/A'),
+                        'dividend_stock_screener': data[0].get('dividend_stock_screener', 'N/A'),
+                        'key_metrics_growth': data[0].get('key_metrics_growth', 'N/A'),
+                        'ratios': data[0].get('ratios', 'N/A'),
+                        'cash_flow_statement_growth': data[0].get('cash_flow_statement_growth', 'N/A'),
+                        'income_statement_growth': data[0].get('income_statement_growth', 'N/A'),
+                        'balance_sheet_statement_growth': data[0].get('balance_sheet_statement_growth', 'N/A'),
+                        'financial_ratios_growth': data[0].get('financial_ratios_growth', 'N/A'),
+                        'enterprise_value_growth': data[0].get('enterprise_value_growth', 0),
+                        'score': data[0].get('score', 'N/A'),
+                        'enterprise_values': data[0].get('enterprise_values', 'N/A'),
+                        'discounted_cash_flow': data[0].get('discounted_cash_flow', 0),
+                        'advanced_levered_discounted_cash_flow': data[0].get('advanced_levered_discounted_cash_flow',
+                                                                             0),
+                        'rating': data[0].get('rating', 'N/A'),
+                        'price_target_consensus': data[0].get('price_target_consensus', 'N/A'),
+                        'price_target_rss_feed': data[0].get('price_target_rss_feed', 'N/A'),
+                        'upgrades_downgrades_rss_feed': data[0].get('upgrades_downgrades_rss_feed', 'N/A'),
+                        'stock_news_sentiments_rss_feed': data[0].get('stock_news_sentiments_rss_feed', 'N/A'),
+                        'rss_feed_all': data[0].get('rss_feed_all', 'N/A'),
+                        'mergers_acquisitions_rss_feed': data[0].get('mergers_acquisitions_rss_feed', 'N/A'),
+                        'senate_trading_rss_feed': data[0].get('senate_trading_rss_feed', 'N/A'),
+                        'senate_disclosure_rss_feed': data[0].get('senate_disclosure_rss_feed', 'N/A'),
+                        'insider_trading_rss_feed': data[0].get('insider_trading_rss_feed', 'N/A'),
+                        'crowdfunding_offerings_rss_feed': data[0].get('crowdfunding_offerings_rss_feed', 'N/A'),
+                        'fundraising_rss_feed': data[0].get('fundraising_rss_feed', 'N/A'),
+                        'economic': data[0].get('economic', 'N/A')
+                    })
+                    break
                 else:
-                    print(f"Unexpected data structure or no price available for {stock_symbol}")
-            else:
-                print(f"Failed to fetch data for {stock_symbol}.HTTP status code: {response.status_code}")
-                print(f"Response content: {response.text}")
-        except requests.exceptions.RequestException as e:
-            print(f"An error occurred while fetching data for {stock_symbol}: {e}")
-        except (KeyError, IndexError) as e:
-            print(f"Error extracting data for stock {stock_symbol}: {e}")
-        except Exception as e:
-            print(f"An unexpected error occurred: {e}")
+                    logging.error(f"Failed to fetch data for stock {stock_symbol} from {endpoint}.HTTP status code: {response.status_code}")
+                    logging.error(f"Response: {response.text}")
+            except requests.exceptions.RequestException as e:
+                logging.error(f"Error fetching data for stock {stock_symbol} from {endpoint}: {e}")
+            except (KeyError, IndexError) as e:
+                print(f"Error extracting data for stock {stock_symbol}: {e}")
+            except Exception as e:
+                print(f"An unexpected error occurred: {e}")
+        stock_data.append(stock_info)
     return stock_data
 
-
-def add_column():
+def update_database(stock_data):
     '''
-    Add a new column to the database.
+    Update the database with the latest stock data.
     '''
-    conn = sqlite3.connect('stock_companies.db')
+    conn = sqlite3.connect('sri_companies.db')
     cursor = conn.cursor()
     try:
-        cursor.execute('''
-        ALTER TABLE stock_companies ADD COLUMN symbol TEXT''')  # SQL command to add a new column
-        cursor.execute('''
-        ALTER TABLE stock_companies ADD COLUMN price REAL''')
+        for data in stock_data:
+            cursor.execute('''
+            INSERT OR REPLACE INTO sri_companies(name, price, symbol, sector, industry, marketCap, peRatio, dividendYield, volume, avgVolume, exchange, incomeStatement, balanceSheet, cashFlow, profile, executive_compensation, executive_compensation_benchmark, employee_count, stock_screener, grade, company_core_information, market_capitalization, analyst_estimates, analyst_stock_recommendations, company_outlook, shares_float, quote, real_time_price, stock_price_change, pre_post_market_trade, pre_post_market, income_statement, balance_sheet_statement, cash_flow_statement, financial_ratios, enterprise_value, key_metrics, financial_growth, financial_ratios_ttm, financial_statement_growth, dcf, stock_splits, earnings_calendar, ipo_calendar, sec_filings, press_releases, dividends, dividend_calendar, dividend_stock_screener, key_metrics_growth, ratios, cash_flow_statement_growth, income_statement_growth, balance_sheet_statement_growth, financial_ratios_growth, enterprise_value_growth, score, enterprise_values, discounted_cash_flow, advanced_levered_discounted_cash_flow, rating, price_target_consensus, price_target_rss_feed, upgrades_downgrades_rss_feed, stock_news_sentiments_rss_feed, rss_feed_all, mergers_acquisitions_rss_feed, senate_trading_rss_feed, senate_disclosure_rss_feed, insider_trading_rss_feed, crowdfunding_offerings_rss_feed, fundraising_rss_feed, economic)
+VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,
+            ''', (data['name'], data['price'], data['symbol'], data['marketCap'], data['peRatio'], data['dividendYield'], data['volume'], data['avgVolume'], data['exchange'], data['incomeStatement'], data['balanceSheet'], data['cashFlow']))
         conn.commit()
-        print("Columns added successfully")
-    except sqlite3.Error as e:
-        print(f"An error occurred: {e}")
-    finally:  # A block used to define code that will always be executed, whether there is an error or the try block is executed or not.
-        conn.close()
-
-def update_database(symbol, price):
-    '''
-    Update the database with the latest stock prices.
-    '''
-    conn = sqlite3.connect('stock_companies.db')
-    cursor = conn.cursor()
-    try:
-        cursor.execute('''
-            INSERT INTO stock_companies (symbol, price)
-            VALUES (?, ?)
-            ON CONFLICT(symbol) DO UPDATE SET
-            price = excluded.price,
-            timestamp = CURRENT_TIMESTAMP
-        ''', (symbol, price))
-        conn.commit()
-        print(f"Updated database successfully")
-    except sqlite3.Error as e:
-        print(f"An error occurred: {e}")
+        print("Database successfully updated.")
+    except sqlite3.OperationalError as e:
+        print(f"Error updating table: {e}")
     finally:
         conn.close()
+
 def list_tables():
     '''
     Retrieve the names of all tables in the database.
     '''
-    conn=sqlite3.connect('stock_companies.db')
+    conn=sqlite3.connect('sri_companies.db')
     cursor = conn.cursor()
-    cursor.execute('''
-    SELECT name FROM sqlite_master WHERE type='table'
-    ''')
-    table = cursor.fetchall()
-    cursor.close()
+    try:
+        cursor.execute('''
+        SELECT name FROM sqlite_master WHERE type='table'
+        ''')
+        table = cursor.fetchall()
+    except sqlite3.OperationalError as e:
+        print(f"Error fetching table names: {e}")
+    finally:
+        cursor.close()
 
     return[t[0] for t in table]
-
-table_names = list_tables()
-print(table_names)
 
 def describe_table(table_name: str) -> list[tuple[str,str]]:
     '''
@@ -102,30 +272,29 @@ def describe_table(table_name: str) -> list[tuple[str,str]]:
     Returns:
         List of columns, where each entry is a tuple of (column, type).
     '''
-    conn=sqlite3.connect('stock_companies.db')
+    conn=sqlite3.connect('sri_companies.db')
     cursor = conn.cursor()
-    cursor.execute(f"PRAGMA table_info({table_name})")
-    columns = cursor.fetchall()
-    #Print column details
-    for col in columns:
-        print(col)
-    conn.close()
+    try:
+        cursor.execute(f"PRAGMA table_info({table_name})")
+        columns = cursor.fetchall()
+        #Print column details
+        for col in columns:
+            print(col)
+    except sqlite3.OperationalError as e:
+        print(f"Error fetching table schema: {e}")
+    finally:
+        conn.close()
 
-columns = describe_table('stock_companies')
-print(columns)
 
-def __main__():
-    add_column()
+def main():
+    create_database('sri_companies.db')
     stock_data = fetch_real_time_data(stock_symbols)
     if stock_data:
-        for data in stock_data:
-            symbol = data['symbol']
-            current_price = data['price']
-            print(f"Added stock data to the database")
-            update_database(symbol=symbol,price=current_price)
+        update_database(stock_data)
+        print(f"Added stock data to the database")
     else:
         print(f"Failed to fetch data")
-    list_tables()
-    describe_table('stock_companies')
+    table_names = list_tables()
+    describe_table('sri_companies')
 if __name__ == '__main__':
-    __main__()
+    main()

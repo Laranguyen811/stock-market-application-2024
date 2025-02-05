@@ -6,6 +6,22 @@ def create_database(db_name):
     """
     conn = sqlite3.connect(db_name)
     return conn
+def create_table(conn):
+    """
+    Create a table for stock market data
+    """
+    cursor = conn.cursor()
+    cursor.execute('''
+    CREATE TABLE 
+    IF NOT EXISTS stock_companies (id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,industry TEXT NOT NULL,
+    price REAL NOT NULL, sector TEXT NOT NULL, symbol TEXT NOT NULL, 
+    volume INTEGER NOT NULL, market_cap REAL NOT NULL,
+    )
+    ''')
+    conn.commit()
+    return cursor
+
 def fetch_real_time_data(symbol):
     '''
     Fetches real-time stock data for a given stock symbol.
