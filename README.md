@@ -2,7 +2,7 @@
 ![Stock Market Application Image](https://github.com/Laranguyen811/stock-market-application-2024/assets/36720666/d68560b1-4495-403f-913b-75a537ac4340)
 
 ## Introduction
-My pilot project creates a stock market application, focusing on Socially Responsible Investing, to assist financial insights. If you are an individual trader and investor, it provides essential information to help you make decisions. 
+My pilot project creates a stock market application, focusing on Socially Responsible Investing, to assist financial insights. If you are an individual trader and investor, it provides essential information to help you make decisions. This project is a work in progress. Therefore, I appreciate your understanding. 
 ### Problem formulation
 ### Abstract:
 A new application is needed to educate traders and investors by providing real-time financial insights into the stock market. This application aims to improve individual financial literacy and assist traders and investors in making wise investment decisions.
