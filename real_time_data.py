@@ -78,9 +78,9 @@ def fetch_batch_data(symbols, batch_size=10):
     for i in range(0, len(symbols), batch_size):
         batch = symbols[i:i + batch_size]
         try:
-            data = fetch_real_time_data(batch)
-            if data:
-                update_database(data)
+            sql_data = fetch_real_time_sql_data(batch)
+            if sql_data:
+                update_database(sql_data)
             time.sleep(1)  # Ensure we don't exceed API limits
         except Exception as e:
             logging.error(f"Batch processing failed: {e}")
@@ -157,7 +157,7 @@ def process_response(data):
                             'fmpLast':data.get('fmpLast'),
                             'lastUpdated':data.get('lastUpdated')
                             },
-        'price_target': {'publishedDate':data.get('publishedDate'),
+        'priceTarget': {'publishedDate':data.get('publishedDate'),
                          'newsURL':data.get('newsURL'),
                          'newsTitle':data.get('newsTitle'),
                          'analystName':data.get('analystName'),
@@ -169,7 +169,15 @@ def process_response(data):
                          'analystCompany':data.get('analystCompany')
                          },
         'upgrades_downgrades': {'publishedDate': data.get('publishedDate'),
-                                'newsURL': data.get('newsURL')
+                                'newsURL': data.get('newsURL'),
+                                'newsTitle': data.get('newsTitle'),
+                                'newsBaseURL': data.get('newsBaseURL'),
+                                'newsPublisher': data.get('newsPublisher'),
+                                'newGrade': data.get('newGrade'),
+                                'previousGrade': data.get('previousGrade'),
+                                'gradingCompany': data.get('gradingCompany'),
+                                'action': data.get('action'),
+                                'priceWhenPosted': data.get('priceWhenPosted')
                                 }
         ,
         'stock_news_sentiments': {'publisedDate':data.get('publishedDate'),
@@ -207,7 +215,7 @@ def process_response(data):
                            }
     }
     return processed_data
-def fetch_real_time_data(stock_symbols):
+def fetch_real_time_sql_data(stock_symbols):
     session = requests.Session()
     adapter = HTTPAdapter(max_retries=retry_strategy)  # Configuring HTTP requests with a retry strategy for retrying requests
     session.mount("https://", adapter)  # Attach the adapter to the session
@@ -218,7 +226,16 @@ def fetch_real_time_data(stock_symbols):
                 rate_limiter.acquire()  # Implement proper rate limiting
                 data = make_api_request(session, endpoint, symbol)
                 validate_stock_data(data)
-                yield process_response(data)
+                yield {'symbol': data.get('symbol'),
+                       'price':data.get('price'),
+                       'name':data.get('companyName'),
+                       'industry':data.get('industry'),
+                       'real_time_price':data.get('lastUpdated'),
+                       'priceTarget':data.get('priceTarget'),
+                       'upgrades_downgrades':data.get(''),
+                       'stock_news_sentiments':data.get('sentimentScore'),
+                       'mergers_acquisitions':data.get('targetCompany'),
+                       'senate_trading':data.get('office')}
             except Exception as e:
                 logging.error(f"Failed to fetch {endpoint} for {symbol}: {e}")
                 continue
