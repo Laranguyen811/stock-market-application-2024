@@ -26,7 +26,7 @@ def log_normalize(log_u):
     return normalized_log_u
 
 
-def forward_algorithm(log_A, log_B, log_pi):
+def forward_algorithm(log_A:NDArray, log_B:NDArray, log_pi:NDArray) -> Tuple[NDArray, float]:
     ''' Forward pass of the algorithm
     Args:
         log_A(np.array): An np.array of logged state transition matrix A
@@ -97,18 +97,10 @@ def viterbi_algorithm_1(X,log_A, log_B, log_pi):
 
     # Iterating through A and B
     for t in range(1,N):
-        for i in range(K):
-            for j in range(K):
-                max_val = -np.inf  # Common practice for an algorithm finding a maximum value in a set of comparisons
-                max_state = 0
-                val = delta[t-1, j] + log_A[i, j]  # Assigning value to the addition between delta at time step t-1 and ith element and log of matrix A of state transition from i to j
-                if val > max_val:
-                    max_val = val  # Replacing max value with val every time val is greater than the current max value
-                    max_state = i  # Replacing the max state with the ith state of the resulted max value
-                    delta[t,j] = max_val + log_B[j,X[t]] # Assigning delta at time step t and state transition j to the addition between max value and the log of matrix B at state j and observation X at time step t
-                    psi[t,j] = max_state  # Assigning matrix psi at time step t and state j to max state
-            delta[t, j] = np.max(delta[t-1] + log_A[:,j] + log_B[j,X[t]])   # Assigning matrix delta at time step t and state j to the maximum value of the addition between matrix delta at time step t-1  and the log of matrix A at state j and the matrix B of observation X at time t
-            psi[t,j] = np.argmax(delta[t-1] + log_A[:,j])  # Assigning the matrix psi at time t and state j to the indices of the matrix of the Hadamard dot product between matrix delta at time step t-1 and matrix log A at state j
+        for j in range(K):
+            val = delta[t-1] + log_A[:, j]  # Assigning value to the addition between delta at time step t-1 and ith element and log of matrix A of state transition from i to j
+            delta[t,j] = np.max(val) + log_B[j,X[t]] # Assigning delta at time step t and state transition j to the addition between max value and the log of matrix B at state j and observation X at time step t
+            psi[t,j] = np.argmax(val)  # Assigning the matrix psi at time t and state j to the indices of the matrix of the Hadamard dot product between matrix delta at time step t-1 and matrix log A at state j
     # Termination
     path = np.zeros(N, dtype=int)  # Creating an array of path filled with zeros with N dimension
     path[N-1] = np.argmax(delta[N-1])  # Assigning the N-1 th element of path to the output index of the maximum function with input of the N-1 th element of delta
@@ -137,7 +129,8 @@ def viterbi_algorithm_2(X:NDArray, log_A: NDArray, log_B: NDArray, log_pi: NDArr
     # Initializing delta and psi
     log_delta = np.zeros((N,K))# delta is the probability as the combination of the transition from the previous state i at time t-1 and the most probable path leading to i
     psi = np.zeros((N,K), dtype=int)
-    log_delta[0] = log_pi + log_B[:, X[0]].max(axis=1)
+    log_delta[0] = log_pi + log_B[:, X[0]]
+    # Not looping over i because the state of one step is connected to the state of the next step
     for t in range(1,N):
         for j in range(K):
             temp = log_delta[t-1] + log_A[:,j]
@@ -151,9 +144,9 @@ def viterbi_algorithm_2(X:NDArray, log_A: NDArray, log_B: NDArray, log_pi: NDArr
     # Back tracing
     for t in range(N-2,-1,-1):
         path[t] = psi[t+1,path[t+1]]  # Assigning path at time step t to psi at time step t+1 and path at time step t+1
-    return path[0] # Returning the most likely sequence
+    return path # Returning the most likely sequence
 
-def log_sum_exp(log_probs: np.ndarray,axis: Optional[int] = None) -> np.ndarray:
+def log_sum_exp(log_probs: np.ndarray,axis: Optional[int] = None, keepdims=True) -> np.ndarray:
     '''
     Takes log probabilities and returns the log transformation. We use this technique to minimise the effect of underflow or overflow when computing the log of a sum of exponentials.
     The first step is to find the maximum value, subtracting it from the all values (shifting the values to reduce the risk of overflow), find the exponential of all shifted values and add them all up. Then find
@@ -164,7 +157,11 @@ def log_sum_exp(log_probs: np.ndarray,axis: Optional[int] = None) -> np.ndarray:
         float: A float number of log transformation
     '''
     max_log_prob = np.max(log_probs, axis=axis,keepdims=True)
-    return max_log_prob + np.log(np.sum(np.exp(log_probs - max_log_prob)))
+    result = max_log_prob + np.log(np.sum(np.exp(log_probs - max_log_prob), axis=axis,keepdims=True))
+    # Preserving the shape of the result
+    if not keepdims:
+        return np.squeeze(result,axis=axis)
+    return result
 def baum_welch_algorithm (X:np.ndarray, log_A:np.ndarray, log_B:np.ndarray, log_pi: np.ndarray, n_iter: int =100, tol: float = 1e-6, min_prob: float = 1e-300) -> Tuple[ndarray[Any, dtype[Any]] | ndarray, ndarray, ndarray[Any, dtype[Any]] | ndarray]:
 
     ''' The Baum-Welch algorithm.
@@ -179,15 +176,23 @@ def baum_welch_algorithm (X:np.ndarray, log_A:np.ndarray, log_B:np.ndarray, log_
     '''
     validate_hmm_params(log_A, log_B, log_pi)
     N = len(X)
-    M,K = log_B.shape # Assigning M step to the number of rows of matrix B and K to the number of columns of matrix A
+    K, M = log_B.shape # K is the number of states (rows of log_B), M is the number of observations (columns of log_B)
+    print(f"DEBUG: Baum-Welch - Initial log_B shape: {log_B.shape}")
     prev_likelihood = -np.inf
     best_likelihood = -np.inf
     best_params = (log_A.copy(),log_B.copy(),log_pi.copy())
 
     #Computing the probability for all observations
-    B_obs = np.zeros((N, K))
+    B_obs = np.zeros((K,N))
     for iteration in range(n_iter):  # Using _ here since we don't need to assign a variable
+        print(f"DEBUG: END OF ITERATION {iteration + 1} - log_A.shape: {log_A.shape}")
+        print(f"DEBUG: END OF ITERATION {iteration + 1} - log_B.shape: {log_B.shape}")
+        print(f"DEBUG: END OF ITERATION {iteration + 1} - log_pi.shape: {log_pi.shape}")
         try:
+            print(f"DEBUG: START OF ITERATION {iteration + 1} - log_A.shape: {log_A.shape}")
+            print(f"DEBUG: START OF ITERATION {iteration + 1} - log_B.shape: {log_B.shape}")
+            print(f"DEBUG: START OF ITERATION {iteration + 1} - log_pi.shape: {log_pi.shape}")
+            print(f"DEBUG: log_B shape before B_obs calculation: {log_B.shape}")
             B_obs = log_B[:, X].T
             # E-step with numerical stability check
             log_alpha, current_likelihood = forward_algorithm(log_A, B_obs, log_pi)
@@ -207,7 +212,6 @@ def baum_welch_algorithm (X:np.ndarray, log_A:np.ndarray, log_B:np.ndarray, log_
                 return best_params
             #Compute posterior probabilities
             log_gamma = compute_log_gamma(log_alpha,log_beta)
-            # print(f"log gamma shape: {log_gamma.shape}")
 
             log_xi = compute_log_xi(log_alpha,log_beta,log_A,B_obs,X)
 
@@ -217,8 +221,8 @@ def baum_welch_algorithm (X:np.ndarray, log_A:np.ndarray, log_B:np.ndarray, log_
             log_pi = log_gamma[0]
 
             # Normalise to prevent underflow/overflow
-            log_A = normalise_log_matrix(log_A)
-            log_B = normalise_log_matrix(log_B)
+            log_A = normalise_log_matrix(log_A, axis=1)
+            log_B = normalise_log_matrix(log_B, axis=1)
             log_pi = normalise_log_vector(log_pi)
             #print(f"log A shape: {log_A.shape},log B shape: {log_B.shape}, log pi shape: {log_pi.shape}")
 
@@ -227,9 +231,8 @@ def baum_welch_algorithm (X:np.ndarray, log_A:np.ndarray, log_B:np.ndarray, log_
         except (RuntimeWarning, FloatingPointError) as e:
             warnings.warn(f"Numerical Instability Encountered:{str(e)}. Using previous best parameters.")
             return best_params
-
-        warnings.warn(f"Maximum iterations ({n_iter}) reached without convergence.")
-        return best_params
+    warnings.warn(f"Maximum iterations ({n_iter}) reached without convergence.")
+    return best_params
 def compute_log_gamma(log_alpha: np.ndarray, log_beta: np.ndarray) -> np.ndarray:
     """
     Compute log gamma values.
@@ -240,10 +243,8 @@ def compute_log_gamma(log_alpha: np.ndarray, log_beta: np.ndarray) -> np.ndarray
         np.ndarray: An np.ndarray of logged matrix gamma values (smoothed posterior probabilities) of an observation given past and future evidence with improved numerical stability
     """
     log_gamma = log_alpha + log_beta
-    if len(log_gamma.shape) == 2:
-        new_log_gamma = log_gamma - log_sum_exp(log_gamma,axis=1)[: np.newaxis]  # Calculating the log sum exponential acros the axis 1, the states, then broadcasting to match the shapes for element-wise operations by adding a new dimension. Then perform the subtraction.
-    elif len(log_gamma.shape) == 3:
-        new_log_gamma = log_gamma - log_sum_exp(log_gamma, axis=2)[:, :, np.newaxis] # Calculating the log sum exponential acros the axis 2, a set of values like probabilities across states or categories, then broadcasting to match the shapes for element-wise operations by adding a new dimension. Then perform the subtraction.
+    sum_log_gamma_over_states = log_sum_exp(log_gamma, axis=-1,keepdims=True)  # Summing over states
+    new_log_gamma = log_gamma - sum_log_gamma_over_states
     return new_log_gamma
 def compute_log_xi(log_alpha: np.ndarray,log_beta: np.ndarray,log_A:np.ndarray, B_obs: np.ndarray, X: np.ndarray) -> np.ndarray:
     '''
@@ -304,8 +305,9 @@ def update_emission_matrix(log_gamma: np.ndarray, X: np.ndarray, M: int, K: int,
         for k in range(M):
             mask = (X == k)
             if np.any(mask):
-                log_B[j,k] = log_sum_exp(log_gamma[mask, j]) - log_sum_exp(log_gamma[:, j])
 
+                log_B[j,k] = log_sum_exp(log_gamma[mask, j]) - log_sum_exp(log_gamma[:, j])
+    print(f"DEBUG: update_emission_matrix - Shape of log_B just before returning: {log_B.shape}")
     return log_B
 
         #for j in range(K):
@@ -340,7 +342,7 @@ def validate_hmm_params(log_A, log_B,log_pi):
     if log_pi.shape[0] != log_A.shape[0]:
         raise ValueError("Initial distribution dimension doesn't match number of states")
 
-def normalise_log_matrix(log_matrix: np.ndarray) -> np.ndarray:
+def normalise_log_matrix(log_probs: np.ndarray, axis: Optional[int] = None, keepdims=True) -> np.ndarray:
     """
     Normalize log probabilities in a matrix to prevent numerical instability.
     Inputs:
@@ -348,7 +350,10 @@ def normalise_log_matrix(log_matrix: np.ndarray) -> np.ndarray:
     Returns:
         np.ndarray: An np.ndarray of normalised logged matrix.
     """
-    return log_matrix - log_sum_exp(log_matrix, axis=1)[:, np.newaxis]
+    print(f"DEBUG: normalise_log_matrix - Shape of normalized_matrix just before returning: {log_probs.shape}")
+    normalised_constant = log_sum_exp(log_probs, axis=axis, keepdims=keepdims)
+    normalised_matrix = log_probs - normalised_constant
+    return normalised_matrix
 
 def normalise_log_vector(log_vector : np.ndarray) -> np.ndarray:
     '''

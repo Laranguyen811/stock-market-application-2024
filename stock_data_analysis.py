@@ -23,9 +23,8 @@ print(matplotlib.get_cachedir())
 
 #Create a dictionary to store all the stock dataframes and its name
 
-stock_data = {'MSFT':data_msft,'GOOG': data_goog,'AMZN': data_amzn,'AAPL': data_aapl,'SAP':data_sap,'META':data_meta,'005930_KS':data_005930_ks,'INTC':data_intc,
-              'IBM':data_ibm, 'ORCL':data_orcl, 'BABA':data_baba,'TCEHY':data_tcehy,'NVDA': data_nvda,'TSM':data_tsm,'NFLX': data_nflx,'TSLA':data_tsla,'CRM':data_crm,
-              'ADBE':data_adbe,'PYPL':data_pypl}
+
+
 '''a dictionary can store a dataframe'''
 
 # A function to analyse data structures of stock data
@@ -265,6 +264,7 @@ def mardia_test(stock_data):
         #kurtosis
 
         #Compute test statistic
+
         test_statistic = skewness_multivariate**2 + (kurtosis_multivariate - m*(m+2))**2 #calculate test statistic by squaring the Mardia's multivariate skewness
         # then add the squared Mardia's multivariate kurtosis subtracting the number of features times the number of features plus 2
 

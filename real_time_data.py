@@ -16,7 +16,8 @@ stock_symbols = ['AAPL', 'TSLA','MSFT','NVDA','UL','GOOGL','PFE','JNJ','PG','DAN
 logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s',
                     filename='real_time_sri_companies.log', filemode='w')
 
-@contextmanager
+@contextmanager  # Creating context managers, helping to manage resources such as files, database connections, or network connections cleanly and efficiently.
+# Defining the runtime context to be established when the block of code is executed
 def get_db_connection():
     conn = None
     try:
@@ -215,6 +216,8 @@ def process_response(data):
                            }
     }
     return processed_data
+@sleep_and_retry
+@limits(calls=CALLS_PER_SECOND, period=1)
 def fetch_real_time_sql_data(stock_symbols):
     session = requests.Session()
     adapter = HTTPAdapter(max_retries=retry_strategy)  # Configuring HTTP requests with a retry strategy for retrying requests
@@ -223,10 +226,15 @@ def fetch_real_time_sql_data(stock_symbols):
     for symbol in stock_symbols:
         for endpoint in endpoints:
             try:
-                rate_limiter.acquire()  # Implement proper rate limiting
-                data = make_api_request(session, endpoint, symbol)
+                #rate_limiter.acquire()  # Implement proper rate limiting
+                response = session.get(f"https://financialmodelingprep.com/api/v3/{endpoint}/{symbol}?apikey={FMP_API_KEY}")
+                data = response.json()
+                logging.debug(f"Fetched data for {symbol} from {endpoint}:{data}")
+                if not isinstance(data,dict):
+                    raise ValueError("Stock data must be a dictionary")
                 validate_stock_data(data)
-                yield {'symbol': data.get('symbol'),
+                yield {
+                    'symbol': data.get('symbol'),
                        'price':data.get('price'),
                        'name':data.get('companyName'),
                        'industry':data.get('industry'),
@@ -235,7 +243,8 @@ def fetch_real_time_sql_data(stock_symbols):
                        'upgrades_downgrades':data.get(''),
                        'stock_news_sentiments':data.get('sentimentScore'),
                        'mergers_acquisitions':data.get('targetCompany'),
-                       'senate_trading':data.get('office')}
+                       'senate_trading':data.get('office')
+                }
             except Exception as e:
                 logging.error(f"Failed to fetch {endpoint} for {symbol}: {e}")
                 continue
@@ -278,14 +287,16 @@ def update_database(stock_data):
             conn.rollback()
             logging.error(f"Transaction failed: {e}")
             return False
-def insert_data_into_mongodb(collection,data):
+
+def insert_data_into_mongodb(collection,processed_data):
     '''
     Insert data into a MongoDB database.
     '''
-    if data:
-        collection.insert_many(data)
+    processed_data = process_response(processed_data)
+    if processed_data:
+        collection.insert_many(processed_data)
         logging.info("Data successfully inserted into MongoDB.")
-        logging.info(f"Inserted {len(data)} records into MongoDB.")
+        logging.info(f"Inserted {len(processed_data)} records into MongoDB.")
 
 def fetch_data_from_mongodb(collection):
     '''
