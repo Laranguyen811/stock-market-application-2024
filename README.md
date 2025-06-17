@@ -3,7 +3,7 @@
 
 ## Introduction
 My pilot project creates a stock market application, focusing on Socially Responsible Investing, to assist financial insights. If you are an individual trader and investor, it provides essential information to help you make decisions. This project is a work in progress. Therefore, I appreciate your understanding. 
-### Problem formulation
+### Problem Formulation
 ### Abstract:
 A new application is needed to educate traders and investors by providing real-time financial insights into the stock market. This application aims to improve individual financial literacy and assist traders and investors in making wise investment decisions.
 
@@ -54,7 +54,7 @@ The challenge is to develop a user-friendly, secure stock market application tha
 * Mobile Responsiveness
 * User-Friendly Interface
 * Educational Resources
-* AI agents
+* AI Assistants
   
 ## Installation
 Follow these steps to install and run the application:
@@ -69,16 +69,27 @@ Before you begin, ensure you have met the following requirements:
 To install <Your Application>, follow these steps:
 
 1. Clone the repository:
+To clone this project, run the following command in your terminal:
+
+```sh
 git clone https://github.com/Laranguyen811/stock-market-application-2024.git
 
-2. Navigate to the project directory:
+3. Navigate to the project directory:
+After cloning the repository, move into the project folder using:
+
+```sh
 cd stock-market-application-2024
 
-3. Install the required packages:
+4. Install the required packages:
+Before running the project, install the dependencies using:
+
+```sh
 pip install -r requirements.txt
 
-## Using <Your Application>
-To use the Stock Market Application, run the application:
+## Using the Stock Market Application
+To start the application, execute the following command:
+
+```sh
 python main.py
 
 ## Contact
