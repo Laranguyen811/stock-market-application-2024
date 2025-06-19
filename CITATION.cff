@@ -1,0 +1,12 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+title: "Stock Market Application 2024"
+version: 1.0.0
+date-released: 2024-12-01
+authors:
+  - family-names: "Nguyen"
+    given-names: "Lara"
+    orcid: "https://orcid.org/0000-0000-0000-0000"  # Optional: replace with your actual ORCID if you have one
+url: "https://github.com/Laranguyen811/stock-market-application-2024"
+abstract: "A socially responsible stock market platform designed to improve financial literacy and empower ethical investing through AI-powered insights."
+license: "MIT"
