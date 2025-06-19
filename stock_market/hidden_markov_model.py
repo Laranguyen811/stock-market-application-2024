@@ -200,7 +200,7 @@ def baum_welch_algorithm (X:np.ndarray, log_A:np.ndarray, log_B:np.ndarray, log_
                 warnings.warn("Non-finite likelihood encountered. Using previous best parameters.")
                 return best_params
             log_beta = backward_algorithm(log_A,B_obs)
-            #Store best parameters
+            # Store best parameters
             if current_likelihood > best_likelihood:
                 best_likelihood = current_likelihood
                 best_params =(log_A.copy(),log_B.copy(),log_pi.copy())
@@ -221,6 +221,7 @@ def baum_welch_algorithm (X:np.ndarray, log_A:np.ndarray, log_B:np.ndarray, log_
             log_pi = log_gamma[0]
 
             # Normalise to prevent underflow/overflow
+
             log_A = normalise_log_matrix(log_A, axis=1)
             log_B = normalise_log_matrix(log_B, axis=1)
             log_pi = normalise_log_vector(log_pi)
@@ -310,16 +311,6 @@ def update_emission_matrix(log_gamma: np.ndarray, X: np.ndarray, M: int, K: int,
     print(f"DEBUG: update_emission_matrix - Shape of log_B just before returning: {log_B.shape}")
     return log_B
 
-        #for j in range(K):
-         #   for k in range(M):
-         #       mask = (X == k)
-          #      log_B[j,k] = log_sum_exp(log_gamma[mask,j]) - log_sum_exp(log_gamma[:,j])
-        #log_pi = log_gamma[0]
-    #else:
-     #   print(f"Warning: Maximum iterations({n_iter}) reached without convergence")
-
-   # return log_A,log_B,log_pi
-
 def validate_hmm_params(log_A, log_B,log_pi):
     '''
     Validate HMM parameters.
@@ -344,7 +335,7 @@ def validate_hmm_params(log_A, log_B,log_pi):
 
 def normalise_log_matrix(log_probs: np.ndarray, axis: Optional[int] = None, keepdims=True) -> np.ndarray:
     """
-    Normalize log probabilities in a matrix to prevent numerical instability.
+    Normalise log probabilities in a matrix to prevent numerical instability.
     Inputs:
         log_matrix (np.ndarray): An np.ndarray of logged matrix.
     Returns:
@@ -357,7 +348,7 @@ def normalise_log_matrix(log_probs: np.ndarray, axis: Optional[int] = None, keep
 
 def normalise_log_vector(log_vector : np.ndarray) -> np.ndarray:
     '''
-    Normalize log probabilities in a vector to prevent numerical issues
+    Normalise log probabilities in a vector to prevent numerical issues
     Inputs:
         log_vector (np.ndarray): An np.ndarray of logged vector.
     Returns:

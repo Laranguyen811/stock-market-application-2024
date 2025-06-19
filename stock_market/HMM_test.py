@@ -1,6 +1,6 @@
 import numpy as np
 from typing import Tuple, Optional
-from stock_market.hidden_markov_model import forward_algorithm, viterbi_algorithm_2, baum_welch_algorithm
+from stock_market.hidden_markov_model import forward_algorithm, viterbi_algorithm_1, viterbi_algorithm_2, baum_welch_algorithm
 
 def generate_synthetic_hmm_data(
     num_states: int,
@@ -92,10 +92,18 @@ if __name__ == "__main__":
     log_alpha_test, likelihood_test = forward_algorithm(log_A_true, log_B_true[:, X_synthetic].T, log_pi_true)
     print(f"\nForward Algorithm Likelihood: {likelihood_test}")
 
-    viterbi_path = viterbi_algorithm_2(X_synthetic, log_A_true, log_B_true, log_pi_true)
-    print(f"Viterbi Path: {viterbi_path}")
+    # Test Viterbi Algorithm 1
+    viterbi_path_1 = viterbi_algorithm_1(X_synthetic, log_A_true, log_B_true, log_pi_true)
+    print(f"Viterbi Path: {viterbi_path_1}")
     print(f"True Path:    {Z_true}")
-    print(f"Viterbi path matches true path: {np.array_equal(viterbi_path, Z_true)}")
+    print(f"Viterbi path matches true path: {np.array_equal(viterbi_path_1, Z_true)}")
+
+    # Test Viterbi Algorithm 2
+    viterbi_path_2 = viterbi_algorithm_2(X_synthetic, log_A_true, log_B_true, log_pi_true)
+    print(f"Viterbi Path: {viterbi_path_2}")
+    print(f"True Path:    {Z_true}")
+    print(f"Viterbi path matches true path: {np.array_equal(viterbi_path_2, Z_true)}")
+
 
     # # Initialize random parameters for Baum-Welch training
     initial_log_pi = np.log(np.random.dirichlet(np.ones(num_states)))
