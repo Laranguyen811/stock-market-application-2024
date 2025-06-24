@@ -4,6 +4,28 @@ import requests
 from stock_market.fl_multimodal_knowledge_graph.data_collection.data_collection_tools import proxy_tool
 import time
 import logging
+import csv
+# Load the proxy list CSV file
+with open(r"D:\Users\laran\PycharmProjects\ASX\stock_market\fl_multimodal_knowledge_graph\data_collection\data_collection_tools\proxy_list (2).csv", newline='') as csvfile: # Use newline='' to avoid issues with line endings (extra blank lines)
+    reader = csv.DictReader(csvfile)
+    print(reader.fieldnames)
+
+    # Extract IP and port into a list
+    proxies = [f"{row['ï»¿ip']}:{row['port']}" for row in reader]
+
+    # Save to a text file (optional)
+    with open("proxy_output.txt","w") as outfile:
+        for proxy in proxies:
+            outfile.write(proxy + "\n")
+with open("proxy_output.txt","r") as outfile:
+    proxies = outfile.readlines()
+
+    # Clean up any trailing newlines
+    proxies = [line.strip() for line in proxies]
+    print(proxies[:5])  # Print the first 5 proxies to verify
+
+with open("proxy_output.txt","r") as file:
+    proxy_list = [line.strip() for line in file if line.strip()] # Read the file and strip whitespace
 
 def create_search_uri(text,base_url,query_param):
     '''Takes text, base_url and query_param to return search_url.
@@ -42,7 +64,7 @@ def download_images(text,save_path,limits=5):
     #'Connection':'close' => a directive telling the server to close the connection after the completion of the response.
     text = input("Please enter a search term: ")
     search_urls = {engine:create_search_uri(text,url,param) for engine,(url,param) in search_engines.items()} #Creating search urls from the dictionary of search engines
-    proxy_ip = proxy_tool.get_proxy() #Obtaining proxy IP
+    proxy_ip = proxy_tool.get_proxy(proxy_list=proxy_list) #Obtaining proxy IP
     proxies = {
         'http': 'http://{}'.format(proxy_ip),
         'https': 'https://{}'.format(proxy_ip)
@@ -51,6 +73,7 @@ def download_images(text,save_path,limits=5):
     for i,url in enumerate(search_urls.items()):
         try: #Attempting a block of code before throwing an Exception
             response = requests.get(url,headers=headers,proxies=proxies,timeout=10)  # Sending a GET request to the specified URL. The headers parameter is used to pass HTTP headers to the request, and the proxies parameter is used to specify the proxies that the request should go through. The timeout parameter specifies the maximum number of seconds to wait for a response before giving up.
+            print(response)
             response.raise_for_status()  #Checking if the request was successful. If not, will raise a HTTPError exception.
             image_urls += re.findall(r'\["https://[^,]*?\.jpg",',response.text) #Extracting image URLs from the response text
         except requests.exceptions.RequestException as e: #Throwing a RequestException exception as a variable e

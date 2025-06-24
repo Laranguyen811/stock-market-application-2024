@@ -1,3 +1,11 @@
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import scipy.stats as stats
+import yfinance as yf
+from datetime import datetime, timedelta
+from stock_market_application_data import stock_data
+
 class DetectNormalDistribution:
     def __init__(self,stock_data):
         self.stock_data = stock_data

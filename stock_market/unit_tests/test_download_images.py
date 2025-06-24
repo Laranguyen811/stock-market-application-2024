@@ -6,10 +6,10 @@ sys.path.append('C:/Users/laran/PycharmProjects/ASX/stock_market/fl_multimodal_k
 
 class TestDownloadImages(unittest.TestCase):
     @patch('builtins.input',return_value='stock market')
-    @patch('download_images.create_search_uri')
-    @patch('download_images.requests.get')
+    @patch('stock_market.fl_multimodal_knowledge_graph.data_collection.data_collection_tools.download_images.create_search_uri')
+    @patch('stock_market.fl_multimodal_knowledge_graph.data_collection.data_collection_tools.download_images.requests.get')
 
-    def test_download_images(self,mock_create_search_uri,mock_requests_get,mock_input):
+    def test_download_images(self,mock_requests,mock_create_search_uri,mock_input):
         # Mocking the responses
         mock_create_search_uri.return_value = ['/mocked_uri']
         mock_response = MagicMock
