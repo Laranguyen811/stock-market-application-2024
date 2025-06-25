@@ -80,29 +80,25 @@ This application addresses the gap by blending **financial literacy, responsible
 
 ### 💾 Setup  
 
-1. **Clone the repository**  
-   ```sh
-   git clone https://github.com/Laranguyen811/stock-market-application-2024.git
+1. **Clone the repository**
+    To clone this project, run the following command in your terminal: 
+      ```sh
+      git clone https://github.com/Laranguyen811/stock-market-application-2024.git
 
-1. Clone the repository:
-   To clone this project, run the following command in your terminal:
-   ```sh
-   git clone https://github.com/Laranguyen811/stock-market-application-2024.git
-
-3. Navigate to the project directory:
+2. Navigate to the project directory:
 After cloning the repository, move into the project folder using:
-   ```sh
-   cd stock-market-application-2024
+      ```sh
+      cd stock-market-application-2024
 
-4. Install the required packages:
+3. Install the required packages:
 Before running the project, install the dependencies using:
-   ```sh
-   pip install -r requirements.txt
+      ```sh
+      pip install -r requirements.txt
 
 ## Using the Stock Market Application
 To start the application, execute the following command:
-   ```sh
-   python main.py
+      ```sh
+      python main.py
 
 ## Contact
 
