@@ -23,6 +23,27 @@ with open("proxy_output.txt","r") as outfile:
     # Clean up any trailing newlines
     proxies = [line.strip() for line in proxies]
     print(proxies[:5])  # Print the first 5 proxies to verify
+def filter_errors(lines):
+    '''Filters out lines that do not contain a valid proxy format.
+    Inputs:
+        lines(list): A list of strings containing proxy information
+    Returns:
+        list: A list of valid proxies
+    '''
+    for line in lines:
+        if "ERROR" in line:
+            yield line
+
+def extract_timestamps(lines):
+    '''Extracts timestamps from lines that contain valid proxy information.
+    Inputs:
+        lines(list): A list of strings containing proxy information
+    Returns:
+        list: A list of timestamps
+    '''
+    for line in lines:
+        yield line.split()[0]
+
 
 with open("proxy_output.txt","r") as file:
     proxy_list = [line.strip() for line in file if line.strip()] # Read the file and strip whitespace
