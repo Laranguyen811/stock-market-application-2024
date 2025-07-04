@@ -97,7 +97,7 @@ Before running the project, install the dependencies using:
 
 ## Using the Stock Market Application
 To start the application, execute the following command:
-      ```sh
+      
       python main.py
 
 ## Contact
