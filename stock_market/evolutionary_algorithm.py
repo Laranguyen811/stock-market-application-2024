@@ -1,4 +1,25 @@
 import random
+import os
+import sys
+module_path = r'C:\Users\User\diagnostic_tool_workspace\diagnostic_tool'
+os.chdir(module_path)
+if module_path not in sys.path:
+    sys.path.append(module_path)
+
+
+import strategy
+
+def normalise(value, min_value, max_value):
+    '''
+    Takes a value and normalises it between a minimum and maximum value.
+    Args:
+        value (float): A float number representing the value to be normalised.
+        min_value (float): A float number representing the minimum value.
+        max_value (float): A float number representing the maximum value.
+    Returns:
+        float: A float number representing the normalised value.
+    '''
+    return (value - min_value) / (max_value - min_value) if max_value != min_value else 0.0
 
 def fitness(individual,data:dict):
     '''
@@ -9,6 +30,10 @@ def fitness(individual,data:dict):
     Returns:
         float: A float number representing fitness score
     '''
+    sortino = strategy.sortino_ratio(data['returns'], risk_free_rate=data['risk_free_rate'], threshold=0.5)['value']  # Calculate the Sortino ratio
+    calmar_ratio = strategy.calmar_ratio(data['returns'], risk_free_rate=data['risk_free_rate'], threshold=0.5)['value']  # Calculate the Calmar ratio
+    max_drawdown = strategy.max_drawdown(data['returns'])  # Calculate the maximum drawdown
+
     return score
 def initialise_population(population_size, param_ranges):
     ''' Takes the population and creates a population.
