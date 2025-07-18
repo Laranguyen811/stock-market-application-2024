@@ -19,8 +19,44 @@ def normalise(value, min_value, max_value):
     Returns:
         float: A float number representing the normalised value.
     '''
-    return (value - min_value) / (max_value - min_value) if max_value != min_value else 0.0
+    return (value - min_value) / (max_value - min_value) if max_value != min_value else 0.0 # min-max normalisation, ensuring values range from 0 to 1, preserving relative distances and distribution shapes
+def evaluate_strategies(returns,risk_free_rate=0.0,threshold=0.5):
+    '''
+    Takes a list of returns and evaluates the strategies based on various financial metrics.
+    Args:
+        returns (list): A list of returns.
+        risk_free_rate (float): A float number representing the risk-free rate. Defaults to 0.0.
+        threshold (float): A float number representing the threshold for evaluation. Defaults to 0.5.
+    Returns:
+        dict: A dictionary containing the evaluation results.
+    '''
+    return {
+        'Sharpe Ratio': strategy.check_sharpe_ratio(returns, risk_free_rate, threshold),
+        'Sortino Ratio': strategy.check_sortino_ratio(returns, risk_free_rate, threshold),
+        'Calmar Ratio': strategy.check_calmar_ratio(returns, risk_free_rate, threshold),
+        'Maximum Drawdown': strategy.check_max_drawdown(returns),
+        'Omega Ratio': strategy.check_omega_ratio(returns, risk_free_rate, threshold),
 
+    }
+# Example usage:
+evaluate_strategies([0.01, 0.02, 0.03, 0.01, 0.02, 0.03])
+def weighted_strategy_scores(scores,weights):
+    '''
+    Takes a list of scores and weights and returns a weighted score.
+    Args:
+        scores (list): A list of scores.
+        weights (list): A list of weights.
+    Returns:
+        float: A float number representing the weighted score.
+    '''
+    score = 0.0
+    for name,result in scores.items():
+        value = score['name']
+        weight = weights.get(name,0)
+        normalised_value = normalise(value,0,1)  # Normalising the value between 0 and 1
+        weighted_value = normalised_value * weight
+        score += weighted_value  # Summing up the weighted values
+    return score
 def fitness(individual,data:dict):
     '''
     Takes a dictionary historical data and the individual's trading strategy and returns a fitness score.
@@ -30,10 +66,6 @@ def fitness(individual,data:dict):
     Returns:
         float: A float number representing fitness score
     '''
-    sortino = strategy.sortino_ratio(data['returns'], risk_free_rate=data['risk_free_rate'], threshold=0.5)['value']  # Calculate the Sortino ratio
-    calmar_ratio = strategy.calmar_ratio(data['returns'], risk_free_rate=data['risk_free_rate'], threshold=0.5)['value']  # Calculate the Calmar ratio
-    max_drawdown = strategy.max_drawdown(data['returns'])  # Calculate the maximum drawdown
-
     return score
 def initialise_population(population_size, param_ranges):
     ''' Takes the population and creates a population.
