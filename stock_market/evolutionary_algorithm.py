@@ -1,13 +1,21 @@
 import random
 import os
 import sys
-module_path = r'C:\Users\User\diagnostic_tool_workspace\diagnostic_tool'
-os.chdir(module_path)
-if module_path not in sys.path:
-    sys.path.append(module_path)
+import importlib.util
+from typing import List, Union, Dict
+import numpy as np
+#src_path = os.path.abspath("src")
+#if src_path not in sys.path:
+ #   sys.path.insert(0, src_path)
+
+# Add external diagnostic_tool path
 
 
-import strategy
+spec = importlib.util.spec_from_file_location("strategy_metrics", r"C:\Users\User\diagnostic_tool_workspace\diagnostic_tool\src\diagnostic_tool\strategy_metrics.py")
+strategy = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(strategy)
+# Optional: change working directory if needed for file I/O
+# os.chdir(module_path)
 
 def normalise(value, min_value, max_value):
     '''
@@ -20,26 +28,32 @@ def normalise(value, min_value, max_value):
         float: A float number representing the normalised value.
     '''
     return (value - min_value) / (max_value - min_value) if max_value != min_value else 0.0 # min-max normalisation, ensuring values range from 0 to 1, preserving relative distances and distribution shapes
-def evaluate_strategies(returns,risk_free_rate=0.0,threshold=0.5):
+def evaluate_strategies(
+        returns: Union[List[float], np.ndarray],
+        risk_free_rate: Union[float, np.ndarray],threshold: float, equity_curve:Union[List[float], np.ndarray],
+        verbose: bool = True
+) -> Dict[str, object]:
     '''
     Takes a list of returns and evaluates the strategies based on various financial metrics.
     Args:
         returns (list): A list of returns.
         risk_free_rate (float): A float number representing the risk-free rate. Defaults to 0.0.
         threshold (float): A float number representing the threshold for evaluation. Defaults to 0.5.
+        equity_curve (Union[List[float], np.ndarray]): The equity curve of the strategy (list or np.ndarray).
     Returns:
         dict: A dictionary containing the evaluation results.
     '''
     return {
-        'Sharpe Ratio': strategy.check_sharpe_ratio(returns, risk_free_rate, threshold),
+        'Sharpe Ratio': strategy.check_sharpe_ratio(returns,risk_free_rate,threshold),
         'Sortino Ratio': strategy.check_sortino_ratio(returns, risk_free_rate, threshold),
         'Calmar Ratio': strategy.check_calmar_ratio(returns, risk_free_rate, threshold),
-        'Maximum Drawdown': strategy.check_max_drawdown(returns),
+        'Maximum Drawdown': strategy.check_max_drawdown(equity_curve),
         'Omega Ratio': strategy.check_omega_ratio(returns, risk_free_rate, threshold),
 
     }
 # Example usage:
-evaluate_strategies([0.01, 0.02, 0.03, 0.01, 0.02, 0.03])
+evaluate_strategies([0.1,0.2,0.3], 0.2,0.3,[1000, 1100, 1200, 1050, 1150, 1250])
+
 def weighted_strategy_scores(scores,weights):
     '''
     Takes a list of scores and weights and returns a weighted score.
