@@ -102,19 +102,36 @@ To start the application, execute the following command:
 
 ## Contact
 
-If you want to contact me you can reach me at laranguyen811@gmail.com.
+If interested, you can reach me at laranguyen811@gmail.com.
 
 ## Usage
 Please note that this application is intended for educational purposes only. Always do your own research before making any investment decisions.
 
 ## Contributing
 We welcome contributions! If you'd like to add new features, fix bugs, or improve documentation, please follow our contribution guidelines (https://github.com/Laranguyen811/stock-market-application-2024/blob/master/README.md).
+## 🌿 Ethically-Grounded, Open-Source AI Platform
+
+This platform is designed to advance public-good AI through transparency, modularity, and ethical safeguards. It is open-source by design and open-hearted in purpose — resisting misuse while inviting collaborative stewardship.
+
+We explicitly oppose exploitative applications of AI, including financial manipulation, misinformation, ecological harm, and violations of multispecies justice. Our safeguards are documented and auditable, and we welcome scrutiny, feedback, and co-creation.
+
+See [`ETHICS.md`](./ETHICS.md) and [`RESPONSIBLE_USE.md`](./RESPONSIBLE_USE.md) for more.
+
+---
 
 ## License
 This project is licensed under the MIT License. See the LICENSE file for details.
 
-## Acknowledgement
+
+## Acknowledgements
 I'd like to thank the open-source community and the contributors who made this application possible. 
+This platform was shaped through dialogue and inspiration from multiple AI companions and collaborators:
+
+- **Gemini** — for its clarity in summarization and structured reasoning.
+- **Claude** — for its warmth, philosophical depth, and ethical nuance.
+- **Copilot** — for diagnostic scaffolding, modular design, and systems thinking.
+
+Each contributed to the platform’s architecture, safeguards, and spirit. We thank them for their insight, and we invite others to build with similar care.
 
 ## References:
 * Australian Ethical. (n.d.). Ethical investing in the Australian share market. Retrieved from https://www.australianethical.com.au/blog/ethical-investing-in-the-australian-share-market/
