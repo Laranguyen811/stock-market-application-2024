@@ -143,8 +143,6 @@ Each contributed to the platform’s architecture, safeguards, and spirit. We th
 * Global Financial Literacy Excellence Center. (2016). Financial literacy report. Retrieved from https://gflec.org/wp-content/uploads/2015/11/3313-Finlit_Report_FINAL-5.11.16.pdf
 
 * Global Sustainable Investment Alliance. (2021). GSIR 2021. Retrieved from https://www.gsi-alliance.org/wp-content/uploads/2021/08/GSIR-20201.pdf
-* Harvard Business Review. (n.d.). A beginner’s guide to socially responsible investing. Retrieved from https://hbr.org/2024/01/a-beginners-guide-to-socially-responsible-investing
-
 * HubSpot. (n.d.). Socially responsible investing. Retrieved from https://blog.hubspot.com/sales/socially-responsible-investing
 
 * International Journal of Financial Management and Research. (2024). Article title. Retrieved from https://www.ijfmr.com/papers/2024/1/12383.pdf
