@@ -1,8 +1,12 @@
 # Import libraries
 import os
+
+import fastapi
 from dotenv import load_dotenv
 import logging
-
+from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel
 from langchain_core.prompts import ChatPromptTemplate, HumanMessagePromptTemplate, SystemMessagePromptTemplate
 from langchain_google_genai import ChatGoogleGenerativeAI
 import pyphen
@@ -22,6 +26,22 @@ import pdfplumber
 import google.genai as genai
 # from transformers import
 gemini_api_key = os.getenv("GOOGLE_API_KEY")
+app = FastAPI()
+# Enable CORS for React dev server
+app.add_middleware(
+    CORSMiddleware, # Cross-Origin Resource Sharing refers to the situations when a frontend running in a browser has JavaScript code communicating with a backend API running on a different domain.
+    allow_origins=["http://localhost:3000"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+class SimplifyRequest(BaseModel):
+    text: str
+
+class SimplifyResponse(BaseModel):
+    original_text: str
+    simplified_text: str
+    readability_scores: dict
 
 # Obtain Gemini model
 from google.api_core import client_options # pass configuration settings to the underlying Google API client
@@ -210,3 +230,16 @@ def evaluate_readability(text:str)-> dict:
 #print(f"Original Scores:", orig_scores)
 plain_scores = evaluate_readability(plain_output)
 print(f"Plain Scores:",plain_scores)
+@app.post("/api/simplify", response_model=SimplifyResponse)
+async def simplify_text(request: SimplifyRequest):
+    try:
+        user_prompt = HumanMessagePromptTemplate.from_template(f"Please simplify this text: {request.text}")
+        full_prompt = ChatPromptTemplate.from_messages([system_prompt, check_list_prompt,user_prompt])
+        formatted_prompt = full_prompt.format_prompt(modalities=modality_str).to_messages()
+        response = gem_model.invoke(formatted_prompt)
+        plain_output = clean_response(response.content)
+        scores = evaluate_readability(plain_output)
+        return SimplifyResponse(original_text=request.text, simplified_text=plain_output, readability_scores=scores)
+
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
