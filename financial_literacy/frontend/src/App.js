@@ -39,13 +39,22 @@ function App() {
                         className={"w-full p-4 border rounded-lg"} // set textarea width to 100% of parent element, padding to 4px on all sides, border to 1px solid gray-400 (light gray) and rounded corners to 4px
                         rows="6"
                         placeholder="Enter your complex financial here..."
+                    />
                     <button
                         type="submit"
-                        className="mt-4 px-6 py-2 bg-blue-600 text-white rounded-lg disabled:bg-gray-400" // Set button type to submit, padding to 4px on all sides, background color to blue-600 (dark blue) and text color to white.
                         disabled={loading || !input}> // button is set to 100% width, 4px margin top, blue background color, white text color, rounded corners and disabled background color when loading is true.
+                        className="mt-4 px-6 py-2 bg-blue-600 text-white rounded-lg disabled:bg-gray-400" // Set button type to submit, padding to 4px on all sides, background color to blue-600 (dark blue) and text color to white.
+                    >
                         {loading ? 'Loading...' : 'Simplify'} // button text is set to 'Loading...' when loading is true and 'Simplify' otherwise
                     </button>
                 </form>
+
+                {error && <p className="text-red-600">{error}</p>} // If error is not null, display error message in red text
+                {result && (
+                    <div className="bg-white p-6 rounded-lg shadow">// bg-white sets the background color to white, p-6 sets the padding to 16px on all sides and rounded corners to 6px
+                        <h2 className="text-xl font-bold mb-4">Simplify Version</h2> // text-xl sets the font size to 1.25rem (20px) and font-bold sets the font weight to bold. mb-4 sets the margin bottom to 16px
+
+                )}
                 )
 
 
