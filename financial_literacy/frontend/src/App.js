@@ -53,6 +53,43 @@ function App() {
         {/* bg-white rounded-2xl shadow-xl p-8 mb-8 border border-gray-100 - Sets the background color to white, rounded corners to 2xl, shadow to 8px, border to 1px solid gray-100 */}
         <div className="bg-white rounded-2xl shadow-xl p-8 mb-8 border border-gray-100">
             {/* bg-gradient-to-r from-green-600 to-emerald-600 p-6 - Sets the background gradient to blue-50 to emerald-50 to teal-50 */}
+            < form onSubmit={handleSubmit}>
+                {/* block text-sm font-semibold text-gray-700 mb-3 - Sets the display property to block, font size to 13px, font weight to bold, text color to gray-700, margin bottom to 0.75rem spacing*/}
+                <label className="block text-sm font-semibold text-gray-700 mb-3">
+                    Enter Financial Text
+                </label>
+                <textarea
+                    value={input}
+                    onChange={e => setInput(e.target.value)}
+                    {/* w-full p-4 border-2 border-gray-200 rounded-xl focus:border-green-500 focus:ring-2 focus:ring-green-200 transition-all resize-none - Creates a full-width input field with rounded corners and a light gray border */}
+                    className="w-full p-4 border-2 border-gray-200 rounded-xl focus:border-green-500 focus:ring-2 focus:ring-green-200 transition-all resize-none"
+                    rows={8}
+                    placeholder="Paste complex financial terminology, investment concepts, or economic explanations here..."
+                />
+                <button
+                    type="submit"
+                    {/* disabled={loading || !input} - Disables the button if loading or input is empty */}
+                    disabled={loading || !input}
+                    {/* mt-4 w-full py-4 bg-gradient-to-r from-green-600 to-emerald-600 text-white rounded-xl font-semibold text-lg shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none - Creates a modern, full-width Action Button. It has a green gradient background, rounded corners, and provides visual feedback (it lifts up and casts a larger shadow) when hovered, while clearly indicating when it is inactive. */}
+                    className="mt-4 w-full py-4 bg-gradient-to-r from-green-600 to-emerald-600 text-white rounded-xl font-semibold text-lg shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+                    >
+                    { loading ? (
+                            {/* flex items-center justify-center - Displays a spinner while loading */}
+                        <span className="flex items-center justify-center">
+                            {/* animate-spin - Animates the spinner. ml-1 mr-3 - Adds left and right margins of 0.25rem spacing. h-5 w-5 - Sets the height and width to 0.5rem. text-white - Sets the text color to white.Fill="None" - Sets the fill property to none. viewBox="0 0 24 24" - Sets the viewbox to 0 0 24 24.  */}/
+                            <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" fill="None" viewBox="0 0 24 24">
+                                {/* circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" - Renders a circle with a radius of 10 at coordinates (12, 12). It has a thick outline (width 4) that matches the surrounding text color and is semi-transparent (25% opacity) due to the CSS class */}
+                                < circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4">
+                                    < path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+
+                                    </path>
+
+                                </circle>
+                            </svg>
+
+                        </span>
+                    )}
+                </button>
             <div className="bg-gradient-to-r from-green-600 to-emerald-600 p-6">
                 {/* */}
                 <h2 className="text-2xl font-bold text-white flex items-center">
