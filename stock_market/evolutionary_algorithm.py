@@ -16,7 +16,9 @@ strategy = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(strategy)
 # Optional: change working directory if needed for file I/O
 # os.chdir(module_path)
-
+bio_spec = importlib.util.spec_from_file_location("biodiversity_metrics", r"C:\Users\User\diagnostic_tool_workspace\diagnostic_tool\src\diagnostic_tool\biodiversity_metrics.py")
+biodiversity = importlib.util.module_from_spec(bio_spec)
+bio_spec.loader.exec_module(biodiversity)
 def normalise(value, min_value, max_value):
     '''
     Takes a value and normalises it between a minimum and maximum value.
@@ -31,6 +33,11 @@ def normalise(value, min_value, max_value):
 def evaluate_strategies(
         returns: Union[List[float], np.ndarray],
         risk_free_rate: Union[float, np.ndarray],threshold: float, equity_curve:Union[List[float], np.ndarray],
+        unit_data: dict = None,
+        specimen_richness_data: dict = None,
+        species_counts: Union[List[int], np.ndarray] = None,
+        strict: bool = True,
+        condition_data: dict = None,
         verbose: bool = True
 ) -> Dict[str, object]:
     '''
@@ -49,10 +56,15 @@ def evaluate_strategies(
         'Calmar Ratio': strategy.check_calmar_ratio(returns, risk_free_rate, threshold),
         'Maximum Drawdown': strategy.check_max_drawdown(equity_curve),
         'Omega Ratio': strategy.check_omega_ratio(returns, risk_free_rate, threshold),
+        'Biodiversity Units': biodiversity.calculate_biodiversity_units(unit_data) if unit_data else None,
+        'Species Richness': biodiversity.calculate_species_richness(specimen_richness_data),
+        'Shannon-Wiener Index': biodiversity.calculate_shannon_wiener_index_batch(species_counts, strict) if species_counts else None,
+        'Habitat Condition Score': biodiversity.calculate_habitat_condition_score(condition_data) if condition_data else None,
+
 
     }
 # Example usage:
-evaluate_strategies([0.1,0.2,0.3], 0.2,0.3,[1000, 1100, 1200, 1050, 1150, 1250])
+scores = evaluate_strategies([0.1,0.2,0.3], 0.2,0.3,[1000, 1100, 1200, 1050, 1150, 1250],{"area": 10.0,"distinctiveness": 0.8,"condition": 0.9,"strategic_significance": 1.0,"connectivity": 0.7,},{"total_species":100,"area":50.0},[10,5,0,3],False,{"connectivity":0.8,"condition":0.9,"management_effectiveness":0.7})
 
 def weighted_strategy_scores(scores,weights):
     '''
@@ -64,12 +76,12 @@ def weighted_strategy_scores(scores,weights):
         float: A float number representing the weighted score.
     '''
     score = 0.0
-    for name,result in scores.items():
-        value = score['name']
-        weight = weights.get(name,0)
-        normalised_value = normalise(value,0,1)  # Normalising the value between 0 and 1
-        weighted_value = normalised_value * weight
-        score += weighted_value  # Summing up the weighted values
+    for result in scores:
+        weights = [weights]
+        for weight in weights:
+            normalised_value = normalise(result,0,1)  # Normalising the value between 0 and 1
+            weighted_value = normalised_value * weight
+            score += weighted_value  # Summing up the weighted values
     return score
 def fitness(individual,data:dict):
     '''

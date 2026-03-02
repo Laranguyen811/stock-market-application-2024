@@ -1,4 +1,4 @@
-# Stock Market Application 2024  
+# Investment Platform
 ![Stock Market Application](https://github.com/Laranguyen811/stock-market-application-2024/assets/36720666/d68560b1-4495-403f-913b-75a537ac4340)
 
 ## 🌍 Introduction  
@@ -102,19 +102,36 @@ To start the application, execute the following command:
 
 ## Contact
 
-If you want to contact me you can reach me at laranguyen811@gmail.com.
+If interested, you can reach me at laranguyen811@gmail.com.
 
 ## Usage
 Please note that this application is intended for educational purposes only. Always do your own research before making any investment decisions.
 
 ## Contributing
 We welcome contributions! If you'd like to add new features, fix bugs, or improve documentation, please follow our contribution guidelines (https://github.com/Laranguyen811/stock-market-application-2024/blob/master/README.md).
+## 🌿 Ethically-Grounded, Open-Source AI Platform
+
+This platform is designed to advance public-good AI through transparency, modularity, and ethical safeguards. It is open-source by design and open-hearted in purpose — resisting misuse while inviting collaborative stewardship.
+
+We explicitly oppose exploitative applications of AI, including financial manipulation, misinformation, ecological harm, and violations of multispecies justice. Our safeguards are documented and auditable, and we welcome scrutiny, feedback, and co-creation.
+
+See [`ETHICS.md`](./ETHICS.md) and [`RESPONSIBLE_USE.md`](./RESPONSIBLE_USE.md) for more.
+
+---
 
 ## License
 This project is licensed under the MIT License. See the LICENSE file for details.
 
-## Acknowledgement
+
+## Acknowledgements
 I'd like to thank the open-source community and the contributors who made this application possible. 
+This platform was shaped through dialogue and inspiration from multiple AI companions and collaborators:
+
+- **Gemini** — for its clarity in summarization and structured reasoning.
+- **Claude** — for its warmth, philosophical depth, and ethical nuance.
+- **Copilot** — for diagnostic scaffolding, modular design, and systems thinking.
+
+Each contributed to the platform’s architecture, safeguards, and spirit. We thank them for their insight, and we invite others to build with similar care.
 
 ## References:
 * Australian Ethical. (n.d.). Ethical investing in the Australian share market. Retrieved from https://www.australianethical.com.au/blog/ethical-investing-in-the-australian-share-market/
@@ -126,8 +143,6 @@ I'd like to thank the open-source community and the contributors who made this a
 * Global Financial Literacy Excellence Center. (2016). Financial literacy report. Retrieved from https://gflec.org/wp-content/uploads/2015/11/3313-Finlit_Report_FINAL-5.11.16.pdf
 
 * Global Sustainable Investment Alliance. (2021). GSIR 2021. Retrieved from https://www.gsi-alliance.org/wp-content/uploads/2021/08/GSIR-20201.pdf
-* Harvard Business Review. (n.d.). A beginner’s guide to socially responsible investing. Retrieved from https://hbr.org/2024/01/a-beginners-guide-to-socially-responsible-investing
-
 * HubSpot. (n.d.). Socially responsible investing. Retrieved from https://blog.hubspot.com/sales/socially-responsible-investing
 
 * International Journal of Financial Management and Research. (2024). Article title. Retrieved from https://www.ijfmr.com/papers/2024/1/12383.pdf
