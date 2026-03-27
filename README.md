@@ -102,7 +102,7 @@ To start the application, execute the following command:
 
 ## Contact
 
-If you want to contact me you can reach me at laranguyen811@gmail.com.
+If you want to contact me, you can reach me at laranguyen811@gmail.com.
 
 ## Usage
 Please note that this application is intended for educational purposes only. Always do your own research before making any investment decisions.
