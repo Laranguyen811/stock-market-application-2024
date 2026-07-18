@@ -118,8 +118,11 @@ I'd like to thank the open-source community and the contributors who made this a
 
 ## Design
 Please view the demo here: https://www.youtube.com/watch?v=G5z9JRJVrd0
+
 Please check out my website prototype here: https://good-nature.lovable.app/
+
 Please view my under-development wireframe here: https://canva.link/jcp1wcmkkddpoy4
+
 Please view my under-development information architecture here: https://canva.link/w4xynpc15chsyl0
 
 ## References:
