@@ -116,6 +116,12 @@ This project is licensed under the MIT License. See the LICENSE file for details
 ## Acknowledgement
 I'd like to thank the open-source community and the contributors who made this application possible. 
 
+## Design
+Please view the demo here: https://www.youtube.com/watch?v=G5z9JRJVrd0
+Please check out my website prototype here: https://good-nature.lovable.app/
+Please view my under-development wireframe here: https://canva.link/jcp1wcmkkddpoy4
+Please view my under-development information architecture here: https://canva.link/w4xynpc15chsyl0
+
 ## References:
 * Australian Ethical. (n.d.). Ethical investing in the Australian share market. Retrieved from https://www.australianethical.com.au/blog/ethical-investing-in-the-australian-share-market/
 
